@@ -2,7 +2,11 @@
 // docs/openapi.yaml и docs/schema.md.
 package domain
 
-import "time"
+import (
+	"errors"
+	"fmt"
+	"time"
+)
 
 // ID — UUID в строковом виде. Генерирует база.
 type ID string
@@ -81,12 +85,64 @@ type Plan struct {
 	Status    string
 }
 
+// Meal — приём пищи в дне плана.
+type Meal string
+
+const (
+	MealBreakfast Meal = "breakfast"
+	MealLunch     Meal = "lunch"
+	MealDinner    Meal = "dinner"
+	MealSnack     Meal = "snack"
+)
+
+func (m Meal) Valid() bool {
+	switch m {
+	case MealBreakfast, MealLunch, MealDinner, MealSnack:
+		return true
+	}
+	return false
+}
+
+// PlanItem — блюдо в плане недели. Date и Meal необязательны: блюдо без даты
+// значит «на неделю, день не выбран». В один день и приём пищи можно ставить
+// несколько блюд (основное и салат).
 type PlanItem struct {
 	ID       ID
 	PlanID   ID
 	RecipeID ID
 	Servings int
 	Date     *time.Time
+	Meal     Meal // пусто, если не выбран; без Date не допускается
+}
+
+// ErrInvalidPlanItem — блюдо плана не прошло проверку; причина в тексте ошибки.
+var ErrInvalidPlanItem = errors.New("invalid plan item")
+
+// Validate проверяет блюдо плана для недели, начинающейся с weekStart.
+func (it PlanItem) Validate(weekStart time.Time) error {
+	if it.Servings < 1 {
+		return fmt.Errorf("%w: servings must be at least 1", ErrInvalidPlanItem)
+	}
+	if it.Meal != "" && !it.Meal.Valid() {
+		return fmt.Errorf("%w: unknown meal %q", ErrInvalidPlanItem, it.Meal)
+	}
+	if it.Date == nil {
+		if it.Meal != "" {
+			return fmt.Errorf("%w: meal requires a date", ErrInvalidPlanItem)
+		}
+		return nil
+	}
+	start := dateOnly(weekStart)
+	d := dateOnly(*it.Date)
+	if d.Before(start) || !d.Before(start.AddDate(0, 0, 7)) {
+		return fmt.Errorf("%w: date %s is outside the plan week", ErrInvalidPlanItem, d.Format("2006-01-02"))
+	}
+	return nil
+}
+
+// dateOnly отбрасывает время, не меняя календарную дату.
+func dateOnly(t time.Time) time.Time {
+	return time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, time.UTC)
 }
 
 type PantrySource string
