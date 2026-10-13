@@ -13,6 +13,7 @@ NUMBER = (
     rf"(?:\d+\s*[{_V}]"
     r"|\d+\s+\d+\s*/\s*\d+"
     r"|\d+\s*/\s*\d+"
+    r"|\d{1,3}(?: \d{3})+(?:[.,]\d+)?"  # «1 200» — разделитель тысяч
     r"|\d+(?:[.,]\d+)?"
     rf"|[{_V}])"
 )
@@ -49,6 +50,8 @@ def to_float(text: str) -> float:
         return _fraction(m[1], m[2])
     if s in _VULGAR:
         return _VULGAR[s]
+    if re.fullmatch(r"\d{1,3}(?: \d{3})+(?:[.,]\d+)?", s):
+        s = s.replace(" ", "")
     return float(s.replace(",", "."))
 
 
