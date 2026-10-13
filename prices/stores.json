@@ -1,23 +1,465 @@
 {
-  "_comment": "Профили магазинов. enabled=true допустим только с записью approval (кто, когда, на каком основании). Решение за владельцем проекта, см. docs/stores.md. Адреса категорий заполняются после решения: формат адресов Магнита не выяснен.",
+  "_comment": "Профили магазинов. enabled=true допустим только с записью approval (кто, когда, на каком основании). Решение за владельцем проекта, см. docs/stores.md.",
   "magnit": {
     "name": "Магнит",
-    "enabled": false,
-    "approval": null,
+    "enabled": true,
+    "approval": {
+      "by": "владелец проекта",
+      "on": "2026-10-14",
+      "basis": "личное использование, без монетизации и распространения данных; robots.txt соблюдается"
+    },
     "base_url": "https://magnit.ru",
     "min_delay_s": 20,
-    "daily_request_limit": 150,
-    "notes": "robots.txt запрещает поиск и постраничный обход: читается только первая страница категории (33 товара). Цены и ассортимент зависят от выбранного магазина (shopCode).",
-    "categories": []
+    "daily_request_limit": 100,
+    "notes": "Страницы категорий /catalog/{id}-{code}?shopCode=…&shopType=dostavka отдают данные Nuxt. robots.txt запрещает поиск и постраничный обход: читается только первая страница категории (33 товара). Цены и ассортимент зависят от выбранного магазина (shopCode).",
+    "categories": [
+      {
+        "url": "https://magnit.ru/catalog/63983-testmmmoloko_maslo_yaytsa?shopCode=992301&shopType=dostavka",
+        "groups": [
+          "молочные",
+          "яйца"
+        ],
+        "note": "Молоко, масло, яйца"
+      },
+      {
+        "url": "https://magnit.ru/catalog/63991-testmmsyry?shopCode=992301&shopType=dostavka",
+        "groups": [
+          "молочные"
+        ],
+        "note": "Сыры"
+      },
+      {
+        "url": "https://magnit.ru/catalog/63987-testmmkefir_smetana_tvorog?shopCode=992301&shopType=dostavka",
+        "groups": [
+          "молочные"
+        ],
+        "note": "Кефир, сметана, творог"
+      },
+      {
+        "url": "https://magnit.ru/catalog/63921-testmmovoshchi_griby_zelen?shopCode=992301&shopType=dostavka",
+        "groups": [
+          "овощи",
+          "зелень",
+          "грибы"
+        ],
+        "note": "Овощи, грибы, зелень"
+      },
+      {
+        "url": "https://magnit.ru/catalog/63929-testmmfrukty_i_yagody?shopCode=992301&shopType=dostavka",
+        "groups": [
+          "фрукты",
+          "ягоды"
+        ],
+        "note": "Фрукты и ягоды"
+      },
+      {
+        "url": "https://magnit.ru/catalog/65003-testmmkhleb?shopCode=992301&shopType=dostavka",
+        "groups": [
+          "хлеб"
+        ],
+        "note": "Хлеб"
+      },
+      {
+        "url": "https://magnit.ru/catalog/64129-testmmsakhar_sol_i_spetsii?shopCode=992301&shopType=dostavka",
+        "groups": [
+          "специи",
+          "мука и выпечка"
+        ],
+        "note": "Сахар, соль и специи"
+      },
+      {
+        "url": "https://magnit.ru/catalog/64123-testmmkrupy_i_sukhie_zavtraki?shopCode=992301&shopType=dostavka",
+        "groups": [
+          "крупы",
+          "бобовые",
+          "макароны"
+        ],
+        "note": "Крупы и сухие завтраки"
+      },
+      {
+        "url": "https://magnit.ru/catalog/64131-testmmsousy?shopCode=992301&shopType=dostavka",
+        "groups": [
+          "соусы"
+        ],
+        "note": "Соусы"
+      },
+      {
+        "url": "https://magnit.ru/catalog/64127-testmmrastitelnye_masla?shopCode=992301&shopType=dostavka",
+        "groups": [
+          "масла"
+        ],
+        "note": "Растительные масла"
+      },
+      {
+        "url": "https://magnit.ru/catalog/64133-testmmvse_dlya_vypechki?shopCode=992301&shopType=dostavka",
+        "groups": [
+          "мука и выпечка"
+        ],
+        "note": "Всё для выпечки"
+      },
+      {
+        "url": "https://magnit.ru/catalog/64203-testmmryba?shopCode=992301&shopType=dostavka",
+        "groups": [
+          "рыба",
+          "консервы"
+        ],
+        "note": "Рыба (консервы)"
+      },
+      {
+        "url": "https://magnit.ru/catalog/64247-testmmmyaso?shopCode=992301&shopType=dostavka",
+        "groups": [
+          "мясо"
+        ],
+        "note": "Мясо"
+      },
+      {
+        "url": "https://magnit.ru/catalog/64245-testmmptitsa?shopCode=992301&shopType=dostavka",
+        "groups": [
+          "птица"
+        ],
+        "note": "Птица"
+      },
+      {
+        "url": "https://magnit.ru/catalog/64475-testmmzamorozka_ryba_i_moreprodukty?shopCode=992301&shopType=dostavka",
+        "groups": [
+          "рыба",
+          "морепродукты"
+        ],
+        "note": "Заморозка: рыба и морепродукты"
+      },
+      {
+        "url": "https://magnit.ru/catalog/64719-testmmsukhofrukty_i_orekhi?shopCode=992301&shopType=dostavka",
+        "groups": [
+          "сухофрукты",
+          "орехи и семена"
+        ],
+        "note": "Сухофрукты и орехи"
+      },
+      {
+        "url": "https://magnit.ru/catalog/64205-testmmovoshchi_i_griby?shopCode=992301&shopType=dostavka",
+        "groups": [
+          "консервы",
+          "овощи",
+          "грибы"
+        ],
+        "note": "Консервы: овощи и грибы"
+      }
+    ]
   },
   "dixy": {
     "name": "Дикси",
-    "enabled": false,
-    "approval": null,
+    "enabled": true,
+    "approval": {
+      "by": "владелец проекта",
+      "on": "2026-10-14",
+      "basis": "личное использование, без монетизации и распространения данных; страницы открывает и сохраняет человек в обычном браузере, блокировки не обходятся"
+    },
     "base_url": "https://dixy.ru",
     "min_delay_s": 20,
-    "daily_request_limit": 150,
-    "notes": "Простой клиент получает 403, страницы открывает только браузер; карточки в HTML-вёрстке (стратегии разбора пока нет). Решение о допустимости автоматизированного браузера за владельцем.",
-    "categories": []
+    "daily_request_limit": 100,
+    "notes": "Простой клиент получает 403 и это не обходится: страницы сохраняются из обычного браузера в папку и читаются командой run --pages-dir. Карточки разбираются HTML-стратегией (article.card). Постраничный обход (PAGEN) запрещён в robots.txt: берётся первая страница категории.",
+    "categories": [
+      {
+        "url": "https://dixy.ru/catalog/ovoshchi-frukty/ovoshchi/",
+        "groups": [
+          "овощи"
+        ],
+        "note": "Овощи"
+      },
+      {
+        "url": "https://dixy.ru/catalog/ovoshchi-frukty/frukty/",
+        "groups": [
+          "фрукты"
+        ],
+        "note": "Фрукты"
+      },
+      {
+        "url": "https://dixy.ru/catalog/ovoshchi-frukty/zelen-i-salaty/",
+        "groups": [
+          "зелень"
+        ],
+        "note": "Зелень и салаты"
+      },
+      {
+        "url": "https://dixy.ru/catalog/ovoshchi-frukty/griby/",
+        "groups": [
+          "грибы"
+        ],
+        "note": "Грибы"
+      },
+      {
+        "url": "https://dixy.ru/catalog/ovoshchi-frukty/yagody/",
+        "groups": [
+          "ягоды"
+        ],
+        "note": "Ягоды"
+      },
+      {
+        "url": "https://dixy.ru/catalog/molochnye-produkty-yaytsa/moloko/",
+        "groups": [
+          "молочные"
+        ],
+        "note": "Молоко"
+      },
+      {
+        "url": "https://dixy.ru/catalog/molochnye-produkty-yaytsa/yaytso/",
+        "groups": [
+          "яйца"
+        ],
+        "note": "Яйцо"
+      },
+      {
+        "url": "https://dixy.ru/catalog/molochnye-produkty-yaytsa/tvorog/",
+        "groups": [
+          "молочные"
+        ],
+        "note": "Творог"
+      },
+      {
+        "url": "https://dixy.ru/catalog/molochnye-produkty-yaytsa/smetana/",
+        "groups": [
+          "молочные"
+        ],
+        "note": "Сметана"
+      },
+      {
+        "url": "https://dixy.ru/catalog/molochnye-produkty-yaytsa/kefir-i-ryajenka/",
+        "groups": [
+          "молочные"
+        ],
+        "note": "Кефир и ряженка"
+      },
+      {
+        "url": "https://dixy.ru/catalog/molochnye-produkty-yaytsa/slivki/",
+        "groups": [
+          "молочные"
+        ],
+        "note": "Сливки"
+      },
+      {
+        "url": "https://dixy.ru/catalog/molochnye-produkty-yaytsa/maslo-i-margarin/",
+        "groups": [
+          "молочные",
+          "масла"
+        ],
+        "note": "Масло и маргарин"
+      },
+      {
+        "url": "https://dixy.ru/catalog/molochnye-produkty-yaytsa/mayonez/",
+        "groups": [
+          "соусы"
+        ],
+        "note": "Майонез"
+      },
+      {
+        "url": "https://dixy.ru/catalog/syry/tverdye-syry/",
+        "groups": [
+          "молочные"
+        ],
+        "note": "Твёрдые сыры"
+      },
+      {
+        "url": "https://dixy.ru/catalog/myaso-ptitsa/kuritsa/",
+        "groups": [
+          "птица"
+        ],
+        "note": "Курица"
+      },
+      {
+        "url": "https://dixy.ru/catalog/myaso-ptitsa/indeyka/",
+        "groups": [
+          "птица"
+        ],
+        "note": "Индейка"
+      },
+      {
+        "url": "https://dixy.ru/catalog/myaso-ptitsa/svinina/",
+        "groups": [
+          "мясо"
+        ],
+        "note": "Свинина"
+      },
+      {
+        "url": "https://dixy.ru/catalog/myaso-ptitsa/govyadina/",
+        "groups": [
+          "мясо"
+        ],
+        "note": "Говядина"
+      },
+      {
+        "url": "https://dixy.ru/catalog/myaso-ptitsa/farsh/",
+        "groups": [
+          "мясо"
+        ],
+        "note": "Фарш"
+      },
+      {
+        "url": "https://dixy.ru/catalog/ryba-moreprodukty-ikra/ryba-zamorozka/",
+        "groups": [
+          "рыба"
+        ],
+        "note": "Рыба замороженная"
+      },
+      {
+        "url": "https://dixy.ru/catalog/ryba-moreprodukty-ikra/krevetki-produkty-morya/",
+        "groups": [
+          "морепродукты"
+        ],
+        "note": "Креветки и морепродукты"
+      },
+      {
+        "url": "https://dixy.ru/catalog/ryba-moreprodukty-ikra/rybnye-konservy/",
+        "groups": [
+          "рыба",
+          "консервы"
+        ],
+        "note": "Рыбные консервы"
+      },
+      {
+        "url": "https://dixy.ru/catalog/khleb-i-vypechka/belyy-khleb/",
+        "groups": [
+          "хлеб"
+        ],
+        "note": "Белый хлеб"
+      },
+      {
+        "url": "https://dixy.ru/catalog/khleb-i-vypechka/chernyy-seryy-khleb/",
+        "groups": [
+          "хлеб"
+        ],
+        "note": "Чёрный хлеб"
+      },
+      {
+        "url": "https://dixy.ru/catalog/bakaleya/krupy-bobovye/",
+        "groups": [
+          "крупы",
+          "бобовые"
+        ],
+        "note": "Крупы и бобовые"
+      },
+      {
+        "url": "https://dixy.ru/catalog/bakaleya/makarony-pasta/",
+        "groups": [
+          "макароны"
+        ],
+        "note": "Макароны и паста"
+      },
+      {
+        "url": "https://dixy.ru/catalog/bakaleya/ris/",
+        "groups": [
+          "крупы"
+        ],
+        "note": "Рис"
+      },
+      {
+        "url": "https://dixy.ru/catalog/bakaleya/muka-vse-dlya-vypechki/",
+        "groups": [
+          "мука и выпечка"
+        ],
+        "note": "Мука и всё для выпечки"
+      },
+      {
+        "url": "https://dixy.ru/catalog/bakaleya/sakhar/",
+        "groups": [
+          "сладкое"
+        ],
+        "note": "Сахар"
+      },
+      {
+        "url": "https://dixy.ru/catalog/bakaleya/sol/",
+        "groups": [
+          "специи"
+        ],
+        "note": "Соль"
+      },
+      {
+        "url": "https://dixy.ru/catalog/bakaleya/maslo/",
+        "groups": [
+          "масла"
+        ],
+        "note": "Масло растительное"
+      },
+      {
+        "url": "https://dixy.ru/catalog/bakaleya/med/",
+        "groups": [
+          "сладкое"
+        ],
+        "note": "Мёд"
+      },
+      {
+        "url": "https://dixy.ru/catalog/sousy-spetsii/spetsii-pripravy/",
+        "groups": [
+          "специи"
+        ],
+        "note": "Специи и приправы"
+      },
+      {
+        "url": "https://dixy.ru/catalog/sousy-spetsii/ketchupy/",
+        "groups": [
+          "соусы"
+        ],
+        "note": "Кетчупы"
+      },
+      {
+        "url": "https://dixy.ru/catalog/sousy-spetsii/tomatnaya-pasta/",
+        "groups": [
+          "соусы"
+        ],
+        "note": "Томатная паста"
+      },
+      {
+        "url": "https://dixy.ru/catalog/sousy-spetsii/uksus-marinad/",
+        "groups": [
+          "соусы"
+        ],
+        "note": "Уксус и маринад"
+      },
+      {
+        "url": "https://dixy.ru/catalog/konservy/ovoshchnye-konservy/",
+        "groups": [
+          "консервы",
+          "овощи"
+        ],
+        "note": "Овощные консервы"
+      },
+      {
+        "url": "https://dixy.ru/catalog/konservy/gribnye-konservy/",
+        "groups": [
+          "консервы",
+          "грибы"
+        ],
+        "note": "Грибные консервы"
+      },
+      {
+        "url": "https://dixy.ru/catalog/chipsy-orekhi-i-sneki/orekhi/",
+        "groups": [
+          "орехи и семена"
+        ],
+        "note": "Орехи"
+      },
+      {
+        "url": "https://dixy.ru/catalog/chipsy-orekhi-i-sneki/sukhofrukty/",
+        "groups": [
+          "сухофрукты"
+        ],
+        "note": "Сухофрукты"
+      },
+      {
+        "url": "https://dixy.ru/catalog/zamorojennye-produkty/ovoshchi-griby/",
+        "groups": [
+          "овощи",
+          "грибы"
+        ],
+        "note": "Замороженные овощи и грибы"
+      },
+      {
+        "url": "https://dixy.ru/catalog/zamorojennye-produkty/frukty-yagody/",
+        "groups": [
+          "фрукты",
+          "ягоды"
+        ],
+        "note": "Замороженные фрукты и ягоды"
+      }
+    ]
   }
 }

@@ -17,13 +17,17 @@ def raw(**kw):
     return {**base, **kw}
 
 
-def test_shipped_profiles_are_all_disabled_and_load():
+def test_shipped_profiles_load_and_enabled_ones_are_approved():
     profiles = load_profiles()
     assert {"magnit", "dixy"} <= set(profiles)
     for p in profiles.values():
-        assert p.enabled is False and p.approval is None and p.min_delay_s >= 20
-        with pytest.raises(StoreDisabled, match="выключен"):
+        assert p.min_delay_s >= 20 and p.daily_request_limit <= 500
+        if p.enabled:
+            assert p.approval is not None and p.categories
             p.require_enabled()
+        else:
+            with pytest.raises(StoreDisabled, match="выключен"):
+                p.require_enabled()
 
 
 def test_enabled_requires_a_complete_approval():

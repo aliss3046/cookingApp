@@ -1,9 +1,8 @@
 """Карточки товаров со страницы категории магазина.
 
 Источники по порядку: данные страницы Nuxt (`__NUXT_DATA__`, формат devalue), Next.js
-(`__NEXT_DATA__`), JSON-LD (`Product`, `ItemList`). Берётся первый, который дал товары. Карточки
-в HTML-вёрстке без таких
-данных (Дикси на Bitrix) пока не поддерживаются.
+(`__NEXT_DATA__`), карточки в HTML-вёрстке (Дикси на Bitrix), JSON-LD (`Product`, `ItemList`).
+Берётся первый источник, который дал товары.
 
 Разбирается только то, что сайт сам кладёт в страницу для её отображения. Внутренние интерфейсы
 (`/api/`, `/ajax/`), запрещённые в robots.txt, не используются.
@@ -11,6 +10,7 @@
 
 from __future__ import annotations
 
+import html
 import json
 import re
 from collections.abc import Callable, Iterator
@@ -23,12 +23,18 @@ from prices.normalize import RawOffer
 _NUXT: Final = re.compile(r'<script[^>]*id="__NUXT_DATA__"[^>]*>(.*?)</script>', re.S)
 _NEXT: Final = re.compile(r'<script[^>]*id="__NEXT_DATA__"[^>]*>(.*?)</script>', re.S)
 _LD: Final = re.compile(r'<script[^>]*type="application/ld\+json"[^>]*>(.*?)</script>', re.S | re.I)
+_CARD: Final = re.compile(r'<article[^>]*class="card[^>]*>(.*?)</article>', re.S)
+_CARD_ID: Final = re.compile(r'product-id="([^"]+)"')
+_CARD_TITLE: Final = re.compile(r'<p class="card__title">([^<]+)</p>')
+_CARD_PRICE: Final = re.compile(r'class="card__price-num"[^>]*>\s*(\d+)\.?\s*<span>(\d+)</span>')
+_CARD_UNIT: Final = re.compile(r'data-bsk_data="\S+ \S+ \S+ (\S+)')
 _WRAPPERS: Final = frozenset({"Reactive", "ShallowReactive", "Ref", "ShallowRef", "readonly"})
 _EMPTY_REFS: Final = frozenset({"EmptyRef", "EmptyShallowRef"})
 _OPAQUE: Final = frozenset({"Set", "Map", "Date", "null", "BigInt", "RegExp"})
 
 STRATEGY_NUXT: Final = "nuxt"
 STRATEGY_NEXT: Final = "next"
+STRATEGY_HTML: Final = "html"
 STRATEGY_JSON_LD: Final = "json-ld"
 
 
@@ -152,6 +158,32 @@ def _from_json_state(
     return list(offers.values()), skipped
 
 
+def _html_card_offers(
+    page: str, store: str, category: str, now: datetime
+) -> tuple[list[RawOffer], int]:
+    """Карточки `<article class="card">`; текущая цена в `card__price-num`."""
+    offers: dict[str, RawOffer] = {}
+    skipped = 0
+    for m in _CARD.finditer(page):
+        body = m[0]
+        ident, title, price = (
+            _CARD_ID.search(body),
+            _CARD_TITLE.search(body),
+            _CARD_PRICE.search(body),
+        )
+        if not (ident and title and price) or not html.unescape(title[1]).strip():
+            skipped += 1
+            continue
+        unit = _CARD_UNIT.search(body)
+        offer = RawOffer(
+            store=store, external_id=ident[1], title=html.unescape(title[1]).strip(),
+            price_text=f"{price[1]}.{price[2]}", fetched_at=now, category=category,
+            price_unit="kg" if unit and unit[1] == "кг" else "pack",
+        )  # fmt: skip
+        offers.setdefault(offer.external_id, offer)
+    return list(offers.values()), skipped
+
+
 def _json_ld_offers(
     blocks: list[str], store: str, category: str, now: datetime
 ) -> tuple[list[RawOffer], int]:
@@ -198,6 +230,8 @@ def extract_offers(page: str, *, store: str, now: datetime, category: str = "") 
                 lambda: _json_strategy(m2[1], hydrate=False, args=(store, category, now)),
             )
         )
+    if _CARD.search(page):
+        strategies.append((STRATEGY_HTML, lambda: _html_card_offers(page, store, category, now)))
     blocks = _LD.findall(page)
     if blocks:
         strategies.append((STRATEGY_JSON_LD, lambda: _json_ld_offers(blocks, store, category, now)))
@@ -222,8 +256,8 @@ def _json_strategy(
     return _from_json_state(root, *args)
 
 
-def extract_categories(page: str) -> list[tuple[int, str, str]]:
-    """Дерево категорий страницы: (глубина, код, название), чтобы выбрать адреса для профиля."""
+def extract_categories(page: str) -> list[tuple[int, str, str, str]]:
+    """Дерево категорий страницы: (глубина, id, код, название), чтобы выбрать адреса для профиля."""
     m = _NUXT.search(page)
     if not m:
         return []
@@ -232,7 +266,7 @@ def extract_categories(page: str) -> list[tuple[int, str, str]]:
     except json.JSONDecodeError:
         return []
     root = hydrate_devalue(data) if isinstance(data, list) else data
-    out: list[tuple[int, str, str]] = []
+    out: list[tuple[int, str, str, str]] = []
     seen: set[str] = set()
 
     def visit(node: Any, depth: int) -> None:
@@ -241,7 +275,7 @@ def extract_categories(page: str) -> list[tuple[int, str, str]]:
             if isinstance(code, str) and isinstance(name, str) and "children" in node:
                 if code not in seen:
                     seen.add(code)
-                    out.append((depth, code, name))
+                    out.append((depth, str(node.get("id") or ""), code, name))
                 for child in node["children"] or []:
                     visit(child, depth + 1)
                 return
