@@ -1,0 +1,398 @@
+openapi: 3.0.3
+info:
+  title: cookingApp API
+  version: 1.0.0-draft
+  description: |
+    Контракт бэкенда для фронтенд-разработчика. Черновик Фазы 0, на согласование.
+    Все пути под /v1. Авторизация: Bearer-токен Supabase Auth.
+    Количества в базовых единицах: g, ml, pcs. Деньги в рублях.
+    Тяжёлые операции асинхронные: 202 + job_id, статус в /jobs/{id}.
+servers:
+  - url: https://staging.example.invalid/v1
+    description: staging (адрес будет известен в Фазе 1)
+  - url: http://localhost:4010/v1
+    description: мок-сервер
+security:
+  - bearerAuth: []
+tags:
+  - name: recipes
+  - name: plans
+  - name: cart
+  - name: pantry
+  - name: stores
+  - name: jobs
+paths:
+  /recipes:
+    get:
+      tags: [recipes]
+      summary: Список блюд (общие и свои)
+      parameters:
+        - { name: q, in: query, schema: { type: string } }
+        - { name: tag, in: query, schema: { type: string } }
+        - { name: status, in: query, schema: { $ref: '#/components/schemas/RecipeStatus' } }
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/Recipe' } } } } }
+        default: { $ref: '#/components/responses/Error' }
+    post:
+      tags: [recipes]
+      summary: Создать своё блюдо
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/RecipeInput' } } } }
+      responses:
+        '201': { description: Создано, content: { application/json: { schema: { $ref: '#/components/schemas/Recipe' } } } }
+        default: { $ref: '#/components/responses/Error' }
+  /recipes/{id}:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    get:
+      tags: [recipes]
+      summary: Блюдо с составом
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { $ref: '#/components/schemas/Recipe' } } } }
+        default: { $ref: '#/components/responses/Error' }
+    patch:
+      tags: [recipes]
+      summary: Править блюдо (в том числе подтвердить черновик импорта)
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/RecipeInput' } } } }
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { $ref: '#/components/schemas/Recipe' } } } }
+        default: { $ref: '#/components/responses/Error' }
+    delete:
+      tags: [recipes]
+      summary: Удалить своё блюдо
+      responses:
+        '204': { description: Удалено }
+        default: { $ref: '#/components/responses/Error' }
+  /recipes/import:
+    post:
+      tags: [recipes]
+      summary: Импорт по ссылке (schema.org/Recipe), асинхронно
+      requestBody:
+        required: true
+        content: { application/json: { schema: { type: object, required: [url], properties: { url: { type: string, format: uri } } } } }
+      responses:
+        '202': { description: Задача принята; в result будет черновик Recipe, content: { application/json: { schema: { $ref: '#/components/schemas/JobRef' } } } }
+        default: { $ref: '#/components/responses/Error' }
+  /recipes/{id}/votes:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    put:
+      tags: [recipes]
+      summary: Мой голос за блюдо
+      requestBody: { required: true, content: { application/json: { schema: { type: object, required: [value], properties: { value: { $ref: '#/components/schemas/VoteValue' } } } } } }
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { $ref: '#/components/schemas/Vote' } } } }
+        default: { $ref: '#/components/responses/Error' }
+  /plans:
+    get:
+      tags: [plans]
+      summary: Планы пары
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/Plan' } } } } }
+        default: { $ref: '#/components/responses/Error' }
+    post:
+      tags: [plans]
+      summary: Создать план недели
+      requestBody: { required: true, content: { application/json: { schema: { type: object, required: [week_start], properties: { week_start: { type: string, format: date } } } } } }
+      responses:
+        '201': { description: Создано, content: { application/json: { schema: { $ref: '#/components/schemas/Plan' } } } }
+        default: { $ref: '#/components/responses/Error' }
+  /plans/{id}/suggestions:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    get:
+      tags: [plans]
+      summary: Пересечение пожеланий двоих
+      responses:
+        '200': { description: Блюда, которые хотят оба или хочет один и не против другой, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/Recipe' } } } } }
+        default: { $ref: '#/components/responses/Error' }
+  /plans/{id}/items:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    get:
+      tags: [plans]
+      summary: Блюда плана
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/PlanItem' } } } } }
+        default: { $ref: '#/components/responses/Error' }
+    post:
+      tags: [plans]
+      summary: Добавить блюдо в план
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/PlanItemInput' } } } }
+      responses:
+        '201': { description: Создано, content: { application/json: { schema: { $ref: '#/components/schemas/PlanItem' } } } }
+        default: { $ref: '#/components/responses/Error' }
+  /plans/{id}/items/{itemId}:
+    parameters:
+      - { $ref: '#/components/parameters/Id' }
+      - { name: itemId, in: path, required: true, schema: { type: string, format: uuid } }
+    patch:
+      tags: [plans]
+      summary: Изменить порции или дату
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/PlanItemInput' } } } }
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { $ref: '#/components/schemas/PlanItem' } } } }
+        default: { $ref: '#/components/responses/Error' }
+  /plans/{id}/cart:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    get:
+      tags: [cart]
+      summary: Рассчитанная корзина по ингредиентам
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { $ref: '#/components/schemas/Cart' } } } }
+        default: { $ref: '#/components/responses/Error' }
+  /plans/{id}/quote:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    post:
+      tags: [cart]
+      summary: Подбор товаров и итог по магазинам с доставкой, асинхронно
+      responses:
+        '202': { description: Задача принята, content: { application/json: { schema: { $ref: '#/components/schemas/JobRef' } } } }
+        default: { $ref: '#/components/responses/Error' }
+  /cart/lines:
+    post:
+      tags: [cart]
+      summary: Добавить свой продукт вручную
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/CartLineInput' } } } }
+      responses:
+        '201': { description: Создано, content: { application/json: { schema: { $ref: '#/components/schemas/CartLine' } } } }
+        default: { $ref: '#/components/responses/Error' }
+  /cart/lines/{id}:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    patch:
+      tags: [cart]
+      summary: Исключить продукт, поправить количество, подтвердить товар
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/CartLinePatch' } } } }
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { $ref: '#/components/schemas/CartLine' } } } }
+        default: { $ref: '#/components/responses/Error' }
+    delete:
+      tags: [cart]
+      summary: Убрать ручную позицию
+      responses:
+        '204': { description: Удалено }
+        default: { $ref: '#/components/responses/Error' }
+  /pantry:
+    get:
+      tags: [pantry]
+      summary: Что есть дома
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/PantryItem' } } } } }
+        default: { $ref: '#/components/responses/Error' }
+    put:
+      tags: [pantry]
+      summary: Заменить список запасов
+      requestBody: { required: true, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/PantryItem' } } } } }
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/PantryItem' } } } } }
+        default: { $ref: '#/components/responses/Error' }
+  /stores:
+    get:
+      tags: [stores]
+      summary: Магазины
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/Store' } } } } }
+        default: { $ref: '#/components/responses/Error' }
+  /locations:
+    get:
+      tags: [stores]
+      summary: Адрес доставки пары
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/Location' } } } } }
+        default: { $ref: '#/components/responses/Error' }
+    put:
+      tags: [stores]
+      summary: Задать адрес доставки пары
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/LocationInput' } } } }
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { $ref: '#/components/schemas/Location' } } } }
+        default: { $ref: '#/components/responses/Error' }
+  /jobs/{id}:
+    parameters: [{ $ref: '#/components/parameters/Id' }]
+    get:
+      tags: [jobs]
+      summary: Статус асинхронной задачи
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { $ref: '#/components/schemas/Job' } } } }
+        default: { $ref: '#/components/responses/Error' }
+components:
+  securitySchemes:
+    bearerAuth: { type: http, scheme: bearer }
+  parameters:
+    Id: { name: id, in: path, required: true, schema: { type: string, format: uuid } }
+  responses:
+    Error:
+      description: Ошибка в общем формате
+      content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+  schemas:
+    Unit: { type: string, enum: [g, ml, pcs] }
+    RecipeStatus: { type: string, enum: [draft, confirmed] }
+    VoteValue: { type: string, enum: [want, neutral, dont_want] }
+    ErrorCode:
+      type: string
+      description: Коды ошибок
+      enum:
+        - unauthorized
+        - forbidden
+        - not_found
+        - validation_failed
+        - conflict
+        - rate_limited
+        - import_failed
+        - unit_unparsed
+        - price_stale
+        - product_unavailable
+        - job_failed
+        - internal
+    Error:
+      type: object
+      required: [code, message]
+      properties:
+        code: { $ref: '#/components/schemas/ErrorCode' }
+        message: { type: string }
+        details: { type: object, additionalProperties: true }
+    RecipeIngredient:
+      type: object
+      required: [qty_per_serving, unit]
+      properties:
+        ingredient_id: { type: string, format: uuid, nullable: true }
+        qty_per_serving: { type: number }
+        unit: { $ref: '#/components/schemas/Unit' }
+        optional: { type: boolean, default: false }
+        raw_text: { type: string, nullable: true }
+        needs_review: { type: boolean, default: false, description: Строка не разобрана, нужна проверка парой }
+    RecipeInput:
+      type: object
+      required: [title, default_servings, ingredients]
+      properties:
+        title: { type: string }
+        default_servings: { type: integer, minimum: 1 }
+        source_url: { type: string, format: uri, nullable: true }
+        tags: { type: array, items: { type: string } }
+        status: { $ref: '#/components/schemas/RecipeStatus' }
+        ingredients: { type: array, items: { $ref: '#/components/schemas/RecipeIngredient' } }
+    Recipe:
+      allOf:
+        - $ref: '#/components/schemas/RecipeInput'
+        - type: object
+          required: [id]
+          properties:
+            id: { type: string, format: uuid }
+            shared: { type: boolean, description: Общее блюдо (не принадлежит паре) }
+            my_vote: { $ref: '#/components/schemas/VoteValue' }
+    Vote:
+      type: object
+      properties:
+        recipe_id: { type: string, format: uuid }
+        user_id: { type: string, format: uuid }
+        value: { $ref: '#/components/schemas/VoteValue' }
+    Plan:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        week_start: { type: string, format: date }
+        status: { type: string }
+    PlanItemInput:
+      type: object
+      properties:
+        recipe_id: { type: string, format: uuid }
+        servings: { type: integer, minimum: 1 }
+        date: { type: string, format: date }
+    PlanItem:
+      allOf:
+        - $ref: '#/components/schemas/PlanItemInput'
+        - type: object
+          properties: { id: { type: string, format: uuid } }
+    PantryItem:
+      type: object
+      required: [ingredient_id, qty, unit]
+      properties:
+        ingredient_id: { type: string, format: uuid }
+        qty: { type: number }
+        unit: { $ref: '#/components/schemas/Unit' }
+        source: { type: string, enum: [manual, leftover] }
+    CartLineInput:
+      type: object
+      required: [title, qty, unit]
+      properties:
+        plan_id: { type: string, format: uuid }
+        title: { type: string }
+        qty: { type: number }
+        unit: { $ref: '#/components/schemas/Unit' }
+    CartLinePatch:
+      type: object
+      properties:
+        excluded: { type: boolean }
+        qty: { type: number }
+        chosen_product_id: { type: string, format: uuid }
+    CartLine:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        ingredient_id: { type: string, format: uuid, nullable: true }
+        title: { type: string }
+        qty: { type: number }
+        unit: { $ref: '#/components/schemas/Unit' }
+        excluded: { type: boolean }
+        added_manually: { type: boolean }
+        needs_review: { type: boolean }
+        product: { $ref: '#/components/schemas/ProductChoice' }
+    ProductChoice:
+      type: object
+      nullable: true
+      properties:
+        product_id: { type: string, format: uuid }
+        store_code: { type: string }
+        title: { type: string }
+        packs: { type: integer }
+        pack_qty: { type: number }
+        pack_unit: { $ref: '#/components/schemas/Unit' }
+        price: { type: number }
+        card_price: { type: number, nullable: true }
+        confidence: { type: number, minimum: 0, maximum: 1 }
+        confirmed: { type: boolean }
+        stale: { type: boolean, description: Цена старше 3 дней }
+        fetched_at: { type: string, format: date-time }
+        leftover_qty: { type: number, description: Остаток после округления до упаковок }
+    Cart:
+      type: object
+      properties:
+        plan_id: { type: string, format: uuid }
+        lines: { type: array, items: { $ref: '#/components/schemas/CartLine' } }
+        totals: { type: array, items: { $ref: '#/components/schemas/StoreTotal' }, description: Заполняется после quote }
+    StoreTotal:
+      type: object
+      properties:
+        store_code: { type: string }
+        items_total: { type: number }
+        delivery_fee: { type: number }
+        total: { type: number }
+        unavailable_lines: { type: array, items: { type: string, format: uuid } }
+    Store:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        code: { type: string }
+        name: { type: string }
+        collection_enabled: { type: boolean }
+    LocationInput:
+      type: object
+      required: [address]
+      properties:
+        address: { type: string }
+    Location:
+      allOf:
+        - $ref: '#/components/schemas/LocationInput'
+        - type: object
+          properties:
+            id: { type: string, format: uuid }
+            store_id: { type: string, format: uuid }
+            zone: { type: string, nullable: true }
+            delivery_fee: { type: number, nullable: true }
+    JobRef:
+      type: object
+      required: [job_id]
+      properties: { job_id: { type: string, format: uuid } }
+    Job:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        kind: { type: string, enum: [quote, import] }
+        status: { type: string, enum: [queued, running, done, failed] }
+        result: { type: object, nullable: true, additionalProperties: true }
+        error: { $ref: '#/components/schemas/Error' }
