@@ -99,8 +99,12 @@ paths:
     get:
       tags: [plans]
       summary: Пересечение пожеланий двоих
+      description: |
+        Только подтверждённые блюда, которых ещё нет в плане. «Не хочу» от любого исключает блюдо;
+        нет голоса считается «нейтрально»; блюдо, которого никто не хочет, не предлагается.
+        Сначала tier=all (хотят все), затем tier=some (хочет кто-то, остальные нейтральны).
       responses:
-        '200': { description: Блюда, которые хотят оба или хочет один и не против другой, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/Recipe' } } } } }
+        '200': { description: OK, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/Suggestion' } } } } }
         default: { $ref: '#/components/responses/Error' }
   /plans/{id}/items:
     parameters: [{ $ref: '#/components/parameters/Id' }]
@@ -275,6 +279,13 @@ components:
             id: { type: string, format: uuid }
             shared: { type: boolean, description: Общее блюдо (не принадлежит паре) }
             my_vote: { $ref: '#/components/schemas/VoteValue' }
+    Suggestion:
+      type: object
+      required: [recipe, tier, wanted_by]
+      properties:
+        recipe: { $ref: '#/components/schemas/Recipe' }
+        tier: { type: string, enum: [all, some] }
+        wanted_by: { type: array, items: { type: string, format: uuid }, description: Кто из пары проголосовал «хочу» }
     Vote:
       type: object
       properties:
