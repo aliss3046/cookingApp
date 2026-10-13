@@ -19,6 +19,8 @@ from importers.text import normalize, stem
 from prices.normalize import NormalizedOffer
 
 DEFAULT_RULES: Final = Path(__file__).resolve().parent / "matching_rules.json"
+# Версия правил: пишется рядом с сопоставлением, чтобы после смены правил пересчитать старое.
+MATCHER_VERSION: Final = "1"
 
 AUTO_AT: Final = 0.85
 CONFIRM_AT: Final = 0.60

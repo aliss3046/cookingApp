@@ -75,6 +75,9 @@ class Directory:
     def __len__(self) -> int:
         return len(self._items)
 
+    def ingredients(self) -> tuple[Ingredient, ...]:
+        return tuple(self._items.values())
+
     def __contains__(self, ingredient_id: object) -> bool:
         return ingredient_id in self._items
 
