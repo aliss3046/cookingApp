@@ -1,0 +1,2995 @@
+[
+ {
+  "slug": "omelet",
+  "title": "Омлет с молоком",
+  "default_servings": 2,
+  "tags": [
+   "завтрак",
+   "быстро",
+   "яйца"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "egg",
+    "qty_per_serving": 2.0,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Яйца — 4 шт."
+   },
+   {
+    "ingredient_id": "milk",
+    "qty_per_serving": 50.0,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Молоко — 100 мл"
+   },
+   {
+    "ingredient_id": "butter",
+    "qty_per_serving": 7.5,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Сливочное масло — 1 ст. л."
+   },
+   {
+    "ingredient_id": "salt",
+    "qty_per_serving": 0.25,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Соль — 1 щепотка"
+   }
+  ]
+ },
+ {
+  "slug": "syrniki",
+  "title": "Сырники",
+  "default_servings": 4,
+  "tags": [
+   "завтрак",
+   "творог"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "cottage_cheese",
+    "qty_per_serving": 125.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Творог — 500 г"
+   },
+   {
+    "ingredient_id": "egg",
+    "qty_per_serving": 0.25,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Яйцо — 1 шт."
+   },
+   {
+    "ingredient_id": "wheat_flour",
+    "qty_per_serving": 15.0,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Мука — 4 ст. л."
+   },
+   {
+    "ingredient_id": "sugar",
+    "qty_per_serving": 7.5,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Сахар — 2 ст. л."
+   },
+   {
+    "ingredient_id": "vanilla_sugar",
+    "qty_per_serving": 1.25,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Ванильный сахар — 1 ч. л."
+   },
+   {
+    "ingredient_id": "salt",
+    "qty_per_serving": 0.125,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Соль — 1 щепотка"
+   },
+   {
+    "ingredient_id": "sunflower_oil",
+    "qty_per_serving": 11.25,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Растительное масло — 3 ст. л."
+   }
+  ]
+ },
+ {
+  "slug": "pancakes",
+  "title": "Блины на молоке",
+  "default_servings": 4,
+  "tags": [
+   "завтрак",
+   "выпечка"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "milk",
+    "qty_per_serving": 125.0,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Молоко — 500 мл"
+   },
+   {
+    "ingredient_id": "egg",
+    "qty_per_serving": 0.5,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Яйца — 2 шт."
+   },
+   {
+    "ingredient_id": "wheat_flour",
+    "qty_per_serving": 50.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Мука — 200 г"
+   },
+   {
+    "ingredient_id": "sugar",
+    "qty_per_serving": 7.5,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Сахар — 2 ст. л."
+   },
+   {
+    "ingredient_id": "salt",
+    "qty_per_serving": 0.625,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Соль — 1/2 ч. л."
+   },
+   {
+    "ingredient_id": "sunflower_oil",
+    "qty_per_serving": 11.25,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Растительное масло — 3 ст. л."
+   }
+  ]
+ },
+ {
+  "slug": "oatmeal_banana",
+  "title": "Овсяная каша с бананом",
+  "default_servings": 2,
+  "tags": [
+   "завтрак",
+   "быстро",
+   "вегетарианское"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "oats",
+    "qty_per_serving": 100.0,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Овсяные хлопья — 1 стакан"
+   },
+   {
+    "ingredient_id": "milk",
+    "qty_per_serving": 200.0,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Молоко — 2 стакана"
+   },
+   {
+    "ingredient_id": "banana",
+    "qty_per_serving": 0.5,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Банан — 1 шт."
+   },
+   {
+    "ingredient_id": "honey",
+    "qty_per_serving": 7.5,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Мёд — 1 ст. л."
+   },
+   {
+    "ingredient_id": "salt",
+    "qty_per_serving": 0.25,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Соль — 1 щепотка"
+   }
+  ]
+ },
+ {
+  "slug": "eggs_tomatoes",
+  "title": "Яичница с помидорами",
+  "default_servings": 2,
+  "tags": [
+   "завтрак",
+   "быстро",
+   "яйца"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "egg",
+    "qty_per_serving": 2.0,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Яйца — 4 шт."
+   },
+   {
+    "ingredient_id": "tomato",
+    "qty_per_serving": 1.0,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Помидоры — 2 шт."
+   },
+   {
+    "ingredient_id": "sunflower_oil",
+    "qty_per_serving": 7.5,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Растительное масло — 1 ст. л."
+   },
+   {
+    "ingredient_id": "green_onion",
+    "qty_per_serving": 10.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Лук зелёный — 20 г"
+   },
+   {
+    "ingredient_id": "salt",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   },
+   {
+    "ingredient_id": "black_pepper",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   }
+  ]
+ },
+ {
+  "slug": "oladyi",
+  "title": "Оладьи на кефире",
+  "default_servings": 4,
+  "tags": [
+   "завтрак",
+   "выпечка"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "kefir",
+    "qty_per_serving": 125.0,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Кефир — 500 мл"
+   },
+   {
+    "ingredient_id": "wheat_flour",
+    "qty_per_serving": 100.0,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Мука — 2 стакана"
+   },
+   {
+    "ingredient_id": "egg",
+    "qty_per_serving": 0.25,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Яйцо — 1 шт."
+   },
+   {
+    "ingredient_id": "sugar",
+    "qty_per_serving": 7.5,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Сахар — 2 ст. л."
+   },
+   {
+    "ingredient_id": "baking_soda",
+    "qty_per_serving": 0.625,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Сода — 1/2 ч. л."
+   },
+   {
+    "ingredient_id": "salt",
+    "qty_per_serving": 0.125,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Соль — 1 щепотка"
+   },
+   {
+    "ingredient_id": "sunflower_oil",
+    "qty_per_serving": 11.25,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Растительное масло — 3 ст. л."
+   }
+  ]
+ },
+ {
+  "slug": "buckwheat_milk",
+  "title": "Гречневая каша с молоком",
+  "default_servings": 2,
+  "tags": [
+   "завтрак",
+   "вегетарианское"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "buckwheat",
+    "qty_per_serving": 100.0,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Гречка — 1 стакан"
+   },
+   {
+    "ingredient_id": "water",
+    "qty_per_serving": 200.0,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Вода — 2 стакана"
+   },
+   {
+    "ingredient_id": "milk",
+    "qty_per_serving": 100.0,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Молоко — 200 мл"
+   },
+   {
+    "ingredient_id": "butter",
+    "qty_per_serving": 10.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Сливочное масло — 20 г"
+   },
+   {
+    "ingredient_id": "sugar",
+    "qty_per_serving": 7.5,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Сахар — 1 ст. л."
+   },
+   {
+    "ingredient_id": "salt",
+    "qty_per_serving": 0.25,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Соль — 1 щепотка"
+   }
+  ]
+ },
+ {
+  "slug": "avocado_toast",
+  "title": "Тосты с авокадо и яйцом",
+  "default_servings": 2,
+  "tags": [
+   "завтрак",
+   "быстро"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "white_bread",
+    "qty_per_serving": 60.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Хлеб белый — 4 ломтика"
+   },
+   {
+    "ingredient_id": "avocado",
+    "qty_per_serving": 0.5,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Авокадо — 1 шт."
+   },
+   {
+    "ingredient_id": "egg",
+    "qty_per_serving": 1.0,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Яйца — 2 шт."
+   },
+   {
+    "ingredient_id": "lemon_juice",
+    "qty_per_serving": 2.5,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Лимонный сок — 1 ч. л."
+   },
+   {
+    "ingredient_id": "salt",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   },
+   {
+    "ingredient_id": "black_pepper",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   }
+  ]
+ },
+ {
+  "slug": "borsch",
+  "title": "Борщ с говядиной",
+  "default_servings": 6,
+  "tags": [
+   "обед",
+   "суп",
+   "мясо"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "beef",
+    "qty_per_serving": 100.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Говядина на кости — 600 г"
+   },
+   {
+    "ingredient_id": "water",
+    "qty_per_serving": 416.667,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Вода — 2,5 л"
+   },
+   {
+    "ingredient_id": "beet",
+    "qty_per_serving": 0.333,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Свёкла — 2 шт."
+   },
+   {
+    "ingredient_id": "white_cabbage",
+    "qty_per_serving": 50.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Капуста белокочанная — 300 г"
+   },
+   {
+    "ingredient_id": "potato",
+    "qty_per_serving": 0.5,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Картофель — 3 шт."
+   },
+   {
+    "ingredient_id": "carrot",
+    "qty_per_serving": 0.167,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Морковь — 1 шт."
+   },
+   {
+    "ingredient_id": "onion",
+    "qty_per_serving": 0.167,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Лук репчатый — 1 шт."
+   },
+   {
+    "ingredient_id": "tomato_paste",
+    "qty_per_serving": 5.0,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Томатная паста — 2 ст. л."
+   },
+   {
+    "ingredient_id": "garlic",
+    "qty_per_serving": 2.5,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Чеснок — 3 зубчика"
+   },
+   {
+    "ingredient_id": "sunflower_oil",
+    "qty_per_serving": 7.5,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Растительное масло — 3 ст. л."
+   },
+   {
+    "ingredient_id": "bay_leaf",
+    "qty_per_serving": 0.333,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Лавровый лист — 2 шт."
+   },
+   {
+    "ingredient_id": "salt",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль — по вкусу"
+   },
+   {
+    "ingredient_id": "sour_cream",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Сметана — для подачи"
+   }
+  ]
+ },
+ {
+  "slug": "chicken_noodle_soup",
+  "title": "Куриный суп с вермишелью",
+  "default_servings": 6,
+  "tags": [
+   "обед",
+   "суп",
+   "курица"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "chicken_breast",
+    "qty_per_serving": 83.333,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Куриное филе — 500 г"
+   },
+   {
+    "ingredient_id": "water",
+    "qty_per_serving": 416.667,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Вода — 2,5 л"
+   },
+   {
+    "ingredient_id": "potato",
+    "qty_per_serving": 0.5,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Картофель — 3 шт."
+   },
+   {
+    "ingredient_id": "carrot",
+    "qty_per_serving": 0.167,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Морковь — 1 шт."
+   },
+   {
+    "ingredient_id": "onion",
+    "qty_per_serving": 0.167,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Лук репчатый — 1 шт."
+   },
+   {
+    "ingredient_id": "vermicelli",
+    "qty_per_serving": 16.667,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Вермишель — 100 г"
+   },
+   {
+    "ingredient_id": "bay_leaf",
+    "qty_per_serving": 0.167,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Лавровый лист — 1 шт."
+   },
+   {
+    "ingredient_id": "dill",
+    "qty_per_serving": 0.167,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Укроп — 1 пучок"
+   },
+   {
+    "ingredient_id": "salt",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль — по вкусу"
+   }
+  ]
+ },
+ {
+  "slug": "shchi",
+  "title": "Щи из свежей капусты",
+  "default_servings": 6,
+  "tags": [
+   "обед",
+   "суп",
+   "мясо"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "beef",
+    "qty_per_serving": 83.333,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Говядина — 500 г"
+   },
+   {
+    "ingredient_id": "water",
+    "qty_per_serving": 416.667,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Вода — 2,5 л"
+   },
+   {
+    "ingredient_id": "white_cabbage",
+    "qty_per_serving": 66.667,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Капуста белокочанная — 400 г"
+   },
+   {
+    "ingredient_id": "potato",
+    "qty_per_serving": 0.5,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Картофель — 3 шт."
+   },
+   {
+    "ingredient_id": "carrot",
+    "qty_per_serving": 0.167,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Морковь — 1 шт."
+   },
+   {
+    "ingredient_id": "onion",
+    "qty_per_serving": 0.167,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Лук репчатый — 1 шт."
+   },
+   {
+    "ingredient_id": "tomato_paste",
+    "qty_per_serving": 2.5,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Томатная паста — 1 ст. л."
+   },
+   {
+    "ingredient_id": "bay_leaf",
+    "qty_per_serving": 0.333,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Лавровый лист — 2 шт."
+   },
+   {
+    "ingredient_id": "dill",
+    "qty_per_serving": 0.167,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Укроп — 1 пучок"
+   },
+   {
+    "ingredient_id": "sour_cream",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Сметана — для подачи"
+   },
+   {
+    "ingredient_id": "salt",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль — по вкусу"
+   }
+  ]
+ },
+ {
+  "slug": "pea_soup",
+  "title": "Гороховый суп с беконом",
+  "default_servings": 6,
+  "tags": [
+   "обед",
+   "суп"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "split_peas",
+    "qty_per_serving": 50.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Горох колотый — 300 г"
+   },
+   {
+    "ingredient_id": "water",
+    "qty_per_serving": 416.667,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Вода — 2,5 л"
+   },
+   {
+    "ingredient_id": "bacon",
+    "qty_per_serving": 25.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Бекон — 150 г"
+   },
+   {
+    "ingredient_id": "potato",
+    "qty_per_serving": 0.5,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Картофель — 3 шт."
+   },
+   {
+    "ingredient_id": "carrot",
+    "qty_per_serving": 0.167,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Морковь — 1 шт."
+   },
+   {
+    "ingredient_id": "onion",
+    "qty_per_serving": 0.167,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Лук репчатый — 1 шт."
+   },
+   {
+    "ingredient_id": "sunflower_oil",
+    "qty_per_serving": 5.0,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Растительное масло — 2 ст. л."
+   },
+   {
+    "ingredient_id": "bay_leaf",
+    "qty_per_serving": 0.167,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Лавровый лист — 1 шт."
+   },
+   {
+    "ingredient_id": "salt",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль — по вкусу"
+   },
+   {
+    "ingredient_id": "croutons",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Сухарики — для подачи"
+   }
+  ]
+ },
+ {
+  "slug": "mushroom_cream_soup",
+  "title": "Грибной крем-суп",
+  "default_servings": 4,
+  "tags": [
+   "обед",
+   "суп",
+   "грибы",
+   "вегетарианское"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "champignon",
+    "qty_per_serving": 100.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Шампиньоны — 400 г"
+   },
+   {
+    "ingredient_id": "potato",
+    "qty_per_serving": 0.5,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Картофель — 2 шт."
+   },
+   {
+    "ingredient_id": "onion",
+    "qty_per_serving": 0.25,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Лук репчатый — 1 шт."
+   },
+   {
+    "ingredient_id": "cream",
+    "qty_per_serving": 50.0,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Сливки — 200 мл"
+   },
+   {
+    "ingredient_id": "water",
+    "qty_per_serving": 175.0,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Вода — 700 мл"
+   },
+   {
+    "ingredient_id": "butter",
+    "qty_per_serving": 7.5,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Сливочное масло — 30 г"
+   },
+   {
+    "ingredient_id": "garlic",
+    "qty_per_serving": 1.25,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Чеснок — 1 зубчик"
+   },
+   {
+    "ingredient_id": "salt",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   },
+   {
+    "ingredient_id": "black_pepper",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   }
+  ]
+ },
+ {
+  "slug": "rassolnik",
+  "title": "Рассольник с перловкой",
+  "default_servings": 6,
+  "tags": [
+   "обед",
+   "суп",
+   "мясо"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "beef",
+    "qty_per_serving": 66.667,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Говядина — 400 г"
+   },
+   {
+    "ingredient_id": "water",
+    "qty_per_serving": 416.667,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Вода — 2,5 л"
+   },
+   {
+    "ingredient_id": "pearl_barley",
+    "qty_per_serving": 16.667,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Перловка — 100 г"
+   },
+   {
+    "ingredient_id": "pickled_cucumbers",
+    "qty_per_serving": 0.5,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Огурцы маринованные — 3 шт."
+   },
+   {
+    "ingredient_id": "potato",
+    "qty_per_serving": 0.5,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Картофель — 3 шт."
+   },
+   {
+    "ingredient_id": "carrot",
+    "qty_per_serving": 0.167,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Морковь — 1 шт."
+   },
+   {
+    "ingredient_id": "onion",
+    "qty_per_serving": 0.167,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Лук репчатый — 1 шт."
+   },
+   {
+    "ingredient_id": "sunflower_oil",
+    "qty_per_serving": 5.0,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Растительное масло — 2 ст. л."
+   },
+   {
+    "ingredient_id": "bay_leaf",
+    "qty_per_serving": 0.333,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Лавровый лист — 2 шт."
+   },
+   {
+    "ingredient_id": "salt",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль — по вкусу"
+   }
+  ]
+ },
+ {
+  "slug": "veg_soup",
+  "title": "Овощной суп",
+  "default_servings": 4,
+  "tags": [
+   "обед",
+   "суп",
+   "вегетарианское"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "potato",
+    "qty_per_serving": 0.75,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Картофель — 3 шт."
+   },
+   {
+    "ingredient_id": "carrot",
+    "qty_per_serving": 0.25,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Морковь — 1 шт."
+   },
+   {
+    "ingredient_id": "onion",
+    "qty_per_serving": 0.25,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Лук репчатый — 1 шт."
+   },
+   {
+    "ingredient_id": "zucchini",
+    "qty_per_serving": 0.25,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Кабачок — 1 шт."
+   },
+   {
+    "ingredient_id": "tomato",
+    "qty_per_serving": 0.5,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Помидоры — 2 шт."
+   },
+   {
+    "ingredient_id": "water",
+    "qty_per_serving": 375.0,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Вода — 1,5 л"
+   },
+   {
+    "ingredient_id": "sunflower_oil",
+    "qty_per_serving": 7.5,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Растительное масло — 2 ст. л."
+   },
+   {
+    "ingredient_id": "parsley",
+    "qty_per_serving": 0.125,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Петрушка — 1/2 пучка"
+   },
+   {
+    "ingredient_id": "salt",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль — по вкусу"
+   }
+  ]
+ },
+ {
+  "slug": "plov_beef",
+  "title": "Плов с говядиной",
+  "default_servings": 6,
+  "tags": [
+   "ужин",
+   "мясо",
+   "рис"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "beef",
+    "qty_per_serving": 100.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Говядина — 600 г"
+   },
+   {
+    "ingredient_id": "rice_long",
+    "qty_per_serving": 66.667,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Рис длиннозёрный — 2 стакана"
+   },
+   {
+    "ingredient_id": "carrot",
+    "qty_per_serving": 0.333,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Морковь — 2 шт."
+   },
+   {
+    "ingredient_id": "onion",
+    "qty_per_serving": 0.333,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Лук репчатый — 2 шт."
+   },
+   {
+    "ingredient_id": "garlic",
+    "qty_per_serving": 0.167,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Чеснок — 1 головка"
+   },
+   {
+    "ingredient_id": "sunflower_oil",
+    "qty_per_serving": 16.667,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Растительное масло — 100 мл"
+   },
+   {
+    "ingredient_id": "cumin",
+    "qty_per_serving": 0.833,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Зира — 1 ч. л."
+   },
+   {
+    "ingredient_id": "barberry",
+    "qty_per_serving": 2.5,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Барбарис — 1 ст. л."
+   },
+   {
+    "ingredient_id": "water",
+    "qty_per_serving": 100.0,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Вода — 3 стакана"
+   },
+   {
+    "ingredient_id": "salt",
+    "qty_per_serving": 1.667,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Соль — 2 ч. л."
+   }
+  ]
+ },
+ {
+  "slug": "buckwheat_mushrooms",
+  "title": "Гречка с грибами",
+  "default_servings": 4,
+  "tags": [
+   "ужин",
+   "грибы",
+   "вегетарианское"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "buckwheat",
+    "qty_per_serving": 50.0,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Гречка — 1 стакан"
+   },
+   {
+    "ingredient_id": "champignon",
+    "qty_per_serving": 75.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Шампиньоны — 300 г"
+   },
+   {
+    "ingredient_id": "onion",
+    "qty_per_serving": 0.25,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Лук репчатый — 1 шт."
+   },
+   {
+    "ingredient_id": "butter",
+    "qty_per_serving": 7.5,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Сливочное масло — 30 г"
+   },
+   {
+    "ingredient_id": "water",
+    "qty_per_serving": 100.0,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Вода — 2 стакана"
+   },
+   {
+    "ingredient_id": "salt",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   },
+   {
+    "ingredient_id": "black_pepper",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   }
+  ]
+ },
+ {
+  "slug": "mashed_potato_cutlets",
+  "title": "Котлеты с картофельным пюре",
+  "default_servings": 4,
+  "tags": [
+   "ужин",
+   "мясо"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "minced_mixed",
+    "qty_per_serving": 125.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Фарш — 500 г"
+   },
+   {
+    "ingredient_id": "onion",
+    "qty_per_serving": 0.25,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Лук репчатый — 1 шт."
+   },
+   {
+    "ingredient_id": "white_bread",
+    "qty_per_serving": 15.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Хлеб белый — 2 ломтика"
+   },
+   {
+    "ingredient_id": "milk",
+    "qty_per_serving": 12.5,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Молоко — 50 мл"
+   },
+   {
+    "ingredient_id": "egg",
+    "qty_per_serving": 0.25,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Яйцо — 1 шт."
+   },
+   {
+    "ingredient_id": "breadcrumbs",
+    "qty_per_serving": 11.25,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Панировочные сухари — 3 ст. л."
+   },
+   {
+    "ingredient_id": "sunflower_oil",
+    "qty_per_serving": 11.25,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Растительное масло — 3 ст. л."
+   },
+   {
+    "ingredient_id": "potato",
+    "qty_per_serving": 250.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Картофель — 1 кг"
+   },
+   {
+    "ingredient_id": "milk",
+    "qty_per_serving": 37.5,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Молоко — 150 мл"
+   },
+   {
+    "ingredient_id": "butter",
+    "qty_per_serving": 12.5,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Сливочное масло — 50 г"
+   },
+   {
+    "ingredient_id": "salt",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   },
+   {
+    "ingredient_id": "black_pepper",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   }
+  ]
+ },
+ {
+  "slug": "navy_pasta",
+  "title": "Макароны по-флотски",
+  "default_servings": 4,
+  "tags": [
+   "ужин",
+   "быстро",
+   "мясо"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "pasta",
+    "qty_per_serving": 75.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Макароны — 300 г"
+   },
+   {
+    "ingredient_id": "minced_mixed",
+    "qty_per_serving": 100.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Фарш — 400 г"
+   },
+   {
+    "ingredient_id": "onion",
+    "qty_per_serving": 0.25,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Лук репчатый — 1 шт."
+   },
+   {
+    "ingredient_id": "sunflower_oil",
+    "qty_per_serving": 7.5,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Растительное масло — 2 ст. л."
+   },
+   {
+    "ingredient_id": "salt",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   },
+   {
+    "ingredient_id": "black_pepper",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   }
+  ]
+ },
+ {
+  "slug": "bolognese",
+  "title": "Спагетти болоньезе",
+  "default_servings": 4,
+  "tags": [
+   "ужин",
+   "паста",
+   "мясо"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "spaghetti",
+    "qty_per_serving": 100.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Спагетти — 400 г"
+   },
+   {
+    "ingredient_id": "minced_beef",
+    "qty_per_serving": 125.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Фарш говяжий — 500 г"
+   },
+   {
+    "ingredient_id": "canned_tomatoes",
+    "qty_per_serving": 0.25,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Томаты в собственном соку — 1 банка"
+   },
+   {
+    "ingredient_id": "onion",
+    "qty_per_serving": 0.25,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Лук репчатый — 1 шт."
+   },
+   {
+    "ingredient_id": "carrot",
+    "qty_per_serving": 0.25,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Морковь — 1 шт."
+   },
+   {
+    "ingredient_id": "garlic",
+    "qty_per_serving": 2.5,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Чеснок — 2 зубчика"
+   },
+   {
+    "ingredient_id": "red_wine",
+    "qty_per_serving": 25.0,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Красное вино — полстакана"
+   },
+   {
+    "ingredient_id": "olive_oil",
+    "qty_per_serving": 7.5,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Оливковое масло — 2 ст. л."
+   },
+   {
+    "ingredient_id": "parmesan",
+    "qty_per_serving": 12.5,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Пармезан — 50 г"
+   },
+   {
+    "ingredient_id": "salt",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   },
+   {
+    "ingredient_id": "black_pepper",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   }
+  ]
+ },
+ {
+  "slug": "carbonara",
+  "title": "Паста карбонара",
+  "default_servings": 4,
+  "tags": [
+   "ужин",
+   "паста",
+   "быстро"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "spaghetti",
+    "qty_per_serving": 100.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Спагетти — 400 г"
+   },
+   {
+    "ingredient_id": "bacon",
+    "qty_per_serving": 50.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Бекон — 200 г"
+   },
+   {
+    "ingredient_id": "egg_yolk",
+    "qty_per_serving": 0.75,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Желтки — 3 шт."
+   },
+   {
+    "ingredient_id": "egg",
+    "qty_per_serving": 0.25,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Яйца — 1 шт."
+   },
+   {
+    "ingredient_id": "parmesan",
+    "qty_per_serving": 12.5,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Пармезан — 50 г"
+   },
+   {
+    "ingredient_id": "butter",
+    "qty_per_serving": 7.5,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Сливочное масло — 2 ст. л."
+   },
+   {
+    "ingredient_id": "garlic",
+    "qty_per_serving": 2.5,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Чеснок — 2 зубчика"
+   },
+   {
+    "ingredient_id": "salt",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   },
+   {
+    "ingredient_id": "black_pepper",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   }
+  ]
+ },
+ {
+  "slug": "chicken_potatoes",
+  "title": "Курица с картофелем в духовке",
+  "default_servings": 4,
+  "tags": [
+   "ужин",
+   "курица",
+   "духовка"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "chicken_thigh",
+    "qty_per_serving": 2.0,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Куриные бёдра — 8 шт."
+   },
+   {
+    "ingredient_id": "potato",
+    "qty_per_serving": 200.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Картофель — 800 г"
+   },
+   {
+    "ingredient_id": "onion",
+    "qty_per_serving": 0.25,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Лук репчатый — 1 шт."
+   },
+   {
+    "ingredient_id": "garlic",
+    "qty_per_serving": 5.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Чеснок — 4 зубчика"
+   },
+   {
+    "ingredient_id": "sunflower_oil",
+    "qty_per_serving": 11.25,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Растительное масло — 3 ст. л."
+   },
+   {
+    "ingredient_id": "paprika",
+    "qty_per_serving": 1.25,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Паприка — 1 ч. л."
+   },
+   {
+    "ingredient_id": "salt",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   },
+   {
+    "ingredient_id": "black_pepper",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   }
+  ]
+ },
+ {
+  "slug": "goulash_buckwheat",
+  "title": "Гуляш из говядины с гречкой",
+  "default_servings": 4,
+  "tags": [
+   "ужин",
+   "мясо"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "beef",
+    "qty_per_serving": 175.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Говядина — 700 г"
+   },
+   {
+    "ingredient_id": "onion",
+    "qty_per_serving": 0.5,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Лук репчатый — 2 шт."
+   },
+   {
+    "ingredient_id": "tomato_paste",
+    "qty_per_serving": 7.5,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Томатная паста — 2 ст. л."
+   },
+   {
+    "ingredient_id": "paprika",
+    "qty_per_serving": 1.25,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Паприка — 1 ч. л."
+   },
+   {
+    "ingredient_id": "wheat_flour",
+    "qty_per_serving": 3.75,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Мука — 1 ст. л."
+   },
+   {
+    "ingredient_id": "water",
+    "qty_per_serving": 125.0,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Вода — 500 мл"
+   },
+   {
+    "ingredient_id": "sunflower_oil",
+    "qty_per_serving": 11.25,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Растительное масло — 3 ст. л."
+   },
+   {
+    "ingredient_id": "salt",
+    "qty_per_serving": 1.25,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Соль — 1 ч. л."
+   },
+   {
+    "ingredient_id": "buckwheat",
+    "qty_per_serving": 50.0,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Гречка — 1 стакан"
+   }
+  ]
+ },
+ {
+  "slug": "baked_salmon",
+  "title": "Запечённая сёмга с лимоном",
+  "default_servings": 2,
+  "tags": [
+   "ужин",
+   "рыба",
+   "духовка",
+   "быстро"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "salmon",
+    "qty_per_serving": 200.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Филе сёмги — 400 г"
+   },
+   {
+    "ingredient_id": "lemon",
+    "qty_per_serving": 0.5,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Лимон — 1 шт."
+   },
+   {
+    "ingredient_id": "olive_oil",
+    "qty_per_serving": 7.5,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Оливковое масло — 1 ст. л."
+   },
+   {
+    "ingredient_id": "dill",
+    "qty_per_serving": 3.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Укроп — 3 веточки"
+   },
+   {
+    "ingredient_id": "salt",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   },
+   {
+    "ingredient_id": "black_pepper",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   }
+  ]
+ },
+ {
+  "slug": "chicken_cutlets",
+  "title": "Куриные котлеты",
+  "default_servings": 4,
+  "tags": [
+   "ужин",
+   "курица"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "minced_chicken",
+    "qty_per_serving": 150.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Фарш куриный — 600 г"
+   },
+   {
+    "ingredient_id": "onion",
+    "qty_per_serving": 0.25,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Лук репчатый — 1 шт."
+   },
+   {
+    "ingredient_id": "egg",
+    "qty_per_serving": 0.25,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Яйцо — 1 шт."
+   },
+   {
+    "ingredient_id": "white_bread",
+    "qty_per_serving": 15.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Хлеб белый — 2 ломтика"
+   },
+   {
+    "ingredient_id": "milk",
+    "qty_per_serving": 12.5,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Молоко — 50 мл"
+   },
+   {
+    "ingredient_id": "sunflower_oil",
+    "qty_per_serving": 11.25,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Растительное масло — 3 ст. л."
+   },
+   {
+    "ingredient_id": "salt",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   },
+   {
+    "ingredient_id": "black_pepper",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   }
+  ]
+ },
+ {
+  "slug": "meatballs_tomato",
+  "title": "Тефтели в томатном соусе",
+  "default_servings": 4,
+  "tags": [
+   "ужин",
+   "мясо"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "minced_mixed",
+    "qty_per_serving": 125.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Фарш — 500 г"
+   },
+   {
+    "ingredient_id": "rice",
+    "qty_per_serving": 11.25,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Рис — 3 ст. л."
+   },
+   {
+    "ingredient_id": "onion",
+    "qty_per_serving": 0.25,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Лук репчатый — 1 шт."
+   },
+   {
+    "ingredient_id": "egg",
+    "qty_per_serving": 0.25,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Яйцо — 1 шт."
+   },
+   {
+    "ingredient_id": "tomato_paste",
+    "qty_per_serving": 7.5,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Томатная паста — 2 ст. л."
+   },
+   {
+    "ingredient_id": "water",
+    "qty_per_serving": 100.0,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Вода — 400 мл"
+   },
+   {
+    "ingredient_id": "wheat_flour",
+    "qty_per_serving": 7.5,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Мука — 2 ст. л."
+   },
+   {
+    "ingredient_id": "sunflower_oil",
+    "qty_per_serving": 7.5,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Растительное масло — 2 ст. л."
+   },
+   {
+    "ingredient_id": "salt",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   },
+   {
+    "ingredient_id": "black_pepper",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   }
+  ]
+ },
+ {
+  "slug": "zharkoe",
+  "title": "Жаркое по-домашнему",
+  "default_servings": 4,
+  "tags": [
+   "ужин",
+   "мясо"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "pork",
+    "qty_per_serving": 150.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Свинина — 600 г"
+   },
+   {
+    "ingredient_id": "potato",
+    "qty_per_serving": 200.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Картофель — 800 г"
+   },
+   {
+    "ingredient_id": "onion",
+    "qty_per_serving": 0.5,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Лук репчатый — 2 шт."
+   },
+   {
+    "ingredient_id": "carrot",
+    "qty_per_serving": 0.25,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Морковь — 1 шт."
+   },
+   {
+    "ingredient_id": "sunflower_oil",
+    "qty_per_serving": 11.25,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Растительное масло — 3 ст. л."
+   },
+   {
+    "ingredient_id": "bay_leaf",
+    "qty_per_serving": 0.5,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Лавровый лист — 2 шт."
+   },
+   {
+    "ingredient_id": "water",
+    "qty_per_serving": 50.0,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Вода — 200 мл"
+   },
+   {
+    "ingredient_id": "salt",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   },
+   {
+    "ingredient_id": "black_pepper",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   }
+  ]
+ },
+ {
+  "slug": "chicken_rice_veg",
+  "title": "Рис с курицей и овощами",
+  "default_servings": 4,
+  "tags": [
+   "ужин",
+   "курица",
+   "рис"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "chicken_breast",
+    "qty_per_serving": 125.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Куриное филе — 500 г"
+   },
+   {
+    "ingredient_id": "rice",
+    "qty_per_serving": 50.0,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Рис — 1 стакан"
+   },
+   {
+    "ingredient_id": "bell_pepper",
+    "qty_per_serving": 0.25,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Болгарский перец — 1 шт."
+   },
+   {
+    "ingredient_id": "carrot",
+    "qty_per_serving": 0.25,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Морковь — 1 шт."
+   },
+   {
+    "ingredient_id": "onion",
+    "qty_per_serving": 0.25,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Лук репчатый — 1 шт."
+   },
+   {
+    "ingredient_id": "frozen_peas",
+    "qty_per_serving": 25.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Горошек зелёный замороженный — 100 г"
+   },
+   {
+    "ingredient_id": "sunflower_oil",
+    "qty_per_serving": 7.5,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Растительное масло — 2 ст. л."
+   },
+   {
+    "ingredient_id": "water",
+    "qty_per_serving": 100.0,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Вода — 2 стакана"
+   },
+   {
+    "ingredient_id": "salt",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   },
+   {
+    "ingredient_id": "black_pepper",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   }
+  ]
+ },
+ {
+  "slug": "veg_stew",
+  "title": "Овощное рагу",
+  "default_servings": 4,
+  "tags": [
+   "ужин",
+   "овощи",
+   "вегетарианское"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "zucchini",
+    "qty_per_serving": 0.25,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Кабачок — 1 шт."
+   },
+   {
+    "ingredient_id": "eggplant",
+    "qty_per_serving": 0.25,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Баклажан — 1 шт."
+   },
+   {
+    "ingredient_id": "tomato",
+    "qty_per_serving": 0.75,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Помидоры — 3 шт."
+   },
+   {
+    "ingredient_id": "bell_pepper",
+    "qty_per_serving": 0.5,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Болгарский перец — 2 шт."
+   },
+   {
+    "ingredient_id": "onion",
+    "qty_per_serving": 0.25,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Лук репчатый — 1 шт."
+   },
+   {
+    "ingredient_id": "garlic",
+    "qty_per_serving": 3.75,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Чеснок — 3 зубчика"
+   },
+   {
+    "ingredient_id": "sunflower_oil",
+    "qty_per_serving": 11.25,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Растительное масло — 3 ст. л."
+   },
+   {
+    "ingredient_id": "greens_mix",
+    "qty_per_serving": 0.25,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Зелень — 1 пучок"
+   },
+   {
+    "ingredient_id": "salt",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   },
+   {
+    "ingredient_id": "black_pepper",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   }
+  ]
+ },
+ {
+  "slug": "potato_casserole_meat",
+  "title": "Картофельная запеканка с фаршем",
+  "default_servings": 6,
+  "tags": [
+   "ужин",
+   "духовка",
+   "мясо"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "potato",
+    "qty_per_serving": 166.667,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Картофель — 1 кг"
+   },
+   {
+    "ingredient_id": "minced_mixed",
+    "qty_per_serving": 83.333,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Фарш — 500 г"
+   },
+   {
+    "ingredient_id": "onion",
+    "qty_per_serving": 0.167,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Лук репчатый — 1 шт."
+   },
+   {
+    "ingredient_id": "carrot",
+    "qty_per_serving": 0.167,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Морковь — 1 шт."
+   },
+   {
+    "ingredient_id": "milk",
+    "qty_per_serving": 25.0,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Молоко — 150 мл"
+   },
+   {
+    "ingredient_id": "butter",
+    "qty_per_serving": 8.333,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Сливочное масло — 50 г"
+   },
+   {
+    "ingredient_id": "hard_cheese",
+    "qty_per_serving": 16.667,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Сыр — 100 г"
+   },
+   {
+    "ingredient_id": "breadcrumbs",
+    "qty_per_serving": 5.0,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Панировочные сухари — 2 ст. л."
+   },
+   {
+    "ingredient_id": "sunflower_oil",
+    "qty_per_serving": 5.0,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Растительное масло — 2 ст. л."
+   },
+   {
+    "ingredient_id": "salt",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   },
+   {
+    "ingredient_id": "black_pepper",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   }
+  ]
+ },
+ {
+  "slug": "lasagna",
+  "title": "Лазанья",
+  "default_servings": 6,
+  "tags": [
+   "ужин",
+   "паста",
+   "духовка",
+   "мясо"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "lasagna_sheets",
+    "qty_per_serving": 41.667,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Листы для лазаньи — 250 г"
+   },
+   {
+    "ingredient_id": "minced_beef",
+    "qty_per_serving": 83.333,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Фарш говяжий — 500 г"
+   },
+   {
+    "ingredient_id": "canned_tomatoes",
+    "qty_per_serving": 0.167,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Томаты в собственном соку — 1 банка"
+   },
+   {
+    "ingredient_id": "onion",
+    "qty_per_serving": 0.167,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Лук репчатый — 1 шт."
+   },
+   {
+    "ingredient_id": "garlic",
+    "qty_per_serving": 1.667,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Чеснок — 2 зубчика"
+   },
+   {
+    "ingredient_id": "milk",
+    "qty_per_serving": 83.333,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Молоко — 500 мл"
+   },
+   {
+    "ingredient_id": "butter",
+    "qty_per_serving": 8.333,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Сливочное масло — 50 г"
+   },
+   {
+    "ingredient_id": "wheat_flour",
+    "qty_per_serving": 7.5,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Мука — 3 ст. л."
+   },
+   {
+    "ingredient_id": "hard_cheese",
+    "qty_per_serving": 25.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Сыр — 150 г"
+   },
+   {
+    "ingredient_id": "olive_oil",
+    "qty_per_serving": 5.0,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Оливковое масло — 2 ст. л."
+   },
+   {
+    "ingredient_id": "nutmeg",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Мускатный орех — на кончике ножа"
+   },
+   {
+    "ingredient_id": "salt",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   },
+   {
+    "ingredient_id": "black_pepper",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   }
+  ]
+ },
+ {
+  "slug": "stuffed_cabbage",
+  "title": "Голубцы",
+  "default_servings": 6,
+  "tags": [
+   "ужин",
+   "мясо"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "white_cabbage",
+    "qty_per_serving": 0.167,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Капуста белокочанная — 1 кочан"
+   },
+   {
+    "ingredient_id": "minced_mixed",
+    "qty_per_serving": 100.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Фарш — 600 г"
+   },
+   {
+    "ingredient_id": "rice",
+    "qty_per_serving": 16.667,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Рис — 1/2 стакана"
+   },
+   {
+    "ingredient_id": "onion",
+    "qty_per_serving": 0.167,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Лук репчатый — 1 шт."
+   },
+   {
+    "ingredient_id": "carrot",
+    "qty_per_serving": 0.167,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Морковь — 1 шт."
+   },
+   {
+    "ingredient_id": "tomato_paste",
+    "qty_per_serving": 5.0,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Томатная паста — 2 ст. л."
+   },
+   {
+    "ingredient_id": "sour_cream",
+    "qty_per_serving": 7.5,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Сметана — 3 ст. л."
+   },
+   {
+    "ingredient_id": "water",
+    "qty_per_serving": 83.333,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Вода — 500 мл"
+   },
+   {
+    "ingredient_id": "salt",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   },
+   {
+    "ingredient_id": "black_pepper",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   }
+  ]
+ },
+ {
+  "slug": "chicken_cream_pasta",
+  "title": "Курица в сливочном соусе с макаронами",
+  "default_servings": 4,
+  "tags": [
+   "ужин",
+   "курица",
+   "паста"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "chicken_breast",
+    "qty_per_serving": 125.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Куриное филе — 500 г"
+   },
+   {
+    "ingredient_id": "pasta",
+    "qty_per_serving": 75.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Макароны — 300 г"
+   },
+   {
+    "ingredient_id": "cream",
+    "qty_per_serving": 50.0,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Сливки — 200 мл"
+   },
+   {
+    "ingredient_id": "onion",
+    "qty_per_serving": 0.25,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Лук репчатый — 1 шт."
+   },
+   {
+    "ingredient_id": "garlic",
+    "qty_per_serving": 2.5,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Чеснок — 2 зубчика"
+   },
+   {
+    "ingredient_id": "butter",
+    "qty_per_serving": 7.5,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Сливочное масло — 30 г"
+   },
+   {
+    "ingredient_id": "hard_cheese",
+    "qty_per_serving": 12.5,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Сыр — 50 г"
+   },
+   {
+    "ingredient_id": "salt",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   },
+   {
+    "ingredient_id": "black_pepper",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   }
+  ]
+ },
+ {
+  "slug": "greek_salad",
+  "title": "Греческий салат",
+  "default_servings": 2,
+  "tags": [
+   "салат",
+   "быстро",
+   "вегетарианское"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "tomato",
+    "qty_per_serving": 1.5,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Помидоры — 3 шт."
+   },
+   {
+    "ingredient_id": "cucumber",
+    "qty_per_serving": 1.0,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Огурцы — 2 шт."
+   },
+   {
+    "ingredient_id": "bell_pepper",
+    "qty_per_serving": 0.5,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Болгарский перец — 1 шт."
+   },
+   {
+    "ingredient_id": "red_onion",
+    "qty_per_serving": 0.25,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Красный лук — 1/2 шт."
+   },
+   {
+    "ingredient_id": "feta",
+    "qty_per_serving": 75.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Сыр фета — 150 г"
+   },
+   {
+    "ingredient_id": "olives_black",
+    "qty_per_serving": 0.5,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Маслины — 1 банка"
+   },
+   {
+    "ingredient_id": "olive_oil",
+    "qty_per_serving": 22.5,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Оливковое масло — 3 ст. л."
+   },
+   {
+    "ingredient_id": "oregano_dried",
+    "qty_per_serving": 2.5,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Орегано — 1 ч. л."
+   }
+  ]
+ },
+ {
+  "slug": "olivier",
+  "title": "Салат оливье",
+  "default_servings": 6,
+  "tags": [
+   "салат",
+   "праздничное"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "boiled_sausage",
+    "qty_per_serving": 50.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Колбаса варёная — 300 г"
+   },
+   {
+    "ingredient_id": "potato",
+    "qty_per_serving": 0.5,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Картофель — 3 шт."
+   },
+   {
+    "ingredient_id": "carrot",
+    "qty_per_serving": 0.333,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Морковь — 2 шт."
+   },
+   {
+    "ingredient_id": "egg",
+    "qty_per_serving": 0.667,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Яйца — 4 шт."
+   },
+   {
+    "ingredient_id": "pickled_cucumbers",
+    "qty_per_serving": 0.667,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Огурцы маринованные — 4 шт."
+   },
+   {
+    "ingredient_id": "green_peas",
+    "qty_per_serving": 0.167,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Горошек зелёный консервированный — 1 банка"
+   },
+   {
+    "ingredient_id": "mayonnaise",
+    "qty_per_serving": 10.0,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Майонез — 4 ст. л."
+   },
+   {
+    "ingredient_id": "salt",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   },
+   {
+    "ingredient_id": "black_pepper",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   }
+  ]
+ },
+ {
+  "slug": "caesar_chicken",
+  "title": "Салат Цезарь с курицей",
+  "default_servings": 2,
+  "tags": [
+   "салат",
+   "курица"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "chicken_breast",
+    "qty_per_serving": 125.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Куриное филе — 250 г"
+   },
+   {
+    "ingredient_id": "romaine",
+    "qty_per_serving": 0.5,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Салат романо — 1 кочан"
+   },
+   {
+    "ingredient_id": "parmesan",
+    "qty_per_serving": 20.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Пармезан — 40 г"
+   },
+   {
+    "ingredient_id": "croutons",
+    "qty_per_serving": 50.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Сухарики — 100 г"
+   },
+   {
+    "ingredient_id": "cherry_tomato",
+    "qty_per_serving": 75.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Помидоры черри — 150 г"
+   },
+   {
+    "ingredient_id": "mayonnaise",
+    "qty_per_serving": 22.5,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Майонез — 3 ст. л."
+   },
+   {
+    "ingredient_id": "garlic",
+    "qty_per_serving": 2.5,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Чеснок — 1 зубчик"
+   },
+   {
+    "ingredient_id": "sunflower_oil",
+    "qty_per_serving": 7.5,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Растительное масло — 1 ст. л."
+   }
+  ]
+ },
+ {
+  "slug": "vinaigrette",
+  "title": "Винегрет",
+  "default_servings": 4,
+  "tags": [
+   "салат",
+   "вегетарианское"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "beet",
+    "qty_per_serving": 0.5,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Свёкла — 2 шт."
+   },
+   {
+    "ingredient_id": "potato",
+    "qty_per_serving": 0.5,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Картофель — 2 шт."
+   },
+   {
+    "ingredient_id": "carrot",
+    "qty_per_serving": 0.25,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Морковь — 1 шт."
+   },
+   {
+    "ingredient_id": "pickled_cucumbers",
+    "qty_per_serving": 0.5,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Огурцы маринованные — 2 шт."
+   },
+   {
+    "ingredient_id": "sauerkraut",
+    "qty_per_serving": 25.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Капуста квашеная — 100 г"
+   },
+   {
+    "ingredient_id": "onion",
+    "qty_per_serving": 0.125,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Лук репчатый — 1/2 шт."
+   },
+   {
+    "ingredient_id": "sunflower_oil",
+    "qty_per_serving": 11.25,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Растительное масло — 3 ст. л."
+   }
+  ]
+ },
+ {
+  "slug": "cabbage_salad",
+  "title": "Салат из свежей капусты",
+  "default_servings": 4,
+  "tags": [
+   "салат",
+   "быстро",
+   "вегетарианское"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "white_cabbage",
+    "qty_per_serving": 100.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Капуста белокочанная — 400 г"
+   },
+   {
+    "ingredient_id": "carrot",
+    "qty_per_serving": 0.25,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Морковь — 1 шт."
+   },
+   {
+    "ingredient_id": "dill",
+    "qty_per_serving": 0.125,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Укроп — 1/2 пучка"
+   },
+   {
+    "ingredient_id": "vinegar",
+    "qty_per_serving": 3.75,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Уксус — 1 ст. л."
+   },
+   {
+    "ingredient_id": "sunflower_oil",
+    "qty_per_serving": 7.5,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Растительное масло — 2 ст. л."
+   },
+   {
+    "ingredient_id": "sugar",
+    "qty_per_serving": 1.25,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Сахар — 1 ч. л."
+   },
+   {
+    "ingredient_id": "salt",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль — по вкусу"
+   }
+  ]
+ },
+ {
+  "slug": "tuna_bean_salad",
+  "title": "Салат с тунцом и фасолью",
+  "default_servings": 2,
+  "tags": [
+   "салат",
+   "быстро",
+   "рыба"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "canned_tuna",
+    "qty_per_serving": 0.5,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Тунец консервированный — 1 банка"
+   },
+   {
+    "ingredient_id": "canned_beans",
+    "qty_per_serving": 0.5,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Фасоль консервированная — 1 банка"
+   },
+   {
+    "ingredient_id": "red_onion",
+    "qty_per_serving": 0.25,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Красный лук — 1/2 шт."
+   },
+   {
+    "ingredient_id": "cherry_tomato",
+    "qty_per_serving": 75.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Помидоры черри — 150 г"
+   },
+   {
+    "ingredient_id": "olive_oil",
+    "qty_per_serving": 15.0,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Оливковое масло — 2 ст. л."
+   },
+   {
+    "ingredient_id": "lemon_juice",
+    "qty_per_serving": 7.5,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Лимонный сок — 1 ст. л."
+   },
+   {
+    "ingredient_id": "salt",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   },
+   {
+    "ingredient_id": "black_pepper",
+    "qty_per_serving": 0.0,
+    "unit": "g",
+    "optional": true,
+    "raw_text": "Соль, перец — по вкусу"
+   }
+  ]
+ },
+ {
+  "slug": "charlotte",
+  "title": "Шарлотка с яблоками",
+  "default_servings": 6,
+  "tags": [
+   "десерт",
+   "выпечка",
+   "духовка"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "apple",
+    "qty_per_serving": 0.667,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Яблоки — 4 шт."
+   },
+   {
+    "ingredient_id": "egg",
+    "qty_per_serving": 0.5,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Яйца — 3 шт."
+   },
+   {
+    "ingredient_id": "sugar",
+    "qty_per_serving": 33.333,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Сахар — 1 стакан"
+   },
+   {
+    "ingredient_id": "wheat_flour",
+    "qty_per_serving": 33.333,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Мука — 1 стакан"
+   },
+   {
+    "ingredient_id": "cinnamon",
+    "qty_per_serving": 0.833,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Корица — 1 ч. л."
+   },
+   {
+    "ingredient_id": "butter",
+    "qty_per_serving": 3.333,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Сливочное масло — 20 г"
+   }
+  ]
+ },
+ {
+  "slug": "banana_smoothie",
+  "title": "Банановый смузи с клубникой",
+  "default_servings": 2,
+  "tags": [
+   "завтрак",
+   "десерт",
+   "быстро",
+   "вегетарианское"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "banana",
+    "qty_per_serving": 1.0,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Банан — 2 шт."
+   },
+   {
+    "ingredient_id": "strawberry",
+    "qty_per_serving": 75.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Клубника — 150 г"
+   },
+   {
+    "ingredient_id": "yogurt",
+    "qty_per_serving": 100.0,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Йогурт натуральный — 200 мл"
+   },
+   {
+    "ingredient_id": "honey",
+    "qty_per_serving": 7.5,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Мёд — 1 ст. л."
+   },
+   {
+    "ingredient_id": "ice",
+    "qty_per_serving": 30.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Лёд — 6 кубиков"
+   }
+  ]
+ },
+ {
+  "slug": "cottage_cheese_casserole",
+  "title": "Творожная запеканка с манкой",
+  "default_servings": 4,
+  "tags": [
+   "завтрак",
+   "десерт",
+   "духовка",
+   "творог"
+  ],
+  "status": "confirmed",
+  "ingredients": [
+   {
+    "ingredient_id": "cottage_cheese",
+    "qty_per_serving": 125.0,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Творог — 500 г"
+   },
+   {
+    "ingredient_id": "egg",
+    "qty_per_serving": 0.5,
+    "unit": "pcs",
+    "optional": false,
+    "raw_text": "Яйца — 2 шт."
+   },
+   {
+    "ingredient_id": "semolina",
+    "qty_per_serving": 11.25,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Манная крупа — 3 ст. л."
+   },
+   {
+    "ingredient_id": "sugar",
+    "qty_per_serving": 11.25,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Сахар — 3 ст. л."
+   },
+   {
+    "ingredient_id": "sour_cream",
+    "qty_per_serving": 7.5,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Сметана — 2 ст. л."
+   },
+   {
+    "ingredient_id": "vanilla_sugar",
+    "qty_per_serving": 1.25,
+    "unit": "ml",
+    "optional": false,
+    "raw_text": "Ванильный сахар — 1 ч. л."
+   },
+   {
+    "ingredient_id": "butter",
+    "qty_per_serving": 2.5,
+    "unit": "g",
+    "optional": false,
+    "raw_text": "Сливочное масло — 10 г"
+   }
+  ]
+ }
+]
