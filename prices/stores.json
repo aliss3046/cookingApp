@@ -144,6 +144,9 @@
         ],
         "note": "Консервы: овощи и грибы"
       }
+    ],
+    "sources": [
+      "http"
     ]
   },
   "dixy": {
@@ -461,7 +464,9 @@
         "note": "Замороженные фрукты и ягоды"
       }
     ],
-    "source": "saved",
-    "pages_dir": "prices/pages/dixy"
+    "pages_dir": "prices/pages/dixy",
+    "sources": [
+      "saved"
+    ]
   }
 }

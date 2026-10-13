@@ -9,6 +9,7 @@ from typing import Any, Final
 from urllib.parse import urlsplit
 
 from prices.politeness import MAX_DAILY_LIMIT, MIN_DELAY_FLOOR_S
+from prices.sources import source_names
 
 DEFAULT_PATH: Final = Path(__file__).resolve().parent / "stores.json"
 
@@ -19,9 +20,6 @@ class ProfileError(ValueError):
 
 class StoreDisabled(Exception):
     """Магнит или другой магазин не включён владельцем проекта: сбор запрещён."""
-
-
-SOURCES = frozenset({"http", "saved"})
 
 
 @dataclass(frozen=True)
@@ -50,7 +48,7 @@ class StoreProfile:
     daily_request_limit: int
     categories: tuple[CategorySpec, ...]
     notes: str = ""
-    source: str = "http"  # откуда страницы: http (по сети, вежливо) или saved (папка pages_dir)
+    sources: tuple[str, ...] = ("http",)  # источники страниц по порядку, см. prices/sources.py
     pages_dir: str | None = None
 
     def require_enabled(self) -> None:
@@ -100,11 +98,13 @@ def parse_profile(code: str, raw: dict[str, Any]) -> StoreProfile:
             f"{code}: магазин включён без записи approval (кто, когда, на каком основании)"
         )
 
-    source = raw.get("source", "http")
-    if source not in SOURCES:
-        raise ProfileError(f"{code}: source должен быть один из {sorted(SOURCES)}, а не {source!r}")
-    if source == "saved" and not raw.get("pages_dir"):
-        raise ProfileError(f"{code}: для source=saved нужен pages_dir")
+    sources = tuple(raw.get("sources", ("http",)))
+    unknown = [x for x in sources if x not in source_names()]
+    if not sources or unknown:
+        raise ProfileError(
+            f"{code}: sources должен быть непустым списком из {sorted(source_names())}, "
+            f"неизвестно: {unknown}"
+        )
 
     return StoreProfile(
         code=code,
@@ -116,7 +116,7 @@ def parse_profile(code: str, raw: dict[str, Any]) -> StoreProfile:
         daily_request_limit=limit,
         categories=tuple(_parse_category(code, parts.netloc, c) for c in raw.get("categories", ())),
         notes=raw.get("notes", ""),
-        source=source,
+        sources=sources,
         pages_dir=raw.get("pages_dir"),
     )
 

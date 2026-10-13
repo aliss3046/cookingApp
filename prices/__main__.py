@@ -20,14 +20,13 @@ from pathlib import Path
 from typing import Any, TextIO
 
 from importers.directory import Directory, load_directory
-from prices.fetcher import PoliteFetcher
 from prices.listing import extract_categories, extract_offers
 from prices.matching import Match, Matcher
 from prices.memory_store import MemoryPriceStore
 from prices.normalize import NormalizedOffer, PriceParseError, normalize_offer
-from prices.pipeline import Fetcher, run_store
+from prices.pipeline import run_store
 from prices.profile import ProfileError, StoreDisabled, StoreProfile, load_profiles
-from prices.saved_pages import SavedPages
+from prices.sources import build_fetcher
 
 EXIT_OK = 0
 EXIT_FAILED = 1
@@ -102,20 +101,12 @@ def _categories(args: argparse.Namespace, out: TextIO) -> int:
     return EXIT_OK
 
 
-def _fetcher(profile: StoreProfile, pages_dir: str | None) -> Fetcher:
-    """Один интерфейс `get(url)`; способ добычи страницы выбирает профиль магазина."""
-    folder = pages_dir or (profile.pages_dir if profile.source == "saved" else None)
-    if folder:
-        return SavedPages(folder)
-    return PoliteFetcher(min_delay_s=profile.min_delay_s, daily_limit=profile.daily_request_limit)
-
-
 def _run(args: argparse.Namespace, profile: StoreProfile, directory: Directory, out: TextIO) -> int:
     store = MemoryPriceStore()
     stats = run_store(
         profile,
         args.location,
-        fetcher=_fetcher(profile, args.pages_dir),
+        fetcher=build_fetcher(profile, args.pages_dir),
         directory=directory,
         matcher=Matcher(directory),
         store=store,

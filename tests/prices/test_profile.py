@@ -85,11 +85,9 @@ def test_load_profiles_skips_comments(tmp_path):
     assert list(load_profiles(f)) == ["a"]
 
 
-def test_source_defaults_to_http_and_saved_needs_a_folder():
-    assert parse_profile("x", raw()).source == "http"
-    p = parse_profile("x", raw(source="saved", pages_dir="pages/x"))
-    assert (p.source, p.pages_dir) == ("saved", "pages/x")
-    with pytest.raises(ProfileError, match="pages_dir"):
-        parse_profile("x", raw(source="saved"))
-    with pytest.raises(ProfileError, match="source должен быть"):
-        parse_profile("x", raw(source="stealth"))
+def test_sources_default_to_http_and_unknown_ones_are_rejected():
+    assert parse_profile("x", raw()).sources == ("http",)
+    assert parse_profile("x", raw(sources=["http", "saved"])).sources == ("http", "saved")
+    for bad in ([], ["stealth"], ["http", "browser"]):
+        with pytest.raises(ProfileError, match="sources должен быть"):
+            parse_profile("x", raw(sources=bad))

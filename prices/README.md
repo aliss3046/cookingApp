@@ -82,15 +82,21 @@ python -m prices categories --html page.html          # дерево катег�
 python -m prices run --store magnit --location 992301 --json result.json
 ```
 
-### Загрузка страниц: один интерфейс `get(url)`, источник выбирает профиль
+### Загрузка страниц: реестр источников и цепочка (`prices/sources.py`)
 
-| `source` в профиле | Что делает |
-|---|---|
-| `http` | `PoliteFetcher`: по сети, `robots.txt`, пауза ≥ 20 с, суточный лимит, остановка при блокировке |
-| `saved` | `SavedPages`: читает страницы, сохранённые человеком из браузера, из `pages_dir` (по умолчанию `prices/pages/<магазин>/`, в git не попадает) |
+```
+Fetcher: get(url) -> html
+   ├─ http    PoliteFetcher: по сети, robots.txt, пауза ≥ 20 с, суточный лимит
+   ├─ saved   SavedPages: страницы, сохранённые человеком из браузера (pages_dir, по умолчанию prices/pages/<магазин>/)
+   └─ любой свой через register_source(имя, фабрика)
+```
 
-Разбор, нормализация и подбор не зависят от источника. Подмены TLS-отпечатка, stealth-режима и скрытых браузеров
-в проекте нет намеренно: отказ магазина (403) останавливает загрузку, а не обходится. Флаг `--pages-dir` переопределяет источник.
+Профиль задаёт порядок: `"sources": ["http", "saved"]`. При отказе магазина (`StoreBlocked`) источник выводится из работы на
+остаток запуска и страницы берёт следующий; при ошибке одной страницы (`FetchFailed`) пробуется следующий источник для неё.
+Запрет `robots.txt` и суточный лимит цепочка не обходит: работа останавливается сразу. Флаг `--pages-dir` заменяет цепочку чтением папки.
+
+Разбор, нормализация и подбор не зависят от источника. Способов выдать программу за браузер (подмена TLS-отпечатка, stealth)
+в поставке нет намеренно: отказ магазина (403) не обходится.
 
 ### Магнит и Дикси включены (личное использование)
 
@@ -99,7 +105,7 @@ python -m prices run --store magnit --location 992301 --json result.json
 | Магазин | Как читаются страницы | Формат |
 |---|---|---|
 | Магнит | `python -m prices run --store magnit --location 992301` (сеть, пауза 20 с) | Nuxt, адреса `/catalog/{id}-{code}?shopCode=…&shopType=dostavka` |
-| Дикси | `source: saved`: страницы сохраняются из обычного браузера в `prices/pages/dixy/`, затем `python -m prices run --store dixy --location 1` | HTML `article.card` |
+| Дикси | `sources: ["saved"]`: страницы сохраняются из обычного браузера в `prices/pages/dixy/`, затем `python -m prices run --store dixy --location 1` | HTML `article.card` |
 
 Простой клиент получает у Дикси 403: это не обходится (ни подмены User-Agent, ни скрытых запросов). Имя файла в папке
 берётся из пути адреса (`/catalog/ovoshchi-frukty/ovoshchi/` → `catalog_ovoshchi-frukty_ovoshchi.html`).
