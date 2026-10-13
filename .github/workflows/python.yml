@@ -29,4 +29,4 @@ jobs:
       - name: ruff format
         run: ruff format --check .
       - name: pytest
-        run: pytest --cov=importers --cov-branch --cov-report=term-missing --cov-fail-under=95
+        run: pytest --cov=importers --cov=prices --cov-branch --cov-report=term-missing --cov-fail-under=95
