@@ -1,0 +1,55 @@
+{
+  "ingredients": [
+    {
+      "id": "x",
+      "name": "x"
+    }
+  ],
+  "recipes": [
+    {
+      "id": "r1",
+      "items": [
+        {
+          "ing": "x",
+          "qty": 100,
+          "unit": "g"
+        }
+      ]
+    }
+  ],
+  "plan": [
+    {
+      "recipe": "r1",
+      "servings": 1
+    }
+  ],
+  "products": [
+    {
+      "id": "p_x",
+      "store": "dixy",
+      "ing": "x",
+      "mode": "by_weight",
+      "brand": "",
+      "unit": "g",
+      "per_kg": 50,
+      "no_price": true
+    }
+  ],
+  "expect": {
+    "lines": [
+      {
+        "key": "x",
+        "status": "no_offers",
+        "mass": 100,
+        "brand_auto": true,
+        "offers": [
+          {
+            "p": "p_x",
+            "status": "no_price"
+          }
+        ]
+      }
+    ]
+  },
+  "name": "no_price"
+}

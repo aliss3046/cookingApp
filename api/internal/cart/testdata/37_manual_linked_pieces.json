@@ -1,0 +1,87 @@
+{
+  "ingredients": [
+    {
+      "id": "onion",
+      "name": "onion",
+      "piece_g": 100
+    }
+  ],
+  "recipes": [
+    {
+      "id": "r1",
+      "items": [
+        {
+          "ing": "onion",
+          "qty": 100,
+          "unit": "g"
+        }
+      ]
+    }
+  ],
+  "plan": [
+    {
+      "recipe": "r1",
+      "servings": 1
+    }
+  ],
+  "manual": [
+    {
+      "title": "Лук",
+      "ing": "onion",
+      "qty": 2,
+      "unit": "pcs"
+    }
+  ],
+  "products": [
+    {
+      "id": "p_p",
+      "store": "lenta",
+      "ing": "onion",
+      "mode": "per_piece",
+      "brand": "",
+      "unit": "g",
+      "price": 10
+    }
+  ],
+  "expect": {
+    "lines": [
+      {
+        "key": "onion",
+        "status": "ok",
+        "man_pcs": 2,
+        "mass": 100,
+        "pcs": 2,
+        "brand_auto": true,
+        "cheapest": "p_p",
+        "offers": [
+          {
+            "p": "p_p",
+            "status": "ok",
+            "qty": 3,
+            "unit": "pcs",
+            "cost": 30,
+            "flags": [
+              "estimated"
+            ]
+          }
+        ]
+      }
+    ],
+    "totals": [
+      {
+        "store": "lenta",
+        "total": 30,
+        "covered": 1,
+        "est": true
+      }
+    ],
+    "single": "lenta",
+    "split": {
+      "total": 30,
+      "picks": [
+        "p_p"
+      ]
+    }
+  },
+  "name": "manual_linked_pieces"
+}

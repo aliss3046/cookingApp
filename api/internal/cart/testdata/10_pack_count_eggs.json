@@ -1,0 +1,74 @@
+{
+  "ingredients": [
+    {
+      "id": "egg",
+      "name": "egg"
+    }
+  ],
+  "recipes": [
+    {
+      "id": "r1",
+      "items": [
+        {
+          "ing": "egg",
+          "qty": 6,
+          "unit": "pcs"
+        }
+      ]
+    }
+  ],
+  "plan": [
+    {
+      "recipe": "r1",
+      "servings": 2
+    }
+  ],
+  "products": [
+    {
+      "id": "p_e",
+      "store": "dixy",
+      "ing": "egg",
+      "mode": "pack_count",
+      "brand": "",
+      "unit": "pcs",
+      "price": 100,
+      "pack": 10
+    }
+  ],
+  "expect": {
+    "lines": [
+      {
+        "key": "egg",
+        "status": "ok",
+        "pcs": 12,
+        "brand_auto": true,
+        "cheapest": "p_e",
+        "offers": [
+          {
+            "p": "p_e",
+            "status": "ok",
+            "qty": 2,
+            "unit": "packs",
+            "cost": 200,
+            "left": 8
+          }
+        ]
+      }
+    ],
+    "totals": [
+      {
+        "store": "dixy",
+        "total": 200,
+        "covered": 1
+      }
+    ],
+    "single": "dixy",
+    "split": {
+      "total": 200,
+      "picks": [
+        "p_e"
+      ]
+    }
+  },
+  "name": "pack_count_eggs"
+}

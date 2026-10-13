@@ -1,0 +1,90 @@
+{
+  "ingredients": [
+    {
+      "id": "flour",
+      "name": "flour"
+    }
+  ],
+  "recipes": [
+    {
+      "id": "r1",
+      "items": [
+        {
+          "ing": "flour",
+          "qty": 300,
+          "unit": "g"
+        }
+      ]
+    }
+  ],
+  "plan": [
+    {
+      "recipe": "r1",
+      "servings": 1
+    }
+  ],
+  "pantry": [
+    {
+      "ing": "flour",
+      "qty": 100,
+      "unit": "g"
+    }
+  ],
+  "manual": [
+    {
+      "title": "Мука для пирога",
+      "ing": "flour",
+      "qty": 200,
+      "unit": "g"
+    }
+  ],
+  "products": [
+    {
+      "id": "p_f",
+      "store": "dixy",
+      "ing": "flour",
+      "mode": "pack_mass",
+      "brand": "",
+      "unit": "g",
+      "price": 40,
+      "pack": 500
+    }
+  ],
+  "expect": {
+    "lines": [
+      {
+        "key": "flour",
+        "status": "ok",
+        "man_mass": 200,
+        "mass": 400,
+        "brand_auto": true,
+        "cheapest": "p_f",
+        "offers": [
+          {
+            "p": "p_f",
+            "status": "ok",
+            "qty": 1,
+            "unit": "packs",
+            "cost": 40,
+            "left": 100
+          }
+        ]
+      }
+    ],
+    "totals": [
+      {
+        "store": "dixy",
+        "total": 40,
+        "covered": 1
+      }
+    ],
+    "single": "dixy",
+    "split": {
+      "total": 40,
+      "picks": [
+        "p_f"
+      ]
+    }
+  },
+  "name": "manual_linked_merge"
+}

@@ -1,0 +1,104 @@
+{
+  "ingredients": [
+    {
+      "id": "a",
+      "name": "a"
+    }
+  ],
+  "recipes": [
+    {
+      "id": "r1",
+      "items": [
+        {
+          "ing": "a",
+          "qty": 100,
+          "unit": "g"
+        }
+      ]
+    }
+  ],
+  "plan": [
+    {
+      "recipe": "r1",
+      "servings": 1
+    }
+  ],
+  "products": [
+    {
+      "id": "q1",
+      "store": "dixy",
+      "ing": "a",
+      "mode": "pack_mass",
+      "brand": "",
+      "unit": "g",
+      "price": 10
+    },
+    {
+      "id": "q2",
+      "store": "dixy",
+      "ing": "a",
+      "mode": "weird",
+      "brand": "",
+      "unit": "g",
+      "price": 10
+    },
+    {
+      "id": "q3",
+      "store": "dixy",
+      "ing": "a",
+      "mode": "by_weight",
+      "brand": "",
+      "unit": "g"
+    },
+    {
+      "id": "q4",
+      "store": "dixy",
+      "ing": "a",
+      "mode": "pack_count",
+      "brand": "",
+      "unit": "pcs",
+      "price": 10
+    },
+    {
+      "id": "q5",
+      "store": "dixy",
+      "ing": "a",
+      "mode": "per_piece",
+      "brand": "",
+      "unit": "g"
+    }
+  ],
+  "expect": {
+    "lines": [
+      {
+        "key": "a",
+        "status": "no_offers",
+        "mass": 100,
+        "brand_auto": true,
+        "offers": [
+          {
+            "p": "q1",
+            "status": "invalid_product"
+          },
+          {
+            "p": "q2",
+            "status": "invalid_product"
+          },
+          {
+            "p": "q3",
+            "status": "no_price"
+          },
+          {
+            "p": "q4",
+            "status": "invalid_product"
+          },
+          {
+            "p": "q5",
+            "status": "no_price"
+          }
+        ]
+      }
+    ]
+  },
+  "name": "invalid_products"
+}

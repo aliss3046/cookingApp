@@ -1,0 +1,43 @@
+{
+  "ingredients": [
+    {
+      "id": "flour",
+      "name": "flour"
+    }
+  ],
+  "recipes": [
+    {
+      "id": "r1",
+      "items": [
+        {
+          "ing": "flour",
+          "qty": 100,
+          "unit": "g"
+        }
+      ]
+    }
+  ],
+  "plan": [
+    {
+      "recipe": "r1",
+      "servings": 1
+    }
+  ],
+  "overrides": [
+    {
+      "ing": "flour",
+      "qty": 0,
+      "unit": "g"
+    }
+  ],
+  "expect": {
+    "lines": [
+      {
+        "key": "flour",
+        "status": "covered",
+        "overridden": true
+      }
+    ]
+  },
+  "name": "qty_override_zero"
+}

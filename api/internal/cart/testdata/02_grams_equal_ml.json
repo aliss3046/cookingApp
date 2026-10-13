@@ -1,0 +1,88 @@
+{
+  "ingredients": [
+    {
+      "id": "milk",
+      "name": "milk"
+    }
+  ],
+  "recipes": [
+    {
+      "id": "r1",
+      "items": [
+        {
+          "ing": "milk",
+          "qty": 100,
+          "unit": "ml"
+        }
+      ]
+    },
+    {
+      "id": "r2",
+      "items": [
+        {
+          "ing": "milk",
+          "qty": 50,
+          "unit": "g"
+        }
+      ]
+    }
+  ],
+  "plan": [
+    {
+      "recipe": "r1",
+      "servings": 1
+    },
+    {
+      "recipe": "r2",
+      "servings": 1
+    }
+  ],
+  "products": [
+    {
+      "id": "p_m",
+      "store": "dixy",
+      "ing": "milk",
+      "mode": "pack_mass",
+      "brand": "",
+      "unit": "ml",
+      "price": 90,
+      "pack": 930
+    }
+  ],
+  "expect": {
+    "lines": [
+      {
+        "key": "milk",
+        "status": "ok",
+        "mass": 150,
+        "brand_auto": true,
+        "cheapest": "p_m",
+        "offers": [
+          {
+            "p": "p_m",
+            "status": "ok",
+            "qty": 1,
+            "unit": "packs",
+            "cost": 90,
+            "left": 780
+          }
+        ]
+      }
+    ],
+    "totals": [
+      {
+        "store": "dixy",
+        "total": 90,
+        "covered": 1
+      }
+    ],
+    "single": "dixy",
+    "split": {
+      "total": 90,
+      "picks": [
+        "p_m"
+      ]
+    }
+  },
+  "name": "grams_equal_ml"
+}

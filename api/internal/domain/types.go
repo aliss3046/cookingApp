@@ -104,23 +104,38 @@ type PantryItem struct {
 }
 
 type CartLine struct {
-	ID              ID
-	PlanID          ID
-	IngredientID    *ID // nil для ручной позиции
-	Title           string
-	Qty             float64
-	Unit            Unit
-	Excluded        bool
-	AddedManually   bool
+	ID            ID
+	PlanID        ID
+	IngredientID  *ID // nil для ручной позиции
+	Title         string
+	Qty           float64
+	Unit          Unit
+	Excluded      bool
+	AddedManually bool
+	// QtyOverridden — пара сама задала количество; оно заменяет расчётное по плану.
+	QtyOverridden bool
+	// ChosenProductID — товар, закреплённый парой в его магазине.
 	ChosenProductID *ID
 }
+
+// SaleMode — как магазин продаёт товар. Определяет парсер.
+type SaleMode string
+
+const (
+	SalePackMass  SaleMode = "pack_mass"  // упаковка фиксированной массы/объёма
+	SalePackCount SaleMode = "pack_count" // упаковка из N штук
+	SalePerPiece  SaleMode = "per_piece"  // любое целое число штук
+	SaleByWeight  SaleMode = "by_weight"  // на вес, цена за кг
+)
 
 type Product struct {
 	ID         ID
 	StoreID    ID
 	ExternalID string
 	Title      string
-	PackQty    float64
+	Brand      string // пусто — марка не определена
+	SaleMode   SaleMode
+	PackQty    float64 // pack_mass: г/мл в упаковке; pack_count: штук в упаковке
 	PackUnit   Unit
 	Category   string
 }

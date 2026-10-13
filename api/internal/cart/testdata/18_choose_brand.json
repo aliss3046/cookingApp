@@ -1,0 +1,94 @@
+{
+  "ingredients": [
+    {
+      "id": "milk",
+      "name": "milk"
+    }
+  ],
+  "recipes": [
+    {
+      "id": "r1",
+      "items": [
+        {
+          "ing": "milk",
+          "qty": 500,
+          "unit": "ml"
+        }
+      ]
+    }
+  ],
+  "plan": [
+    {
+      "recipe": "r1",
+      "servings": 1
+    }
+  ],
+  "products": [
+    {
+      "id": "pa",
+      "store": "dixy",
+      "ing": "milk",
+      "mode": "pack_mass",
+      "brand": "Alpha",
+      "unit": "g",
+      "price": 90,
+      "pack": 930
+    },
+    {
+      "id": "pa2",
+      "store": "lenta",
+      "ing": "milk",
+      "mode": "pack_mass",
+      "brand": "Alpha",
+      "unit": "g",
+      "price": 85,
+      "pack": 930
+    },
+    {
+      "id": "pa3",
+      "store": "lenta",
+      "ing": "milk",
+      "mode": "pack_mass",
+      "brand": "Alpha",
+      "unit": "g",
+      "price": 95,
+      "pack": 930
+    },
+    {
+      "id": "pb",
+      "store": "lenta",
+      "ing": "milk",
+      "mode": "pack_mass",
+      "brand": "Beta",
+      "unit": "g",
+      "price": 80,
+      "pack": 930
+    },
+    {
+      "id": "pc",
+      "store": "dixy",
+      "ing": "milk",
+      "mode": "pack_mass",
+      "brand": "Gamma",
+      "unit": "g",
+      "price": 70,
+      "pack": 930,
+      "oos": true
+    }
+  ],
+  "expect": {
+    "lines": [
+      {
+        "key": "milk",
+        "status": "choose_brand",
+        "mass": 500,
+        "brands": [
+          "Alpha=85.00",
+          "Beta=80.00",
+          "Gamma=-"
+        ]
+      }
+    ]
+  },
+  "name": "choose_brand"
+}

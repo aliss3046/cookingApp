@@ -1,0 +1,129 @@
+{
+  "ingredients": [
+    {
+      "id": "a",
+      "name": "a"
+    },
+    {
+      "id": "b",
+      "name": "b"
+    }
+  ],
+  "recipes": [
+    {
+      "id": "r1",
+      "items": [
+        {
+          "ing": "a",
+          "qty": 100,
+          "unit": "g"
+        },
+        {
+          "ing": "b",
+          "qty": 100,
+          "unit": "g"
+        }
+      ]
+    }
+  ],
+  "plan": [
+    {
+      "recipe": "r1",
+      "servings": 1
+    }
+  ],
+  "products": [
+    {
+      "id": "pa_d",
+      "store": "dixy",
+      "ing": "a",
+      "mode": "by_weight",
+      "brand": "",
+      "unit": "g",
+      "per_kg": 100
+    },
+    {
+      "id": "pa_l",
+      "store": "lenta",
+      "ing": "a",
+      "mode": "by_weight",
+      "brand": "",
+      "unit": "g",
+      "per_kg": 80
+    },
+    {
+      "id": "pb_d",
+      "store": "dixy",
+      "ing": "b",
+      "mode": "by_weight",
+      "brand": "",
+      "unit": "g",
+      "per_kg": 300
+    }
+  ],
+  "expect": {
+    "lines": [
+      {
+        "key": "a",
+        "status": "ok",
+        "mass": 100,
+        "brand_auto": true,
+        "cheapest": "pa_l",
+        "offers": [
+          {
+            "p": "pa_l",
+            "status": "ok",
+            "qty": 0.1,
+            "unit": "kg",
+            "cost": 8
+          },
+          {
+            "p": "pa_d",
+            "status": "ok",
+            "qty": 0.1,
+            "unit": "kg",
+            "cost": 10
+          }
+        ]
+      },
+      {
+        "key": "b",
+        "status": "ok",
+        "mass": 100,
+        "brand_auto": true,
+        "cheapest": "pb_d",
+        "offers": [
+          {
+            "p": "pb_d",
+            "status": "ok",
+            "qty": 0.1,
+            "unit": "kg",
+            "cost": 30
+          }
+        ]
+      }
+    ],
+    "totals": [
+      {
+        "store": "dixy",
+        "total": 40,
+        "covered": 2
+      },
+      {
+        "store": "lenta",
+        "total": 8,
+        "covered": 1,
+        "missing": 1
+      }
+    ],
+    "single": "dixy",
+    "split": {
+      "total": 38,
+      "picks": [
+        "pa_l",
+        "pb_d"
+      ]
+    }
+  },
+  "name": "partial_coverage_split"
+}

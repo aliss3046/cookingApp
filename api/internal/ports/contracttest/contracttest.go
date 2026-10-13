@@ -203,9 +203,15 @@ func cartLines(t *testing.T, e Env) {
 	l := must(e.Repos.AddCartLine(ctx, e.CoupleA, domain.CartLine{
 		PlanID: p.ID, Title: "Салфетки", Qty: 1, Unit: domain.UnitPiece, AddedManually: true,
 	}))(t)
-	l.Excluded = true
-	if got := must(e.Repos.UpdateCartLine(ctx, e.CoupleA, l))(t); !got.Excluded {
-		t.Fatalf("excluded not saved")
+	ing, product := domain.ID("ingredient-1"), domain.ID("product-1")
+	l.Excluded, l.QtyOverridden, l.Qty = true, true, 3
+	l.IngredientID, l.ChosenProductID = &ing, &product
+	got := must(e.Repos.UpdateCartLine(ctx, e.CoupleA, l))(t)
+	if !got.Excluded || !got.QtyOverridden || got.Qty != 3 {
+		t.Fatalf("excluded/qty override not saved: %+v", got)
+	}
+	if got.IngredientID == nil || *got.IngredientID != ing || got.ChosenProductID == nil || *got.ChosenProductID != product {
+		t.Fatalf("ingredient/chosen product not saved: %+v", got)
 	}
 
 	_, err := e.Repos.ListCartLines(ctx, e.CoupleB, p.ID)

@@ -1,0 +1,94 @@
+{
+  "ingredients": [
+    {
+      "id": "flour",
+      "name": "flour"
+    }
+  ],
+  "recipes": [
+    {
+      "id": "r1",
+      "items": [
+        {
+          "ing": "flour",
+          "qty": 100,
+          "unit": "g"
+        }
+      ]
+    }
+  ],
+  "plan": [
+    {
+      "recipe": "r1",
+      "servings": 1
+    }
+  ],
+  "manual": [
+    {
+      "title": "Салфетки",
+      "qty": 2,
+      "unit": "pcs"
+    },
+    {
+      "title": "Вода",
+      "qty": 1500,
+      "unit": "ml"
+    }
+  ],
+  "products": [
+    {
+      "id": "p_f",
+      "store": "dixy",
+      "ing": "flour",
+      "mode": "by_weight",
+      "brand": "",
+      "unit": "g",
+      "per_kg": 10
+    }
+  ],
+  "expect": {
+    "lines": [
+      {
+        "key": "flour",
+        "status": "ok",
+        "mass": 100,
+        "brand_auto": true,
+        "cheapest": "p_f",
+        "offers": [
+          {
+            "p": "p_f",
+            "status": "ok",
+            "qty": 0.1,
+            "unit": "kg",
+            "cost": 1
+          }
+        ]
+      },
+      {
+        "key": "Салфетки",
+        "status": "ok",
+        "pcs": 2
+      },
+      {
+        "key": "Вода",
+        "status": "ok",
+        "mass": 1500
+      }
+    ],
+    "totals": [
+      {
+        "store": "dixy",
+        "total": 1,
+        "covered": 1
+      }
+    ],
+    "single": "dixy",
+    "split": {
+      "total": 1,
+      "picks": [
+        "p_f"
+      ]
+    }
+  },
+  "name": "manual_line"
+}

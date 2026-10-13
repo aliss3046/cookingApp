@@ -1,0 +1,98 @@
+{
+  "ingredients": [
+    {
+      "id": "onion",
+      "name": "onion",
+      "piece_g": 100
+    }
+  ],
+  "recipes": [
+    {
+      "id": "r1",
+      "items": [
+        {
+          "ing": "onion",
+          "qty": 2,
+          "unit": "pcs"
+        }
+      ]
+    }
+  ],
+  "plan": [
+    {
+      "recipe": "r1",
+      "servings": 1
+    }
+  ],
+  "products": [
+    {
+      "id": "p_p",
+      "store": "dixy",
+      "ing": "onion",
+      "mode": "per_piece",
+      "brand": "",
+      "unit": "g",
+      "price": 10
+    },
+    {
+      "id": "p_w",
+      "store": "lenta",
+      "ing": "onion",
+      "mode": "by_weight",
+      "brand": "",
+      "unit": "g",
+      "per_kg": 50
+    }
+  ],
+  "expect": {
+    "lines": [
+      {
+        "key": "onion",
+        "status": "ok",
+        "pcs": 2,
+        "brand_auto": true,
+        "cheapest": "p_p",
+        "offers": [
+          {
+            "p": "p_p",
+            "status": "ok",
+            "qty": 2,
+            "unit": "pcs",
+            "cost": 20
+          },
+          {
+            "p": "p_w",
+            "status": "ok",
+            "qty": 0.2,
+            "unit": "kg",
+            "cost": 10,
+            "flags": [
+              "estimated"
+            ]
+          }
+        ]
+      }
+    ],
+    "totals": [
+      {
+        "store": "lenta",
+        "total": 10,
+        "covered": 1,
+        "est": true
+      },
+      {
+        "store": "dixy",
+        "total": 20,
+        "covered": 1
+      }
+    ],
+    "single": "lenta",
+    "split": {
+      "total": 20,
+      "picks": [
+        "p_p"
+      ]
+    }
+  },
+  "name": "exact_beats_estimated"
+}
