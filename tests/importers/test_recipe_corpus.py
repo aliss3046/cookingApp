@@ -35,3 +35,22 @@ def test_every_ok_line_has_positive_base_quantity():
             if p.status == "ok":
                 assert p.qty is not None and p.qty > 0 and p.unit in {"g", "ml", "pcs"}, line
                 assert p.name, line
+
+
+def test_drafts_match_directory_for_at_least_90_percent():
+    # разбор + сопоставление со справочником: строка без проверки — готова для корзины
+    from importers.directory import load_directory
+    from importers.draft import build_draft
+
+    directory = load_directory()
+    lines = [
+        line
+        for r in CORPUS
+        for line in build_draft(r["title"], r["lines"], directory, servings=4).lines
+    ]
+    review = {(x.raw_text, x.reason) for x in lines if x.needs_review}
+    assert len(review) / len(lines) <= 0.10, review
+    assert review == {
+        ("Масло для жарки", "ambiguous"),  # сливочное или растительное: решает пара
+        ("Красный перец чили", "no_quantity"),
+    }
