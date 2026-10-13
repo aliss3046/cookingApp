@@ -11,7 +11,6 @@ import re
 import time
 import urllib.error
 import urllib.request
-import urllib.robotparser
 import zlib
 from collections.abc import Callable
 from dataclasses import replace
@@ -34,6 +33,7 @@ from importers.page_markup import (
     extract_candidates,
     extract_recipe,
 )
+from importers.robots import UNREADABLE, Robots, parse_robots
 
 __all__ = [
     "BadUrl",
@@ -45,6 +45,7 @@ __all__ = [
     "RecipeLD",
     "extract_recipe",
     "fetch_html",
+    "fetch_robots",
     "import_from_html",
     "import_recipe",
     "robots_allows",
@@ -145,17 +146,17 @@ def _decode_text(body: bytes, charset: str) -> str:
         return body.decode("utf-8", errors="replace")
 
 
-def robots_allows(
+def fetch_robots(
     url: str,
     *,
     opener: Opener = _default_opener,
     timeout: float = TIMEOUT_S,
     sleep: Callable[[float], None] = time.sleep,
-) -> bool:
-    """Проверка robots.txt тем же загрузчиком, что и страница.
+) -> Robots:
+    """Читает robots.txt сайта (тем же загрузчиком, что и страницу) и разбирает по RFC 9309.
 
-    Как в urllib.robotparser: 401/403 — запрещено всё, другие 4xx — разрешено всё.
-    5xx и сетевой сбой — ошибка: молча идти на сайт, не зная правил, нельзя.
+    401/403: правила недоступны, ходить нельзя (`UNREADABLE`). Другие 4xx (404): ограничений нет.
+    5xx и сетевой сбой: ошибка, молча идти на сайт, не зная правил, нельзя.
     """
     robots_url = urljoin(url, "/robots.txt")
     try:
@@ -165,15 +166,24 @@ def robots_allows(
         )  # fmt: skip
     except urllib.error.HTTPError as e:
         if e.code in (401, 403):
-            return False
+            return UNREADABLE
         if 400 <= e.code < 500:
-            return True
+            return parse_robots("")
         raise FetchFailed(f"robots.txt недоступен: HTTP {e.code}") from e
     except FetchFailed as e:
         raise FetchFailed(f"не удалось прочитать robots.txt: {e}") from e
-    rp = urllib.robotparser.RobotFileParser(robots_url)
-    rp.parse(_decode_text(body, _charset(headers)).splitlines())
-    return rp.can_fetch(USER_AGENT, url)
+    return parse_robots(_decode_text(body, _charset(headers)))
+
+
+def robots_allows(
+    url: str,
+    *,
+    opener: Opener = _default_opener,
+    timeout: float = TIMEOUT_S,
+    sleep: Callable[[float], None] = time.sleep,
+) -> bool:
+    robots = fetch_robots(url, opener=opener, timeout=timeout, sleep=sleep)
+    return robots.allowed(USER_AGENT, url)
 
 
 def fetch_html(

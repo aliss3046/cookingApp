@@ -22,6 +22,7 @@ from importers.recipe_page import (
     PageTooLarge,
     extract_recipe,
     fetch_html,
+    fetch_robots,
     import_from_html,
     import_recipe,
     robots_allows,
@@ -540,3 +541,21 @@ def test_layout_table_does_not_swallow_the_ingredient_paragraphs(directory):
     draft = import_from_html(page_html, directory)
     assert [x.ingredient_id for x in draft.lines] == ["onion", "salt", "water"]
     assert draft.review_count == 0
+
+
+def test_recipe_import_respects_wildcard_rules():
+    # у магазинов запреты записаны шаблонами; раньше urllib.robotparser их не понимал
+    body = b"User-agent: *\nDisallow: /*search\nDisallow: *q=\n"
+    web = FakeWeb({ROBOTS: FakeResponse(body, {"Content-Type": "text/plain"})})
+    assert not robots_allows("https://x.test/recipes/search", opener=web)
+    web = FakeWeb({ROBOTS: FakeResponse(body, {"Content-Type": "text/plain"})})
+    assert not robots_allows("https://x.test/recipes?q=borsch", opener=web)
+    web = FakeWeb({ROBOTS: FakeResponse(body, {"Content-Type": "text/plain"})})
+    assert robots_allows("https://x.test/recipes/borsch", opener=web)
+
+
+def test_fetch_robots_returns_rules_and_unreadable_marker():
+    web = FakeWeb({ROBOTS: FakeResponse(b"User-agent: *\nCrawl-delay: 7\n", {})})
+    assert fetch_robots(PAGE, opener=web).crawl_delay(USER_AGENT) == 7
+    assert fetch_robots(PAGE, opener=FakeWeb({ROBOTS: http_error(ROBOTS, 403)})).unreadable
+    assert not fetch_robots(PAGE, opener=FakeWeb({ROBOTS: http_error(ROBOTS, 404)})).unreadable
