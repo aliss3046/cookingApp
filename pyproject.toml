@@ -1,0 +1,20 @@
+[project]
+name = "cooking-workers"
+version = "0.1.0"
+description = "Python-часть бэкенда: разбор рецептов, цены, рекомендации (см. docs/adr/0006)"
+requires-python = ">=3.11"
+dependencies = []
+# Инструменты разработки: requirements-dev.txt (пакет не устанавливается, модули лежат в корне)
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "RUF"]
+# русские буквы в строках и регулярных выражениях здесь намеренные
+ignore = ["RUF001", "RUF002", "RUF003"]
