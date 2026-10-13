@@ -10,9 +10,11 @@ from pathlib import Path
 import pytest
 
 from importers.directory import load_directory
+from importers.page_markup import extract_candidates
 from importers.recipe_page import (
     USER_AGENT,
     WARNING_HTML_FALLBACK,
+    WARNING_LOW_CONFIDENCE,
     BadUrl,
     DisallowedByRobots,
     FetchFailed,
@@ -201,18 +203,18 @@ def test_robots_server_error_and_network_failure():
         robots_allows(PAGE, opener=FakeWeb({ROBOTS: OSError("timeout")}), sleep=no_sleep)
 
 
-def test_network_error_is_retried_once():
+def test_network_error_is_retried_with_growing_pause():
     sleeps = []
-    web = FakeWeb({PAGE: [ssl.SSLError("UNEXPECTED_EOF"), FakeResponse(b"ok")]})
+    web = FakeWeb({PAGE: [ssl.SSLError("UNEXPECTED_EOF"), OSError("reset"), FakeResponse(b"ok")]})
     assert fetch_html(PAGE, opener=web, robots=allow, sleep=sleeps.append) == "ok"
-    assert len(web.calls) == 2 and sleeps == [1.0]
+    assert len(web.calls) == 3 and sleeps == [1.0, 2.0]
 
 
-def test_network_error_twice_fails():
+def test_network_error_always_fails_after_retries():
     web = FakeWeb({PAGE: OSError("connection refused")})
     with pytest.raises(FetchFailed, match="connection refused"):
         fetch_html(PAGE, opener=web, robots=allow, sleep=no_sleep)
-    assert len(web.calls) == 2
+    assert len(web.calls) == 3
 
 
 def test_http_error_is_not_retried():
@@ -337,11 +339,14 @@ def test_fallback_title_sources(head, want):
     assert extract_recipe(f"<html><head>{head}</head><body>{body}</body></html>").title == want
 
 
-def test_fallback_needs_a_list_after_the_label():
-    with pytest.raises(NoRecipeFound):
-        extract_recipe("<h2>Ингредиенты</h2><p>Мука — 200 г</p>")
+def test_fallback_needs_content_after_a_visible_label():
     with pytest.raises(NoRecipeFound):
         extract_recipe("<script>Ингредиенты</script><ul><li>Мука — 200 г</li></ul>")
+    with pytest.raises(NoRecipeFound):
+        extract_recipe("<h2>Ингредиенты</h2><div>Мука — 200 г</div>")  # ни списка, ни абзацев
+    assert extract_recipe("<h2>Ингредиенты</h2><p>Мука — 200 г</p>").ingredients == (
+        "Мука — 200 г",
+    )
 
 
 def test_import_from_html_marks_fallback(directory):
@@ -350,3 +355,188 @@ def test_import_from_html_marks_fallback(directory):
     assert [x.ingredient_id for x in draft.lines] == ["kefir", "wheat_flour", "egg", "salt"]
     json_ld = import_from_html(page("graph_recipe.html"), directory)
     assert WARNING_HTML_FALLBACK not in json_ld.warnings
+
+
+# --- устройство реальных сайтов (куски вёрстки по образцу виденных страниц) ---
+
+
+def sources(page_name):
+    return [c.source for c in extract_candidates(page(page_name))]
+
+
+def test_microdata_meta_content_wins_over_measures_table(directory):
+    # как 1000.menu: <meta itemprop="recipeIngredient" content="...">, рядом таблица мер
+    assert sources("microdata_meta.html") == ["microdata", "html"]
+    draft = import_from_html(page("microdata_meta.html"), directory)
+    assert draft.default_servings == 6 and draft.warnings == ()
+    assert [(x.ingredient_id, x.qty_per_serving, x.unit) for x in draft.lines] == [
+        ("water", 416.667, "ml"),
+        ("beef", 83.333, "g"),
+        ("beet", 0.333, "pcs"),
+        ("salt", 0, "g"),
+    ]
+    assert draft.lines[3].optional and draft.title == "Борщ с говядиной"
+
+
+def test_microdata_text_beats_json_ld_without_quantities(directory):
+    # как gastronom.ru: в JSON-LD только названия, количества в видимых элементах
+    assert sources("microdata_text.html") == ["json-ld", "microdata"]
+    draft = import_from_html(page("microdata_text.html"), directory)
+    assert draft.default_servings == 2  # из надписи «Ингредиенты на 2 порции»
+    assert draft.title == "Сырники классические"
+    assert [x.raw_text for x in draft.lines] == [
+        "9% творог – 200 г",
+        "сахар – 1 ст. л.",
+        "яйцо – 1 шт. (крупное)",
+        "мука – 2 ст. л.",
+    ]
+    assert draft.review_count == 0 and WARNING_HTML_FALLBACK not in draft.warnings
+
+
+def test_products_label_and_portions_in_table(directory):
+    # как russianfood.com: надпись «Продукты», «(на 6 порций)» в соседнем узле, строки в таблице
+    ld = extract_recipe(page("table_products.html"))
+    assert ld.source == "html" and ld.servings == 6
+    assert ld.ingredients == (
+        "Филе куриное - 2 шт. (500 г)",
+        "Картофель - 2-3 шт.",
+        "Вермишель - 100 г",
+        "Соль - по вкусу",
+    )  # заголовок таблицы и «Приготовление» не попали
+    draft = import_from_html(page("table_products.html"), directory)
+    assert [x.ingredient_id for x in draft.lines] == [
+        "chicken_breast",
+        "potato",
+        "vermicelli",
+        "salt",
+    ]
+    assert draft.default_servings == 6 and WARNING_HTML_FALLBACK in draft.warnings
+
+
+def test_paragraph_block_wins_over_menu_and_calories_list(directory):
+    # как iamcook.ru: абзацы вместо списка; меню с надписью «Ингредиенты» и список калорий — мусор
+    cands = extract_candidates(page("paragraphs_block.html"))
+    assert [c.source for c in cands] == ["html"] * len(cands) and len(cands) >= 3
+    menu, kcal, paragraphs = cands[0], cands[1], cands[-1]
+    assert menu.ingredients[:2] == ("Рецепты", "Распечатать рецепт")
+    assert kcal.ingredients == ("24 кКал", "0 ч. 50 мин.", "Б: 2.72")
+    assert len(paragraphs.ingredients) == 7
+
+    draft = import_from_html(page("paragraphs_block.html"), directory)
+    names = [(x.ingredient_id, x.needs_review) for x in draft.lines]
+    assert names == [
+        ("chicken_breast", True),  # «Куриная грудка с крылом»: продукт узнан, количества нет
+        ("onion", False),
+        ("potato", False),
+        ("carrot", False),
+        ("vermicelli", False),
+        ("salt", False),  # «Соль: 2 чайные ложки на 3 литра» -> название до двоеточия
+        ("black_peppercorns", True),  # «Черный перец горошком»: узнан, количества нет
+    ]
+    assert draft.lines[5].qty_per_serving == 10  # 2 ч. л. = 10 мл
+
+
+def test_low_confidence_when_nothing_matches(directory):
+    page_html = "<h2>Ингредиенты</h2><ul><li>Космическая пыль — 3 г</li><li>Эфир</li></ul>"
+    draft = import_from_html(page_html, directory)
+    assert WARNING_LOW_CONFIDENCE in draft.warnings and draft.review_count == 2
+
+
+def test_microdata_details():
+    cands = extract_candidates(
+        "<span itemprop='recipeYield'>4</span><span itemprop='recipeYield'>9</span>"
+        "<ul><li itemprop='ingredients'>Мука <b>200 г</b><ul><li>просеять</li></ul></li>"
+        "<li itemprop='recipeIngredient other'>Соль</li></ul>"
+        "<script>itemprop='recipeIngredient'</script>"
+        "<img itemprop='recipeIngredient' src='x.png'>"
+    )
+    [micro] = [c for c in cands if c.source == "microdata"]
+    assert micro.ingredients == ("Мука 200 г просеять", "Соль")
+    assert micro.servings == "4"  # первое значение
+
+
+def test_candidate_hints_come_from_other_sources():
+    cands = extract_candidates(
+        '<script type="application/ld+json">{"@type": "Recipe", "name": "Плов", "url": "https://x.test/p",'
+        ' "recipeYield": "5 порций"}</script>'
+        "<h2>Ингредиенты</h2><ul><li>Рис — 300 г</li></ul>"
+    )
+    [c] = cands
+    assert (c.title, c.servings, c.url, c.source) == (
+        "Плов",
+        "5 порций",
+        "https://x.test/p",
+        "html",
+    )
+
+
+def test_label_restarts_section_and_headings_stop_it():
+    cands = extract_candidates(
+        "<h2>Ингредиенты</h2><ul><li>Мука — 200 г</li></ul><h2>Шаги</h2><ul><li>Смешать</li></ul>"
+        "<h2>Состав</h2><ol><li>Сахар — 50 г</li></ol><h3>Конец</h3><ol><li>лишнее</li></ol>"
+    )
+    assert [c.ingredients for c in cands] == [("Мука — 200 г",), ("Сахар — 50 г",)]
+
+
+def test_paragraph_group_is_capped():
+    paras = "".join(f"<p>Продукт {i} — {i} г</p>" for i in range(1, 60))
+    [c] = extract_candidates(f"<h2>Ингредиенты</h2>{paras}")
+    assert len(c.ingredients) == 30
+
+
+def test_block_tags_and_br_separate_words():
+    [micro] = [
+        c
+        for c in extract_candidates(
+            "<div itemprop='recipeIngredient'>Мука<br>200 г<div>просеять</div></div>"
+        )
+        if c.source == "microdata"
+    ]
+    assert micro.ingredients == ("Мука 200 г просеять",)
+    [c] = extract_candidates(
+        "<h2>Ингредиенты</h2><ul><li>Мука<br>200 г</li><li><p>Соль</p><p>1 ч. л.</p></li></ul>"
+    )
+    assert c.ingredients == ("Мука 200 г", "Соль 1 ч. л.")
+
+
+def test_hidden_noscript_content_is_ignored():
+    cands = extract_candidates(
+        "<noscript><div itemprop='recipeIngredient'>скрыто<br></div>"
+        "<h2>Ингредиенты</h2><ul><li>скрыто</li></ul></noscript>"
+        "<h2>Ингредиенты</h2><ul><li>Мука — 200 г</li></ul>"
+    )
+    assert [c.ingredients for c in cands] == [("Мука — 200 г",)]
+
+
+def test_empty_paragraphs_are_skipped():
+    [c] = extract_candidates("<h2>Ингредиенты</h2><p> </p><p></p><p>Мука — 200 г</p>")
+    assert c.ingredients == ("Мука — 200 г",)
+
+
+def test_extract_recipe_falls_back_to_first_candidate_without_digits():
+    page_html = (
+        '<script type="application/ld+json">{"@type": "Recipe", "name": "Х",'
+        ' "recipeIngredient": ["Соль", "Перец"]}</script>'
+    )
+    assert extract_recipe(page_html).ingredients == ("Соль", "Перец")
+
+
+def test_paragraphs_inside_a_layout_table():
+    # на iamcook.ru вся страница лежит в <table><tr><td>, надпись «Ингредиенты» тоже внутри неё
+    cands = extract_candidates(
+        "<table><tr><td><h1>Суп</h1><div class='ingredients'><h2>Ингредиенты</h2>"
+        "<div><p>Лук: 1 штука;</p><p>Соль: 2 чайные ложки.</p></div>"
+        "<ul><li>24 кКал</li></ul></div><h2>Приготовление</h2><p>Варить.</p></td></tr></table>"
+    )
+    assert [c.ingredients for c in cands][-1] == ("Лук: 1 штука;", "Соль: 2 чайные ложки.")
+
+
+def test_layout_table_does_not_swallow_the_ingredient_paragraphs(directory):
+    page_html = (
+        "<table><tr><td><h1>Суп</h1><h2>Ингредиенты</h2>"
+        "<p>Лук репчатый: 1 штука;</p><p>Соль: 2 чайные ложки;</p><p>Вода: 1 л.</p>"
+        "<h2>Шаги</h2><p>Варить 30 минут.</p></td></tr></table>"
+    )
+    draft = import_from_html(page_html, directory)
+    assert [x.ingredient_id for x in draft.lines] == ["onion", "salt", "water"]
+    assert draft.review_count == 0

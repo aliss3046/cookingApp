@@ -53,6 +53,10 @@ def stem(word: str) -> str:
 
 
 _DESCRIPTOR_STEMS: Final = {stem(w) for w in _DESCRIPTORS}
+# «Сырой» и «сыр» имеют общую основу, поэтому такие описания отбрасываются по точной форме слова.
+_DESCRIPTOR_FORMS: Final = frozenset(
+    {"сырой", "сырая", "сырое", "сырые", "сырого", "сырых", "сырую", "сырым", "сырыми"}
+)
 
 
 def normalize(text: str) -> str:
@@ -67,12 +71,17 @@ def tokens(text: str) -> list[str]:
 
 def stems(text: str) -> frozenset[str]:
     """Набор основ значимых слов: порядок слов не важен («масло сливочное»)."""
-    out = set()
+    return frozenset(ordered_stems(text))
+
+
+def ordered_stems(text: str) -> list[str]:
+    """Основы значимых слов в порядке следования (без повторов)."""
+    out: list[str] = []
     for t in tokens(text):
-        if t in _STOP_WORDS:
+        if t in _STOP_WORDS or t in _DESCRIPTOR_FORMS:
             continue
         s = stem(t)
-        if s in _DESCRIPTOR_STEMS:
+        if s in _DESCRIPTOR_STEMS or s in out:
             continue
-        out.add(s)
-    return frozenset(out)
+        out.append(s)
+    return out

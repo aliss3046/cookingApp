@@ -45,3 +45,11 @@ def test_stems_ignore_order_stop_words_and_descriptors():
     assert stems("томаты в собственном соку") == stems("томаты собственном соку")
     assert stems("свежий крупный укроп") == stems("укроп")
     assert stems("") == frozenset()
+
+
+def test_ordered_stems_keep_order_and_drop_duplicates():
+    from importers.text import ordered_stems
+
+    assert ordered_stems("Мука с горкой, мука") == ["мук", "горк"]
+    assert ordered_stems("сырых желтка") == ["желтк"]  # «сырых» — описание, а не сыр
+    assert "сыр" in stems("сыр пармезан") and "сыр" not in stems("сырой картофель")

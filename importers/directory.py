@@ -12,12 +12,14 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Final
 
-from importers.text import stems
+from importers.text import ordered_stems, stems
 
 DEFAULT_PATH: Final = Path(__file__).resolve().parent.parent / "db" / "seeds" / "ingredients.json"
 
 CONFIDENCE_EXACT: Final = 1.0  # совпали все значимые слова
 CONFIDENCE_CONTAINED: Final = 0.8  # название справочника целиком внутри строки, есть лишние слова
+# Несколько ингредиентов подошли одинаково хорошо; выбран тот, что стоит в названии раньше.
+CONFIDENCE_TIEBREAK: Final = 0.6
 CANDIDATES_LIMIT: Final = 3
 
 
@@ -41,13 +43,20 @@ class Ingredient:
 class Match:
     ingredient_id: str | None
     confidence: float
-    # Кандидаты для выбора пары: при неоднозначности или когда совпадения нет
+    # Кандидаты для выбора парой: при ничьей (все равные) и при частичном совпадении
     candidates: tuple[str, ...] = ()
     alias: str | None = None
+    # tie: несколько равных, выбран первый по положению в названии (уверенность понижена)
+    tie: bool = False
+
+    @property
+    def uncertain(self) -> bool:
+        return self.ingredient_id is not None and self.tie
 
     @property
     def ambiguous(self) -> bool:
-        return self.ingredient_id is None and len(self.candidates) > 1
+        """Равные кандидаты, выбрать нельзя. Частичные совпадения сюда не относятся."""
+        return self.ingredient_id is None and self.tie
 
 
 class Directory:
@@ -96,16 +105,38 @@ class Directory:
 
         if not best:
             ranked = sorted(overlap, key=lambda i: (-overlap[i], i))
-            return Match(None, 0.0, tuple(ranked[:CANDIDATES_LIMIT]))
+            candidates = tuple(ranked[:CANDIDATES_LIMIT])
+            # «масло»: каждый кандидат объясняет название целиком, выбирать надо паре.
+            # «говяжья грудинка»: кандидаты объясняют только часть, это просто нет в справочнике.
+            whole = [i for i in ranked if overlap[i] == len(query)]
+            return Match(None, 0.0, candidates, tie=len(whole) > 1)
 
         top = max(size for size, _ in best.values())
         winners = sorted(i for i, (size, _) in best.items() if size == top)
         if len(winners) > 1:
-            return Match(None, 0.0, tuple(winners[:CANDIDATES_LIMIT]))
+            return self._break_tie(name, winners, best)
 
         winner = winners[0]
         confidence = CONFIDENCE_EXACT if top == len(query) else CONFIDENCE_CONTAINED
         return Match(winner, confidence, (winner,), best[winner][1])
+
+    def _break_tie(self, name: str, winners: list[str], best: dict[str, tuple[int, str]]) -> Match:
+        """Ничья: побеждает ингредиент, чей псевдоним начинается раньше в названии.
+
+        «мука с горкой для раскатывания теста»: «мука» стоит раньше «теста». Если и по
+        положению ничья («масло»), выбрать нельзя. Выбор по положению всегда уценён и
+        уходит паре на проверку: порядок слов не доказывает, что главный продукт первый.
+        """
+        order = ordered_stems(name)
+        position = {
+            i: min(order.index(st) for st in stems(best[i][1]) if st in order) for i in winners
+        }
+        first = min(position.values())
+        leaders = [i for i in winners if position[i] == first]
+        candidates = tuple(winners[:CANDIDATES_LIMIT])
+        if len(leaders) > 1:
+            return Match(None, 0.0, candidates, tie=True)
+        return Match(leaders[0], CONFIDENCE_TIEBREAK, candidates, best[leaders[0]][1], tie=True)
 
 
 def load_directory(path: Path = DEFAULT_PATH) -> Directory:

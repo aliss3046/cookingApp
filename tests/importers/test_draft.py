@@ -4,6 +4,7 @@ from importers.directory import Directory, Ingredient
 from importers.draft import (
     REASON_AMBIGUOUS,
     REASON_NO_MATCH,
+    REASON_UNCERTAIN,
     REASON_UNIT_UNKNOWN,
     WARNING_NO_INGREDIENTS,
     WARNING_SERVINGS_UNKNOWN,
@@ -141,3 +142,17 @@ def test_to_recipe_input_matches_contract(d):
 def test_single_to_taste_line_is_not_split(d):
     [line] = build_draft("Суп", ["Соль по вкусу"], d, servings=2).lines
     assert (line.ingredient_id, line.optional, line.needs_review) == ("salt", True, False)
+
+
+def test_uncertain_match_is_prefilled_but_needs_review(d):
+    d2 = Directory([Ingredient("flour", "мука"), Ingredient("dough", "тесто")])
+    [line] = build_draft("Х", ["Мука для теста — 200 г"], d2, servings=1).lines
+    assert (line.ingredient_id, line.reason, line.needs_review) == ("flour", REASON_UNCERTAIN, True)
+    assert line.candidates == ("dough", "flour") and line.confidence < 0.7
+
+
+def test_partial_overlap_is_no_match_not_ambiguous():
+    d2 = Directory([Ingredient("liver", "говяжья печень"), Ingredient("mince", "говяжья вырезка")])
+    [line] = build_draft("Х", ["Говяжья грудинка — 700 г"], d2, servings=1).lines
+    assert (line.ingredient_id, line.reason) == (None, REASON_NO_MATCH)
+    assert line.candidates == ("liver", "mince")

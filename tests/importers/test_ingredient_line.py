@@ -177,3 +177,37 @@ def test_bare_number_only_in_parentheses():
 def test_real_world_forms(raw, qty, unit, approx):
     p = parse_line(raw)
     assert (p.qty, p.unit, p.approx) == (qty, unit, approx)
+
+
+@pytest.mark.parametrize(
+    "raw",
+    [
+        "Зелень петрушки (для подачи) - по вкусу",
+        "Соль (по вкусу) по желанию",
+        "Масло для жарки, для смазывания формы",
+    ],
+)
+def test_every_to_taste_phrase_is_removed(raw):
+    p = parse_line(raw)
+    assert p.optional and p.qty is None
+    assert "вкусу" not in p.name and "подачи" not in p.name and "желанию" not in p.name
+
+
+def test_name_before_colon():
+    p = parse_line("Лук репчатый : 1 штука;")
+    assert (p.name, p.qty) == ("лук репчатый", 1)
+    assert parse_line("Соль: 2 чайные ложки на 3 литра бульона").name == "соль"
+    assert parse_line(": 200 г муки").name == "муки"  # пустое слева от двоеточия не трогаем
+
+
+@pytest.mark.parametrize(
+    ("raw", "name"),
+    [
+        ("Вода для варки - по потребности", "вода"),
+        ("Зелень - для декора", "зелень"),
+        ("Мука для присыпки", "мука"),
+    ],
+)
+def test_more_to_taste_phrases_from_real_pages(raw, name):
+    p = parse_line(raw)
+    assert (p.name, p.optional, p.qty, p.needs_review) == (name, True, None, False)
