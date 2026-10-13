@@ -26,8 +26,10 @@
 
 ```python
 matcher = Matcher(load_directory())
-matcher.match("milk", offer)            # Match: оценка 0..1, вердикт auto / confirm / reject, марка, вариант, причины
-matcher.shortlist("milk", offers)       # лучшие по (магазин, марка, вариант), не больше 12
+matcher.match(
+    "milk", offer
+)  # Match: оценка 0..1, вердикт auto / confirm / reject, марка, вариант, причины
+matcher.shortlist("milk", offers)  # лучшие по (магазин, марка, вариант), не больше 12
 ```
 
 ### Качество на эталонном наборе
