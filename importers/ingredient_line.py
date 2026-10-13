@@ -18,7 +18,8 @@ REASON_NO_NAME: Final = "no_name"
 REASON_NO_QUANTITY: Final = "no_quantity"
 
 _TO_TASTE: Final = re.compile(
-    r"по\s+вкусу|по\s+желанию|для\s+(?:подачи|украшения|жарки|обжарки|смазывани\w*|смазки|посыпки"
+    r"по\s+вкусу|по\s+желанию|по\s+потребности"
+    r"|для\s+(?:подачи|украшения|декора|варки|жарки|обжарки|смазывани\w*|смазки|посыпки"
     r"|присыпки|посыпания|фритюра|формы|противня|панировки)"
     r"|на\s+кончике\s+ножа|сколько\s+потребуется|немного"
 )
@@ -119,6 +120,10 @@ def _clean_name(text: str, keep_list: bool = False) -> str:
         return re.sub(r"\s[-–—]\s", " ", name).strip(_EDGE_PUNCT)
     # запятая-разделитель отсекает пояснение, десятичная («3,2%») нет
     for part in re.split(r"[;,](?!\d)", text):
+        # «Лук: 1 штука» — название до двоеточия; «: 200 г» (пустое слева) не трогаем
+        before = part.split(":", 1)[0]
+        if before.strip(_EDGE_PUNCT):
+            part = before
         name = re.sub(r"\s+", " ", part).strip(_EDGE_PUNCT)
         name = re.sub(r"\s[-–—]\s", " ", name).strip(_EDGE_PUNCT)
         if name:
@@ -130,10 +135,8 @@ def parse_line(raw: str) -> ParsedLine:
     text = _normalize(raw)
     approx = bool(_APPROX.search(text))
 
-    optional = False
-    if m := _TO_TASTE.search(text):
-        optional = True
-        text = f"{text[: m.start()]} {text[m.end() :]}"
+    optional = bool(_TO_TASTE.search(text))
+    text = _TO_TASTE.sub(" ", text)  # все вхождения: «(для подачи) - по вкусу»
 
     # Количество ищем сначала вне скобок; если там пусто, то внутри («Мука (200 г)»).
     inner = " ".join(_PAREN.findall(text))

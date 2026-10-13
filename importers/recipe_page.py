@@ -1,300 +1,62 @@
-"""Импорт рецепта со страницы по разметке schema.org/Recipe (JSON-LD).
+"""Импорт рецепта по ссылке: загрузка страницы и сборка черновика.
 
 Сайт читается один раз по просьбе пары, с проверкой robots.txt, ограничением
 размера и тайм-аутом. Сеть спрятана за функцией `fetch`, поэтому всё остальное
-тестируется на сохранённых страницах.
+тестируется на сохранённых страницах. Разбор разметки: `importers.page_markup`.
 """
 
 from __future__ import annotations
 
-import html
-import json
 import re
 import time
 import urllib.error
 import urllib.request
 import urllib.robotparser
 import zlib
-from collections.abc import Callable, Iterator
-from dataclasses import dataclass, replace
-from html.parser import HTMLParser
+from collections.abc import Callable
+from dataclasses import replace
 from typing import Any, Final, Protocol
 from urllib.parse import urljoin, urlsplit
 
 from importers.directory import Directory
 from importers.draft import RecipeDraft, build_draft
+from importers.errors import (
+    BadUrl,
+    DisallowedByRobots,
+    FetchFailed,
+    NoRecipeFound,
+    PageTooLarge,
+    RecipeImportError,
+)
+from importers.page_markup import (
+    SOURCE_HTML,
+    RecipeLD,
+    extract_candidates,
+    extract_recipe,
+)
+
+__all__ = [
+    "BadUrl",
+    "DisallowedByRobots",
+    "FetchFailed",
+    "NoRecipeFound",
+    "PageTooLarge",
+    "RecipeImportError",
+    "RecipeLD",
+    "extract_recipe",
+    "fetch_html",
+    "import_from_html",
+    "import_recipe",
+    "robots_allows",
+]
 
 USER_AGENT: Final = "cookingApp-recipe-import/0.1 (+https://github.com/aliss3046/cookingApp)"
 TIMEOUT_S: Final = 10
 MAX_BYTES: Final = 3_000_000
 WARNING_HTML_FALLBACK: Final = "html_fallback"
-
-
-class RecipeImportError(Exception):
-    """Базовая ошибка импорта рецепта."""
-
-
-class BadUrl(RecipeImportError):
-    pass
-
-
-class DisallowedByRobots(RecipeImportError):
-    pass
-
-
-class PageTooLarge(RecipeImportError):
-    pass
-
-
-class FetchFailed(RecipeImportError):
-    pass
-
-
-class NoRecipeFound(RecipeImportError):
-    pass
-
-
-@dataclass(frozen=True)
-class RecipeLD:
-    title: str
-    ingredients: tuple[str, ...]
-    servings: object
-    url: str | None = None
-    source: str = "json-ld"  # json-ld | html (запасной разбор вёрстки)
-
-
-# --- разбор страницы ---
-
-
-class _LdJsonCollector(HTMLParser):
-    def __init__(self) -> None:
-        super().__init__(convert_charrefs=True)
-        self.blocks: list[str] = []
-        self._in_ld = False
-        self._buf: list[str] = []
-
-    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
-        if tag == "script":
-            kind = (dict(attrs).get("type") or "").split(";")[0].strip().lower()
-            self._in_ld = kind == "application/ld+json"
-            self._buf = []
-
-    def handle_data(self, data: str) -> None:
-        if self._in_ld:
-            self._buf.append(data)
-
-    def handle_endtag(self, tag: str) -> None:
-        if tag == "script" and self._in_ld:
-            self.blocks.append("".join(self._buf))
-            self._in_ld = False
-
-
-def _loads(block: str) -> Any:
-    text = block.strip()
-    text = re.sub(r"^\s*<!\[CDATA\[|\]\]>\s*$", "", text)
-    text = re.sub(r"^\s*<!--|-->\s*$", "", text)
-    try:
-        return json.loads(text)
-    except json.JSONDecodeError:
-        # частая поломка: висячие запятые перед ] и }
-        try:
-            return json.loads(re.sub(r",\s*([\]}])", r"\1", text))
-        except json.JSONDecodeError:
-            return None
-
-
-def _is_recipe(obj: dict[str, Any]) -> bool:
-    t = obj.get("@type")
-    types = t if isinstance(t, list) else [t]
-    return any(isinstance(x, str) and x.lower() == "recipe" for x in types)
-
-
-def _walk(obj: Any) -> Iterator[dict[str, Any]]:
-    if isinstance(obj, list):
-        for item in obj:
-            yield from _walk(item)
-    elif isinstance(obj, dict):
-        if _is_recipe(obj):
-            yield obj
-        for key in ("@graph", "mainEntity", "mainEntityOfPage", "itemListElement", "item"):
-            if key in obj:
-                yield from _walk(obj[key])
-
-
-def _text(value: Any) -> str:
-    if value is None:
-        return ""
-    if isinstance(value, list):
-        value = value[0] if value else ""
-    if isinstance(value, dict):
-        value = value.get("name") or value.get("text") or ""
-    s = html.unescape(str(value))
-    s = re.sub(r"<[^>]+>", " ", s)
-    return re.sub(r"\s+", " ", s).strip()
-
-
-_LABEL_RE: Final = re.compile(r"\s*ингредиенты\s*:?\s*", re.I)
-_CONTAINERS: Final = frozenset({"ul", "ol", "table"})
-_SKIP_TAGS: Final = frozenset({"script", "style", "noscript", "template"})
-
-
-def _clean(text: str) -> str:
-    return re.sub(r"\s+", " ", text).strip()
-
-
-class _IngredientListCollector(HTMLParser):
-    """Запасной разбор для страниц без ингредиентов в JSON-LD.
-
-    Ищет надпись «Ингредиенты» и берёт первый список (`ul`/`ol`) или таблицу после
-    неё, либо ту, внутри которой надпись стоит (подпись таблицы). Строка таблицы
-    склеивается через « — »: «Творог | 500 г» -> «Творог — 500 г».
-    """
-
-    def __init__(self) -> None:
-        super().__init__(convert_charrefs=True)
-        self.items: list[str] = []
-        self.og_title = ""
-        self.h1 = ""
-        self.title = ""
-        self._skip = 0
-        self._open: list[str] = []  # открытые списки и таблицы
-        self._label = False
-        self._container: str | None = None
-        self._depth = 0
-        self._done = False
-        self._li: list[str] | None = None
-        self._cells: list[str] | None = None
-        self._cell: list[str] | None = None
-        self._in_h1 = False
-        self._in_title = False
-
-    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
-        if tag in _SKIP_TAGS:
-            self._skip += 1
-            return
-        if tag == "meta":
-            a = dict(attrs)
-            if a.get("property") == "og:title" and not self.og_title:
-                self.og_title = _clean(a.get("content") or "")
-        elif tag == "h1" and not self.h1:
-            self._in_h1 = True
-        elif tag == "title" and not self.title:
-            self._in_title = True
-        if tag in _CONTAINERS:
-            self._open.append(tag)
-        if self._done or not self._label:
-            return
-        if self._container is None:
-            if tag in _CONTAINERS:
-                self._container, self._depth = tag, 1
-            return
-        if tag == self._container:
-            self._depth += 1
-        elif tag == "li" and self._depth == 1:
-            self._li = []
-        elif tag == "tr":
-            self._cells = []
-        elif tag in ("td", "th") and self._cells is not None:
-            self._cell = []
-
-    def handle_data(self, data: str) -> None:
-        if self._skip:
-            return
-        if self._in_h1:
-            self.h1 += data
-        if self._in_title:
-            self.title += data
-        if self._done:
-            return
-        if not self._label:
-            if _LABEL_RE.fullmatch(data):
-                self._label = True
-                if self._open:  # надпись внутри таблицы или списка: берём его
-                    self._container, self._depth = self._open[-1], 1
-            return
-        if self._depth > 1:  # вложенные списки — пояснения и замены, не ингредиенты
-            return
-        if self._cell is not None:
-            self._cell.append(data)
-        elif self._li is not None:
-            self._li.append(data)
-
-    def handle_endtag(self, tag: str) -> None:
-        if tag in _SKIP_TAGS:
-            self._skip = max(0, self._skip - 1)
-            return
-        if tag == "h1":
-            self._in_h1 = False
-        elif tag == "title":
-            self._in_title = False
-        if tag in _CONTAINERS and self._open and self._open[-1] == tag:
-            self._open.pop()
-        if self._done or self._container is None:
-            return
-        if tag in ("td", "th") and self._cell is not None and self._cells is not None:
-            if text := _clean(" ".join(self._cell)):
-                self._cells.append(text)
-            self._cell = None
-        elif tag == "tr" and self._cells is not None:
-            if self._cells:
-                self.items.append(" — ".join(self._cells))
-            self._cells = None
-        elif tag == "li" and self._li is not None and self._depth == 1:
-            if text := _clean(" ".join(self._li)):
-                self.items.append(text)
-            self._li = None
-        elif tag == self._container:
-            self._depth -= 1
-            if self._depth == 0:
-                if self.items:
-                    self._done = True
-                else:  # пустой контейнер: ждём следующий
-                    self._container = None
-
-    @property
-    def page_title(self) -> str:
-        return _clean(self.og_title or self.h1 or self.title)
-
-
-def extract_recipe(page: str) -> RecipeLD:
-    """Рецепт со страницы: сначала JSON-LD, затем запасной разбор вёрстки.
-
-    Если в JSON-LD есть Recipe без ингредиентов (так бывает), его название и число
-    порций используются, а ингредиенты берутся из вёрстки.
-    """
-    collector = _LdJsonCollector()
-    collector.feed(page)
-    partial: dict[str, Any] | None = None
-    for block in collector.blocks:
-        for recipe in _walk(_loads(block)):
-            raw = recipe.get("recipeIngredient") or recipe.get("ingredients") or []
-            if isinstance(raw, str):
-                raw = [raw]
-            lines = tuple(t for t in (_text(x) for x in raw) if t)
-            if not lines:
-                partial = partial or recipe
-                continue
-            return RecipeLD(
-                title=_text(recipe.get("name")) or "Без названия",
-                ingredients=lines,
-                servings=recipe.get("recipeYield"),
-                url=_text(recipe.get("url")) or None,
-            )
-
-    fallback = _IngredientListCollector()
-    fallback.feed(page)
-    if fallback.items:
-        partial = partial or {}
-        return RecipeLD(
-            title=_text(partial.get("name")) or fallback.page_title or "Без названия",
-            ingredients=tuple(fallback.items),
-            servings=partial.get("recipeYield"),
-            url=_text(partial.get("url")) or None,
-            source="html",
-        )
-    raise NoRecipeFound(
-        "на странице нет ингредиентов: ни разметки schema.org/Recipe, ни списка после «Ингредиенты»"
-    )
+WARNING_LOW_CONFIDENCE: Final = "low_confidence"
+# вариант списка годится, если не меньше половины строк разобрано и сопоставлено без проверки
+GOOD_SHARE: Final = 0.5
 
 
 # --- загрузка страницы ---
@@ -309,7 +71,7 @@ class _Response(Protocol):
 Opener = Callable[[urllib.request.Request, float], _Response]
 RobotsCheck = Callable[[str], bool]
 
-RETRIES: Final = 1  # один повтор при сетевом сбое (на практике бывают обрывы TLS)
+RETRIES: Final = 2  # два повтора при сетевом сбое (на практике бывают обрывы TLS)
 RETRY_DELAY_S: Final = 1.0
 
 
@@ -345,7 +107,10 @@ def _get(
     accept: str,
     sleep: Callable[[float], None] = time.sleep,
 ) -> tuple[bytes, Any]:
-    """GET с одним повтором при сетевом сбое. HTTP-ошибки (404 и т. п.) не повторяются."""
+    """GET с повторами при сетевом сбое (пауза растёт: 1 с, 2 с).
+
+    HTTP-ошибки (404 и т. п.) не повторяются.
+    """
     req = urllib.request.Request(
         url, headers={"User-Agent": USER_AGENT, "Accept": accept, "Accept-Encoding": "gzip"}
     )
@@ -361,7 +126,7 @@ def _get(
             if attempt >= RETRIES:
                 raise FetchFailed(f"не удалось загрузить {url}: {e}") from e
             attempt += 1
-            sleep(RETRY_DELAY_S)
+            sleep(RETRY_DELAY_S * attempt)
     if len(body) > max_bytes:
         raise PageTooLarge(f"страница больше {max_bytes} байт")
     headers = resp.headers or {}
@@ -440,8 +205,7 @@ def fetch_html(
     return _decode_text(body, _charset(headers))
 
 
-def import_from_html(page: str, directory: Directory, source_url: str | None = None) -> RecipeDraft:
-    ld = extract_recipe(page)
+def _draft(ld: RecipeLD, directory: Directory, source_url: str | None) -> RecipeDraft:
     draft = build_draft(
         ld.title,
         list(ld.ingredients),
@@ -449,10 +213,35 @@ def import_from_html(page: str, directory: Directory, source_url: str | None = N
         servings=ld.servings,
         source_url=source_url or ld.url,
     )
-    if ld.source == "html":
+    if ld.source == SOURCE_HTML:
         # список найден эвристикой по вёрстке: паре стоит проверить его целиком
         draft = replace(draft, warnings=(*draft.warnings, WARNING_HTML_FALLBACK))
     return draft
+
+
+def _share_ok(draft: RecipeDraft) -> float:
+    return (len(draft.lines) - draft.review_count) / len(draft.lines) if draft.lines else 0.0
+
+
+def import_from_html(page: str, directory: Directory, source_url: str | None = None) -> RecipeDraft:
+    """Собирает черновик из лучшего варианта списка ингредиентов на странице.
+
+    Варианты идут по надёжности (JSON-LD, микроразметка, вёрстка). Берётся первый, у
+    которого не меньше половины строк разобрано и сопоставлено со справочником; иначе тот,
+    у кого таких строк больше (с предупреждением `low_confidence`). Так JSON-LD без
+    количеств или меню сайта вместо ингредиентов не попадают в черновик.
+    """
+    best: RecipeDraft | None = None
+    best_share = -1.0
+    for ld in extract_candidates(page):
+        draft = _draft(ld, directory, source_url)
+        share = _share_ok(draft)
+        if share >= GOOD_SHARE:
+            return draft
+        if share > best_share:
+            best, best_share = draft, share
+    assert best is not None  # extract_candidates не возвращает пустой список
+    return replace(best, warnings=(*best.warnings, WARNING_LOW_CONFIDENCE))
 
 
 def import_recipe(

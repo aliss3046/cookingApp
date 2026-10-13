@@ -23,6 +23,7 @@ MAX_SERVINGS: Final = 50
 
 REASON_NO_MATCH: Final = "no_match"
 REASON_AMBIGUOUS: Final = "ambiguous"
+REASON_UNCERTAIN: Final = "uncertain"  # выбран по положению в названии, нужна проверка
 REASON_UNIT_UNKNOWN: Final = "unit_unknown"  # «3 веточки» продукта без веса веточки
 
 WARNING_SERVINGS_UNKNOWN: Final = "servings_unknown"
@@ -120,6 +121,8 @@ def _line(raw: str, parsed: ParsedLine, name: str, servings: int, d: Directory) 
     reason = parsed.reason
     if reason is None and m is not None and ingredient_id is None:
         reason = REASON_AMBIGUOUS if m.ambiguous else REASON_NO_MATCH
+    elif reason is None and m is not None and m.uncertain:
+        reason = REASON_UNCERTAIN
     if (
         reason is None
         and ingredient_id is not None
