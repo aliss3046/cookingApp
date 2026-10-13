@@ -2,7 +2,7 @@
 
     python -m prices dry-run --store magnit --html page.html --groups молочные,овощи
     python -m prices categories --html page.html
-    python -m prices run --store magnit --location 992301 [--json out.json]
+    python -m prices run --store magnit --location 992301 [--json out.json] [--pages-dir pages/]
 
 `dry-run` и `categories` работают по сохранённой странице, без сети, и не требуют включения
 магазина. `run` ходит на сайт и работает только для магазина, включённого владельцем проекта
@@ -20,20 +20,31 @@ from pathlib import Path
 from typing import Any, TextIO
 
 from importers.directory import Directory, load_directory
-from prices.fetcher import PoliteFetcher
 from prices.listing import extract_categories, extract_offers
 from prices.matching import Match, Matcher
 from prices.memory_store import MemoryPriceStore
-from prices.normalize import PriceParseError, normalize_offer
+from prices.normalize import NormalizedOffer, PriceParseError, normalize_offer
 from prices.pipeline import run_store
 from prices.profile import ProfileError, StoreDisabled, StoreProfile, load_profiles
+from prices.sources import build_fetcher
 
 EXIT_OK = 0
 EXIT_FAILED = 1
 
 
-def _match_json(m: Match) -> dict[str, Any]:
+def _match_json(m: Match, product: NormalizedOffer | None = None) -> dict[str, Any]:
+    shown = (
+        {
+            "title": product.title,
+            "price": str(product.price),
+            "price_per_kg": None if product.price_per_kg is None else str(product.price_per_kg),
+            "in_stock": product.in_stock,
+        }
+        if product
+        else {}
+    )
     return {
+        **shown,
         "external_id": m.external_id,
         "score": m.score,
         "verdict": m.verdict,
@@ -85,8 +96,8 @@ def _dry_run(args: argparse.Namespace, directory: Directory, out: TextIO) -> int
 
 def _categories(args: argparse.Namespace, out: TextIO) -> int:
     page = Path(args.html).read_text(encoding="utf-8", errors="replace")
-    for depth, code, name in extract_categories(page):
-        out.write(f"{'  ' * depth}{code}\t{name}\n")
+    for depth, cid, code, name in extract_categories(page):
+        out.write(f"{'  ' * depth}{cid}-{code}\t{name}\n")
     return EXIT_OK
 
 
@@ -95,9 +106,7 @@ def _run(args: argparse.Namespace, profile: StoreProfile, directory: Directory, 
     stats = run_store(
         profile,
         args.location,
-        fetcher=PoliteFetcher(
-            min_delay_s=profile.min_delay_s, daily_limit=profile.daily_request_limit
-        ),
+        fetcher=build_fetcher(profile, args.pages_dir),
         directory=directory,
         matcher=Matcher(directory),
         store=store,
@@ -107,8 +116,8 @@ def _run(args: argparse.Namespace, profile: StoreProfile, directory: Directory, 
             k: (str(v) if isinstance(v, datetime | tuple) else v) for k, v in vars(stats).items()
         },
         "shortlists": {
-            ing: [_match_json(m) for m in matches]
-            for (_, ing), (matches, _) in store.mapping.items()
+            ing: [_match_json(m, store.products.get((profile.code, m.external_id))) for m in ms]
+            for (_, ing), (ms, _) in store.mapping.items()
         },
     }  # fmt: skip
     text = json.dumps(result, ensure_ascii=False, indent=2) + "\n"
@@ -144,6 +153,9 @@ def main(
     run.add_argument("--store", required=True)
     run.add_argument("--location", required=True, help="ключ адреса или магазина")
     run.add_argument("--json", help="записать результат в файл")
+    run.add_argument(
+        "--pages-dir", help="читать страницы, сохранённые из браузера, из папки (без сети)"
+    )
     args = parser.parse_args(argv)
 
     if args.cmd == "categories":

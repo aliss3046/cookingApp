@@ -213,10 +213,10 @@ def test_category_tree():
         ]
     }  # fmt: skip
     assert extract_categories(nuxt_page(tree)) == [
-        (0, "milk", "Молочный прилавок"),
-        (1, "cheese", "Сыры"),
-        (2, "hard", "Твердые"),
-        (1, "milk_p", "Молоко"),
+        (0, "1", "milk", "Молочный прилавок"),
+        (1, "2", "cheese", "Сыры"),
+        (2, "3", "hard", "Твердые"),
+        (1, "4", "milk_p", "Молоко"),
     ]
 
 
@@ -225,7 +225,7 @@ def test_categories_absent_or_broken():
     assert extract_categories('<script id="__NUXT_DATA__">{плохо</script>') == []
     plain = {"x": [{"code": "a", "name": "A", "children": []}]}
     page = f'<script id="__NUXT_DATA__">{json.dumps(plain)}</script>'
-    assert extract_categories(page) == [(0, "a", "A")]
+    assert extract_categories(page) == [(0, "", "a", "A")]
 
 
 @pytest.mark.parametrize("bad", [True, False, None, [], {}, "abc"])
@@ -253,3 +253,31 @@ def test_json_ld_duplicate_products_are_dropped():
     ]
     page = f'<script type="application/ld+json">{json.dumps(ld)}</script>'
     assert len(offers(page).offers) == 1
+
+
+def test_html_cards_from_real_dixy_markup():
+    from pathlib import Path
+
+    page = (Path(__file__).parent / "fixtures" / "dixy_cards.html").read_text(encoding="utf-8")
+    listing = extract_offers(page, store="dixy", now=NOW, category="ovoshchi")
+    assert listing.strategy == "html" and listing.skipped == 1
+    onion, yalta, sale = listing.offers
+    assert (onion.external_id, onion.title) == ("10E0074356", "Лук репчатый")
+    assert (onion.price_text, onion.price_unit) == ("41.89", "kg")  # весовой: цена за кг
+    assert yalta.title == 'Лук "Ялтинский", в упаковке, 360 г' and yalta.price_unit == "pack"
+    assert sale.price_text == "89.99"  # текущая цена, а не зачёркнутая 119.90
+    assert all(o.store == "dixy" and o.category == "ovoshchi" for o in listing.offers)
+
+
+def test_html_cards_without_unit_and_duplicates_and_blank_title():
+    def art(pid, title, unit=""):
+        action = f'<div data-bsk_data="1 1 1 {unit} 0">' if unit else "<div>"
+        return (
+            f'<article class="card" product-id="{pid}"><p class="card__title">{title}</p>'
+            f'{action}<div class="card__price-num">10.<span>50</span></div></div></article>'
+        )
+
+    page = art("a", "Соль") + art("a", "Соль повтор", "кг") + art("b", "  ")
+    listing = extract_offers(page, store="dixy", now=NOW)
+    assert [o.external_id for o in listing.offers] == ["a"]
+    assert listing.offers[0].price_unit == "pack" and listing.skipped == 1

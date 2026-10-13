@@ -17,13 +17,17 @@ def raw(**kw):
     return {**base, **kw}
 
 
-def test_shipped_profiles_are_all_disabled_and_load():
+def test_shipped_profiles_load_and_enabled_ones_are_approved():
     profiles = load_profiles()
     assert {"magnit", "dixy"} <= set(profiles)
     for p in profiles.values():
-        assert p.enabled is False and p.approval is None and p.min_delay_s >= 20
-        with pytest.raises(StoreDisabled, match="выключен"):
+        assert p.min_delay_s >= 20 and p.daily_request_limit <= 500
+        if p.enabled:
+            assert p.approval is not None and p.categories
             p.require_enabled()
+        else:
+            with pytest.raises(StoreDisabled, match="выключен"):
+                p.require_enabled()
 
 
 def test_enabled_requires_a_complete_approval():
@@ -79,3 +83,11 @@ def test_load_profiles_skips_comments(tmp_path):
     f = tmp_path / "stores.json"
     f.write_text(json.dumps({"_comment": "x", "a": raw()}), encoding="utf-8")
     assert list(load_profiles(f)) == ["a"]
+
+
+def test_sources_default_to_http_and_unknown_ones_are_rejected():
+    assert parse_profile("x", raw()).sources == ("http",)
+    assert parse_profile("x", raw(sources=["http", "saved"])).sources == ("http", "saved")
+    for bad in ([], ["stealth"], ["http", "browser"]):
+        with pytest.raises(ProfileError, match="sources должен быть"):
+            parse_profile("x", raw(sources=bad))

@@ -9,6 +9,7 @@ from typing import Any, Final
 from urllib.parse import urlsplit
 
 from prices.politeness import MAX_DAILY_LIMIT, MIN_DELAY_FLOOR_S
+from prices.sources import source_names
 
 DEFAULT_PATH: Final = Path(__file__).resolve().parent / "stores.json"
 
@@ -47,6 +48,8 @@ class StoreProfile:
     daily_request_limit: int
     categories: tuple[CategorySpec, ...]
     notes: str = ""
+    sources: tuple[str, ...] = ("http",)  # источники страниц по порядку, см. prices/sources.py
+    pages_dir: str | None = None
 
     def require_enabled(self) -> None:
         if not self.enabled:
@@ -95,6 +98,14 @@ def parse_profile(code: str, raw: dict[str, Any]) -> StoreProfile:
             f"{code}: магазин включён без записи approval (кто, когда, на каком основании)"
         )
 
+    sources = tuple(raw.get("sources", ("http",)))
+    unknown = [x for x in sources if x not in source_names()]
+    if not sources or unknown:
+        raise ProfileError(
+            f"{code}: sources должен быть непустым списком из {sorted(source_names())}, "
+            f"неизвестно: {unknown}"
+        )
+
     return StoreProfile(
         code=code,
         name=raw.get("name", code),
@@ -105,6 +116,8 @@ def parse_profile(code: str, raw: dict[str, Any]) -> StoreProfile:
         daily_request_limit=limit,
         categories=tuple(_parse_category(code, parts.netloc, c) for c in raw.get("categories", ())),
         notes=raw.get("notes", ""),
+        sources=sources,
+        pages_dir=raw.get("pages_dir"),
     )
 
 

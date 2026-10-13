@@ -1,11 +1,13 @@
 import io
 import json
+from pathlib import Path
 from typing import ClassVar
 
 import pytest
 from payloads import card, nuxt_page, page_with
 
 import prices.__main__ as cli
+import prices.sources as sources
 from importers.directory import load_directory
 from prices.politeness import StoreBlocked
 from prices.profile import Approval, CategorySpec, StoreProfile
@@ -88,7 +90,7 @@ def test_categories_lists_the_tree(tmp_path, directory):
     f = tmp_path / "p.html"
     f.write_text(nuxt_page(tree), encoding="utf-8")
     code, out, _ = call(["categories", "--html", str(f)], directory)
-    assert code == 0 and out == "milk\tМолоко\n  kefir\tКефир\n"
+    assert code == 0 and out == "-milk\tМолоко\n  -kefir\tКефир\n"
 
 
 def profile(enabled=True, categories=()):
@@ -136,7 +138,7 @@ class FakeFetcher:
 
 def test_run_prints_stats_and_shortlists(directory, monkeypatch):
     FakeFetcher.pages = {"https://shop.test/milk": PAGE}
-    monkeypatch.setattr(cli, "PoliteFetcher", FakeFetcher)
+    monkeypatch.setattr(sources, "PoliteFetcher", FakeFetcher)
     prof = profile(
         categories=[CategorySpec("https://shop.test/milk", groups=("молочные", "овощи"))]
     )
@@ -151,7 +153,7 @@ def test_run_prints_stats_and_shortlists(directory, monkeypatch):
 
 def test_run_writes_json_file_and_fails_on_block(directory, monkeypatch, tmp_path):
     FakeFetcher.pages = {"https://shop.test/milk": StoreBlocked("HTTP 403", status=403)}
-    monkeypatch.setattr(cli, "PoliteFetcher", FakeFetcher)
+    monkeypatch.setattr(sources, "PoliteFetcher", FakeFetcher)
     prof = profile(categories=[CategorySpec("https://shop.test/milk", groups=("молочные",))])
     target = tmp_path / "result.json"
     code, out, _ = call(
@@ -171,11 +173,37 @@ def test_fetcher_gets_the_profile_limits(directory, monkeypatch):
             created.append(kwargs)
 
     FakeFetcher.pages = {}
-    monkeypatch.setattr(cli, "PoliteFetcher", Spy)
+    monkeypatch.setattr(sources, "PoliteFetcher", Spy)
     call(["run", "--store", "shop", "--location", "1"], directory, {"shop": profile()})
     assert created == [{"min_delay_s": 20, "daily_limit": 50}]
 
 
-def test_run_loads_shipped_profiles_when_none_given(directory):
-    code, _, err = call(["run", "--store", "magnit", "--location", "1"], directory)
-    assert code == cli.EXIT_FAILED and "выключен" in err  # магазины по умолчанию выключены
+def test_run_loads_shipped_profiles_when_none_given(directory, monkeypatch):
+    class Blocked:
+        def __init__(self, **_):
+            pass
+
+        def get(self, url):
+            raise StoreBlocked("HTTP 403", status=403)  # сеть в тестах не трогаем
+
+    monkeypatch.setattr(sources, "PoliteFetcher", Blocked)
+    code, out, _ = call(["run", "--store", "magnit", "--location", "1"], directory)
+    assert code == cli.EXIT_FAILED and json.loads(out)["stats"]["blocked"] == "HTTP 403"
+
+
+def test_run_from_saved_pages_needs_no_network(directory, tmp_path, monkeypatch):
+    def no_network(**_):
+        raise AssertionError("сеть не должна использоваться")
+
+    monkeypatch.setattr(sources, "PoliteFetcher", no_network)
+    html = Path(__file__).parent / "fixtures" / "dixy_cards.html"
+    (tmp_path / "catalog_onion.html").write_text(html.read_text("utf-8"), encoding="utf-8")
+    prof = profile(categories=[CategorySpec("https://shop.test/catalog/onion", groups=("овощи",))])
+    code, out, _ = call(
+        ["run", "--store", "shop", "--location", "1", "--pages-dir", str(tmp_path)],
+        directory,
+        {"shop": prof},
+    )
+    data = json.loads(out)
+    assert code == cli.EXIT_OK and data["stats"]["pages"] == 1 and data["stats"]["parsed"] == 3
+    assert "onion" in data["shortlists"]
