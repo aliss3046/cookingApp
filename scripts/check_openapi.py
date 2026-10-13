@@ -1,4 +1,5 @@
 """Проверяет контракт: YAML читается, все $ref ведут на существующие схемы."""
+
 import re
 import sys
 
@@ -18,7 +19,7 @@ for section, name in sorted(set(re.findall(r"\$ref:\s*'#/components/(\w+)/(\w+)'
     if name not in spec.get("components", {}).get(section, {}):
         errors.append(f"битая ссылка: #/components/{section}/{name}")
 
-for route, ops in spec.get("paths", {}).items():
+for route in spec.get("paths", {}):
     if not route.startswith("/"):
         errors.append(f"путь без ведущего /: {route}")
 
