@@ -186,7 +186,7 @@ def test_run_loads_shipped_profiles_when_none_given(directory, monkeypatch):
             raise StoreBlocked("HTTP 403", status=403)  # сеть в тестах не трогаем
 
     monkeypatch.setattr(cli, "PoliteFetcher", Blocked)
-    code, out, _ = call(["run", "--store", "dixy", "--location", "1"], directory)
+    code, out, _ = call(["run", "--store", "magnit", "--location", "1"], directory)
     assert code == cli.EXIT_FAILED and json.loads(out)["stats"]["blocked"] == "HTTP 403"
 
 
