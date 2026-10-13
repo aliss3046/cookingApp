@@ -160,3 +160,20 @@ def test_first_bare_number_wins_when_there_are_several():
 def test_bare_number_only_in_parentheses():
     p = parse_line("Яйца (3)")
     assert (p.name, p.qty, p.unit) == ("яйца", 3, "pcs")
+
+
+@pytest.mark.parametrize(
+    ("raw", "qty", "unit", "approx"),
+    [
+        # найдено на реальных страницах (Лайфхакер): «ложек» и разделитель тысяч
+        ("Растительное масло 5 ст. ложек", 75, "ml", False),
+        ("Сахар 3 чайных ложек", 15, "ml", False),
+        ("Масло 2 столовых ложек", 30, "ml", False),
+        ("Вода 1 200 мл", 1200, "ml", False),
+        ("Вода 1 000–1 200 мл", 1200, "ml", True),
+        ("Мука 1 200,5 г", 1200.5, "g", False),
+    ],
+)
+def test_real_world_forms(raw, qty, unit, approx):
+    p = parse_line(raw)
+    assert (p.qty, p.unit, p.approx) == (qty, unit, approx)
