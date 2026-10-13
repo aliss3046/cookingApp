@@ -167,7 +167,7 @@ def fetch_robots(
     except urllib.error.HTTPError as e:
         if e.code in (401, 403):
             return UNREADABLE
-        if 400 <= e.code < 500:
+        if 400 <= e.code < 500 and e.code != 429:  # 404: ограничений нет; 429: нас сдерживают
             return parse_robots("")
         raise FetchFailed(f"robots.txt недоступен: HTTP {e.code}") from e
     except FetchFailed as e:
