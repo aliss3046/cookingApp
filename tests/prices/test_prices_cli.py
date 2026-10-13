@@ -206,3 +206,16 @@ def test_run_from_saved_pages_needs_no_network(directory, tmp_path, monkeypatch)
     data = json.loads(out)
     assert code == cli.EXIT_OK and data["stats"]["pages"] == 1 and data["stats"]["parsed"] == 3
     assert "onion" in data["shortlists"]
+
+
+def test_profile_source_picks_the_fetcher(tmp_path):
+    from dataclasses import replace
+
+    from prices.fetcher import PoliteFetcher
+    from prices.saved_pages import SavedPages
+
+    http = profile()
+    assert isinstance(cli._fetcher(http, None), PoliteFetcher)
+    saved = replace(http, source="saved", pages_dir=str(tmp_path))
+    assert isinstance(cli._fetcher(saved, None), SavedPages)
+    assert isinstance(cli._fetcher(http, str(tmp_path)), SavedPages)  # --pages-dir главнее

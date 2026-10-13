@@ -83,3 +83,13 @@ def test_load_profiles_skips_comments(tmp_path):
     f = tmp_path / "stores.json"
     f.write_text(json.dumps({"_comment": "x", "a": raw()}), encoding="utf-8")
     assert list(load_profiles(f)) == ["a"]
+
+
+def test_source_defaults_to_http_and_saved_needs_a_folder():
+    assert parse_profile("x", raw()).source == "http"
+    p = parse_profile("x", raw(source="saved", pages_dir="pages/x"))
+    assert (p.source, p.pages_dir) == ("saved", "pages/x")
+    with pytest.raises(ProfileError, match="pages_dir"):
+        parse_profile("x", raw(source="saved"))
+    with pytest.raises(ProfileError, match="source должен быть"):
+        parse_profile("x", raw(source="stealth"))

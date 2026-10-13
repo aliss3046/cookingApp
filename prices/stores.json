@@ -460,6 +460,8 @@
         ],
         "note": "Замороженные фрукты и ягоды"
       }
-    ]
+    ],
+    "source": "saved",
+    "pages_dir": "prices/pages/dixy"
   }
 }

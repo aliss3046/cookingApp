@@ -21,6 +21,9 @@ class StoreDisabled(Exception):
     """Магнит или другой магазин не включён владельцем проекта: сбор запрещён."""
 
 
+SOURCES = frozenset({"http", "saved"})
+
+
 @dataclass(frozen=True)
 class Approval:
     by: str  # кто принял решение
@@ -47,6 +50,8 @@ class StoreProfile:
     daily_request_limit: int
     categories: tuple[CategorySpec, ...]
     notes: str = ""
+    source: str = "http"  # откуда страницы: http (по сети, вежливо) или saved (папка pages_dir)
+    pages_dir: str | None = None
 
     def require_enabled(self) -> None:
         if not self.enabled:
@@ -95,6 +100,12 @@ def parse_profile(code: str, raw: dict[str, Any]) -> StoreProfile:
             f"{code}: магазин включён без записи approval (кто, когда, на каком основании)"
         )
 
+    source = raw.get("source", "http")
+    if source not in SOURCES:
+        raise ProfileError(f"{code}: source должен быть один из {sorted(SOURCES)}, а не {source!r}")
+    if source == "saved" and not raw.get("pages_dir"):
+        raise ProfileError(f"{code}: для source=saved нужен pages_dir")
+
     return StoreProfile(
         code=code,
         name=raw.get("name", code),
@@ -105,6 +116,8 @@ def parse_profile(code: str, raw: dict[str, Any]) -> StoreProfile:
         daily_request_limit=limit,
         categories=tuple(_parse_category(code, parts.netloc, c) for c in raw.get("categories", ())),
         notes=raw.get("notes", ""),
+        source=source,
+        pages_dir=raw.get("pages_dir"),
     )
 
 

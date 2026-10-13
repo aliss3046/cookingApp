@@ -82,6 +82,16 @@ python -m prices categories --html page.html          # дерево катег�
 python -m prices run --store magnit --location 992301 --json result.json
 ```
 
+### Загрузка страниц: один интерфейс `get(url)`, источник выбирает профиль
+
+| `source` в профиле | Что делает |
+|---|---|
+| `http` | `PoliteFetcher`: по сети, `robots.txt`, пауза ≥ 20 с, суточный лимит, остановка при блокировке |
+| `saved` | `SavedPages`: читает страницы, сохранённые человеком из браузера, из `pages_dir` (по умолчанию `prices/pages/<магазин>/`, в git не попадает) |
+
+Разбор, нормализация и подбор не зависят от источника. Подмены TLS-отпечатка, stealth-режима и скрытых браузеров
+в проекте нет намеренно: отказ магазина (403) останавливает загрузку, а не обходится. Флаг `--pages-dir` переопределяет источник.
+
 ### Магнит и Дикси включены (личное использование)
 
 Решение владельца 14.10.2026: личное использование, без монетизации; запись `approval` лежит в `stores.json`.
@@ -89,7 +99,7 @@ python -m prices run --store magnit --location 992301 --json result.json
 | Магазин | Как читаются страницы | Формат |
 |---|---|---|
 | Магнит | `python -m prices run --store magnit --location 992301` (сеть, пауза 20 с) | Nuxt, адреса `/catalog/{id}-{code}?shopCode=…&shopType=dostavka` |
-| Дикси | страницы сохраняются из обычного браузера в папку: `python -m prices run --store dixy --location 1 --pages-dir pages/` | HTML `article.card` |
+| Дикси | `source: saved`: страницы сохраняются из обычного браузера в `prices/pages/dixy/`, затем `python -m prices run --store dixy --location 1` | HTML `article.card` |
 
 Простой клиент получает у Дикси 403: это не обходится (ни подмены User-Agent, ни скрытых запросов). Имя файла в папке
 берётся из пути адреса (`/catalog/ovoshchi-frukty/ovoshchi/` → `catalog_ovoshchi-frukty_ovoshchi.html`).
