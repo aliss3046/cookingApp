@@ -1,6 +1,6 @@
 # ADR-0001: Стек бэкенда
 
-Статус: предложено
+Статус: частично заменено [ADR-0006](0006-go-api-python-workers.md): API и расчёт корзины пишутся на Go, Python остаётся для воркеров
 
 **Выбрано:** Supabase (PostgreSQL, Auth, Realtime, RLS; Frankfurt), Python + FastAPI + Pydantic для API и расчёта, Python + httpx + BeautifulSoup (+ Playwright при необходимости) для воркера цен, pytest.
 
