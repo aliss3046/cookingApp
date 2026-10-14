@@ -71,6 +71,34 @@ paths:
       responses:
         '202': { description: Задача принята; в result будет черновик Recipe, content: { application/json: { schema: { $ref: '#/components/schemas/JobRef' } } } }
         default: { $ref: '#/components/responses/Error' }
+  /recipes/deck:
+    get:
+      tags: [recipes]
+      summary: Колода для свайпов — следующая страница блюд, за которые я ещё не голосовал
+      description: |
+        Только подтверждённые блюда без моего голоса и без «не хочу» от партнёра.
+        Порядок псевдослучайный, но стабильный для пользователя. Курсор — позиция в порядке,
+        поэтому голосование между запросами его не сбивает. Пропуск карточки на сервере
+        не хранится: клиент сам откладывает её в конец.
+      parameters:
+        - { name: limit, in: query, schema: { type: integer, minimum: 1, maximum: 50, default: 20 } }
+        - { name: cursor, in: query, schema: { type: string }, description: next_cursor предыдущей страницы }
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { $ref: '#/components/schemas/Deck' } } } }
+        default: { $ref: '#/components/responses/Error' }
+  /votes:
+    put:
+      tags: [recipes]
+      summary: Пачка голосов (свайпы), до 100 за запрос
+      description: |
+        За одно блюдо в пачке действует последний голос. В ответе для каждого голоса есть
+        match: true, если после него блюдо хотят все участники пары («совпало»).
+      requestBody:
+        required: true
+        content: { application/json: { schema: { type: array, minItems: 1, maxItems: 100, items: { $ref: '#/components/schemas/VoteInput' } } } }
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/VoteResult' } } } } }
+        default: { $ref: '#/components/responses/Error' }
   /recipes/{id}/votes:
     parameters: [{ $ref: '#/components/parameters/Id' }]
     put:
@@ -279,6 +307,25 @@ components:
             id: { type: string, format: uuid }
             shared: { type: boolean, description: Общее блюдо (не принадлежит паре) }
             my_vote: { $ref: '#/components/schemas/VoteValue' }
+    Deck:
+      type: object
+      required: [cards]
+      properties:
+        cards: { type: array, items: { $ref: '#/components/schemas/Recipe' } }
+        next_cursor: { type: string, nullable: true, description: Пусто, когда карточки закончились }
+    VoteInput:
+      type: object
+      required: [recipe_id, value]
+      properties:
+        recipe_id: { type: string, format: uuid }
+        value: { $ref: '#/components/schemas/VoteValue' }
+    VoteResult:
+      allOf:
+        - $ref: '#/components/schemas/Vote'
+        - type: object
+          required: [match]
+          properties:
+            match: { type: boolean, description: После этого голоса блюдо хотят все участники пары }
     Suggestion:
       type: object
       required: [recipe, tier, wanted_by]

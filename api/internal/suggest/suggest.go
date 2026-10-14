@@ -131,3 +131,18 @@ func Conflicts(recipeID domain.ID, votes []domain.Vote, members []domain.ID) []C
 	}
 	return out
 }
+
+// IsMatch — совпадение: блюдо хотят все участники пары и никто не против.
+func IsMatch(recipeID domain.ID, votes []domain.Vote, members []domain.ID) bool {
+	if len(members) == 0 {
+		return false
+	}
+	byUser := map[domain.ID]domain.VoteValue{}
+	for _, v := range votes {
+		if v.RecipeID == recipeID {
+			byUser[v.UserID] = v.Value
+		}
+	}
+	s, ok := classify(byUser, members)
+	return ok && s.Tier == TierAll
+}

@@ -150,6 +150,32 @@ func TestSuggest(t *testing.T) {
 	}
 }
 
+func TestIsMatch(t *testing.T) {
+	votes := []domain.Vote{
+		vote("both", anna, domain.VoteWant), vote("both", boris, domain.VoteWant),
+		vote("one", anna, domain.VoteWant),
+		vote("veto", anna, domain.VoteWant), vote("veto", boris, domain.VoteDontWant),
+	}
+	members := []domain.ID{anna, boris}
+	tests := []struct {
+		recipe  string
+		members []domain.ID
+		want    bool
+	}{
+		{"both", members, true},
+		{"one", members, false},
+		{"veto", members, false},
+		{"none", members, false},
+		{"one", []domain.ID{anna}, true}, // в паре один участник
+		{"both", nil, false},
+	}
+	for _, tc := range tests {
+		if got := suggest.IsMatch(domain.ID(tc.recipe), votes, tc.members); got != tc.want {
+			t.Errorf("%s with %v: got %v, want %v", tc.recipe, tc.members, got, tc.want)
+		}
+	}
+}
+
 func TestConflicts(t *testing.T) {
 	votes := []domain.Vote{
 		vote("a", anna, domain.VoteDontWant),
