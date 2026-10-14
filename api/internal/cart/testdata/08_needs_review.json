@@ -1,0 +1,103 @@
+{
+  "ingredients": [
+    {
+      "id": "onion",
+      "name": "onion"
+    }
+  ],
+  "recipes": [
+    {
+      "id": "r1",
+      "items": [
+        {
+          "ing": "onion",
+          "qty": 100,
+          "unit": "g"
+        },
+        {
+          "ing": "",
+          "qty": 0,
+          "unit": "",
+          "review": true,
+          "raw": "соль по вкусу"
+        },
+        {
+          "ing": "pepper",
+          "qty": 1,
+          "unit": "g",
+          "review": true,
+          "raw": "1 щепотка перца"
+        },
+        {
+          "ing": "oil",
+          "qty": 10,
+          "unit": "bad"
+        }
+      ]
+    }
+  ],
+  "plan": [
+    {
+      "recipe": "r1",
+      "servings": 1
+    }
+  ],
+  "products": [
+    {
+      "id": "p_o",
+      "store": "dixy",
+      "ing": "onion",
+      "mode": "by_weight",
+      "brand": "",
+      "unit": "g",
+      "per_kg": 50
+    }
+  ],
+  "expect": {
+    "lines": [
+      {
+        "key": "onion",
+        "status": "ok",
+        "mass": 100,
+        "brand_auto": true,
+        "cheapest": "p_o",
+        "offers": [
+          {
+            "p": "p_o",
+            "status": "ok",
+            "qty": 0.1,
+            "unit": "kg",
+            "cost": 5
+          }
+        ]
+      },
+      {
+        "key": "соль по вкусу",
+        "status": "needs_review"
+      },
+      {
+        "key": "1 щепотка перца",
+        "status": "needs_review"
+      },
+      {
+        "key": "",
+        "status": "needs_review"
+      }
+    ],
+    "totals": [
+      {
+        "store": "dixy",
+        "total": 5,
+        "covered": 1
+      }
+    ],
+    "single": "dixy",
+    "split": {
+      "total": 5,
+      "picks": [
+        "p_o"
+      ]
+    }
+  },
+  "name": "needs_review"
+}

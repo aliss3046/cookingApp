@@ -1,0 +1,112 @@
+{
+  "ingredients": [
+    {
+      "id": "a",
+      "name": "a"
+    },
+    {
+      "id": "b",
+      "name": "b"
+    }
+  ],
+  "recipes": [
+    {
+      "id": "r1",
+      "items": [
+        {
+          "ing": "a",
+          "qty": 2,
+          "unit": "pcs"
+        },
+        {
+          "ing": "b",
+          "qty": 100,
+          "unit": "g"
+        }
+      ]
+    }
+  ],
+  "plan": [
+    {
+      "recipe": "r1",
+      "servings": 1
+    }
+  ],
+  "products": [
+    {
+      "id": "pa1",
+      "store": "dixy",
+      "ing": "a",
+      "mode": "by_weight",
+      "brand": "",
+      "unit": "g",
+      "per_kg": 100
+    },
+    {
+      "id": "pa2",
+      "store": "lenta",
+      "ing": "a",
+      "mode": "pack_mass",
+      "brand": "",
+      "unit": "g",
+      "price": 50,
+      "pack": 500
+    },
+    {
+      "id": "pb1",
+      "store": "dixy",
+      "ing": "b",
+      "mode": "per_piece",
+      "brand": "",
+      "unit": "g",
+      "price": 10
+    },
+    {
+      "id": "pb2",
+      "store": "lenta",
+      "ing": "b",
+      "mode": "pack_count",
+      "brand": "",
+      "unit": "pcs",
+      "price": 100,
+      "pack": 10
+    }
+  ],
+  "expect": {
+    "lines": [
+      {
+        "key": "a",
+        "status": "no_offers",
+        "pcs": 2,
+        "brand_auto": true,
+        "offers": [
+          {
+            "p": "pa1",
+            "status": "unit_mismatch"
+          },
+          {
+            "p": "pa2",
+            "status": "unit_mismatch"
+          }
+        ]
+      },
+      {
+        "key": "b",
+        "status": "no_offers",
+        "mass": 100,
+        "brand_auto": true,
+        "offers": [
+          {
+            "p": "pb1",
+            "status": "unit_mismatch"
+          },
+          {
+            "p": "pb2",
+            "status": "unit_mismatch"
+          }
+        ]
+      }
+    ]
+  },
+  "name": "unit_mismatch"
+}

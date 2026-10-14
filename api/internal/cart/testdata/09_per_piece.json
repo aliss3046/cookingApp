@@ -1,0 +1,72 @@
+{
+  "ingredients": [
+    {
+      "id": "lemon",
+      "name": "lemon"
+    }
+  ],
+  "recipes": [
+    {
+      "id": "r1",
+      "items": [
+        {
+          "ing": "lemon",
+          "qty": 1,
+          "unit": "pcs"
+        }
+      ]
+    }
+  ],
+  "plan": [
+    {
+      "recipe": "r1",
+      "servings": 3
+    }
+  ],
+  "products": [
+    {
+      "id": "p_l",
+      "store": "dixy",
+      "ing": "lemon",
+      "mode": "per_piece",
+      "brand": "",
+      "unit": "g",
+      "price": 25
+    }
+  ],
+  "expect": {
+    "lines": [
+      {
+        "key": "lemon",
+        "status": "ok",
+        "pcs": 3,
+        "brand_auto": true,
+        "cheapest": "p_l",
+        "offers": [
+          {
+            "p": "p_l",
+            "status": "ok",
+            "qty": 3,
+            "unit": "pcs",
+            "cost": 75
+          }
+        ]
+      }
+    ],
+    "totals": [
+      {
+        "store": "dixy",
+        "total": 75,
+        "covered": 1
+      }
+    ],
+    "single": "dixy",
+    "split": {
+      "total": 75,
+      "picks": [
+        "p_l"
+      ]
+    }
+  },
+  "name": "per_piece"
+}

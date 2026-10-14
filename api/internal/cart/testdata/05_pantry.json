@@ -1,0 +1,144 @@
+{
+  "ingredients": [
+    {
+      "id": "a",
+      "name": "a"
+    },
+    {
+      "id": "b",
+      "name": "b"
+    },
+    {
+      "id": "c",
+      "name": "c"
+    }
+  ],
+  "recipes": [
+    {
+      "id": "r1",
+      "items": [
+        {
+          "ing": "a",
+          "qty": 200,
+          "unit": "g"
+        },
+        {
+          "ing": "b",
+          "qty": 300,
+          "unit": "g"
+        },
+        {
+          "ing": "c",
+          "qty": 200,
+          "unit": "g"
+        }
+      ]
+    }
+  ],
+  "plan": [
+    {
+      "recipe": "r1",
+      "servings": 1
+    }
+  ],
+  "pantry": [
+    {
+      "ing": "a",
+      "qty": 300,
+      "unit": "g"
+    },
+    {
+      "ing": "b",
+      "qty": 100,
+      "unit": "g"
+    },
+    {
+      "ing": "c",
+      "qty": 3,
+      "unit": "pcs"
+    },
+    {
+      "ing": "unused",
+      "qty": 5,
+      "unit": "g"
+    }
+  ],
+  "products": [
+    {
+      "id": "p_b",
+      "store": "dixy",
+      "ing": "b",
+      "mode": "pack_mass",
+      "brand": "",
+      "unit": "g",
+      "price": 40,
+      "pack": 500
+    },
+    {
+      "id": "p_c",
+      "store": "dixy",
+      "ing": "c",
+      "mode": "by_weight",
+      "brand": "",
+      "unit": "g",
+      "per_kg": 60
+    }
+  ],
+  "expect": {
+    "lines": [
+      {
+        "key": "a",
+        "status": "covered"
+      },
+      {
+        "key": "b",
+        "status": "ok",
+        "mass": 200,
+        "brand_auto": true,
+        "cheapest": "p_b",
+        "offers": [
+          {
+            "p": "p_b",
+            "status": "ok",
+            "qty": 1,
+            "unit": "packs",
+            "cost": 40,
+            "left": 300
+          }
+        ]
+      },
+      {
+        "key": "c",
+        "status": "ok",
+        "mass": 200,
+        "brand_auto": true,
+        "cheapest": "p_c",
+        "offers": [
+          {
+            "p": "p_c",
+            "status": "ok",
+            "qty": 0.2,
+            "unit": "kg",
+            "cost": 12
+          }
+        ]
+      }
+    ],
+    "totals": [
+      {
+        "store": "dixy",
+        "total": 52,
+        "covered": 2
+      }
+    ],
+    "single": "dixy",
+    "split": {
+      "total": 52,
+      "picks": [
+        "p_b",
+        "p_c"
+      ]
+    }
+  },
+  "name": "pantry"
+}

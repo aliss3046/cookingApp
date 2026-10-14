@@ -1,0 +1,121 @@
+{
+  "ingredients": [
+    {
+      "id": "onion",
+      "name": "Лук"
+    },
+    {
+      "id": "carrot",
+      "name": "Морковь"
+    }
+  ],
+  "recipes": [
+    {
+      "id": "r1",
+      "items": [
+        {
+          "ing": "onion",
+          "qty": 50,
+          "unit": "g"
+        },
+        {
+          "ing": "carrot",
+          "qty": 100,
+          "unit": "g"
+        }
+      ]
+    },
+    {
+      "id": "r2",
+      "items": [
+        {
+          "ing": "onion",
+          "qty": 25,
+          "unit": "g"
+        }
+      ]
+    }
+  ],
+  "plan": [
+    {
+      "recipe": "r1",
+      "servings": 2
+    },
+    {
+      "recipe": "r2",
+      "servings": 4
+    }
+  ],
+  "products": [
+    {
+      "id": "p_o",
+      "store": "dixy",
+      "ing": "onion",
+      "mode": "by_weight",
+      "brand": "",
+      "unit": "g",
+      "per_kg": 60
+    },
+    {
+      "id": "p_c",
+      "store": "dixy",
+      "ing": "carrot",
+      "mode": "by_weight",
+      "brand": "",
+      "unit": "g",
+      "per_kg": 50
+    }
+  ],
+  "expect": {
+    "lines": [
+      {
+        "key": "carrot",
+        "status": "ok",
+        "mass": 200,
+        "brand_auto": true,
+        "cheapest": "p_c",
+        "offers": [
+          {
+            "p": "p_c",
+            "status": "ok",
+            "qty": 0.2,
+            "unit": "kg",
+            "cost": 10
+          }
+        ]
+      },
+      {
+        "key": "onion",
+        "status": "ok",
+        "mass": 200,
+        "brand_auto": true,
+        "cheapest": "p_o",
+        "offers": [
+          {
+            "p": "p_o",
+            "status": "ok",
+            "qty": 0.2,
+            "unit": "kg",
+            "cost": 12
+          }
+        ]
+      }
+    ],
+    "totals": [
+      {
+        "store": "dixy",
+        "total": 22,
+        "covered": 2
+      }
+    ],
+    "single": "dixy",
+    "split": {
+      "total": 22,
+      "picks": [
+        "p_c",
+        "p_o"
+      ]
+    }
+  },
+  "name": "servings_and_glue"
+}

@@ -1,0 +1,65 @@
+{
+  "ingredients": [
+    {
+      "id": "milk",
+      "name": "milk"
+    }
+  ],
+  "recipes": [
+    {
+      "id": "r1",
+      "items": [
+        {
+          "ing": "milk",
+          "qty": 500,
+          "unit": "ml"
+        }
+      ]
+    }
+  ],
+  "plan": [
+    {
+      "recipe": "r1",
+      "servings": 1
+    }
+  ],
+  "prefs": {
+    "milk": "Zeta"
+  },
+  "products": [
+    {
+      "id": "pa",
+      "store": "dixy",
+      "ing": "milk",
+      "mode": "pack_mass",
+      "brand": "Alpha",
+      "unit": "g",
+      "price": 90,
+      "pack": 930
+    },
+    {
+      "id": "pb",
+      "store": "lenta",
+      "ing": "milk",
+      "mode": "pack_mass",
+      "brand": "Beta",
+      "unit": "g",
+      "price": 80,
+      "pack": 930
+    }
+  ],
+  "expect": {
+    "lines": [
+      {
+        "key": "milk",
+        "status": "choose_brand",
+        "mass": 500,
+        "brands": [
+          "Alpha=90.00",
+          "Beta=80.00"
+        ]
+      }
+    ]
+  },
+  "name": "saved_brand_not_found"
+}

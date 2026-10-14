@@ -31,7 +31,7 @@
 | `plans` | id, couple_id, week_start date, status | |
 | `plan_items` | id, plan_id, recipe_id, servings, date | |
 | `pantry` | couple_id, ingredient_id, qty, unit, source (`manual`/`leftover`) | `leftover` — остаток от упаковок |
-| `cart_lines` | id, plan_id, ingredient_id (null для ручной позиции), title, qty, unit, excluded bool, added_manually bool, chosen_product_id | |
+| `cart_lines` | id, plan_id, ingredient_id (null для ручной позиции без привязки), title, qty, unit, excluded bool, added_manually bool, **qty_overridden bool**, chosen_product_id | `qty_overridden` — пара сама задала количество вместо расчётного по плану; `added_manually` + `ingredient_id` — ручная позиция, склеиваемая с ингредиентом корзины; `chosen_product_id` — товар, закреплённый в его магазине |
 
 ## Магазины и цены
 
@@ -39,8 +39,9 @@
 |---|---|---|
 | `stores` | id, code (`dixy`/`lenta`/`manual`), name, collection_enabled bool (default false) | сбор включается только после проверки условий использования |
 | `store_locations` | id, store_id, couple_id, address, zone, region_key, delivery_fee, free_delivery_from | один адрес пары на старте |
-| `products` | id, store_id, external_id, title, pack_qty, pack_unit, category | уникально (store_id, external_id) |
+| `products` | id, store_id, external_id, title, **brand**, **sale_mode** (`pack_mass`/`pack_count`/`per_piece`/`by_weight`), pack_qty, pack_unit, category | уникально (store_id, external_id) |
 | `ingredient_product_map` | ingredient_id, product_id, preferred bool, confidence numeric(3,2), confirmed_by_couple bool | |
+| `couple_brand_prefs` | couple_id, ingredient_id, brand, updated_at | Выбранная парой марка для ингредиента; уникально (couple_id, ingredient_id); пара может менять. RLS по `couple_id` |
 | `prices` | id, product_id, location_id, price, card_price, price_per_kg, in_stock, store_only, fetched_at, source (`site`/`manual`/`receipt`) | INSERT-only; индекс (product_id, location_id, fetched_at desc) |
 | `jobs` | id, couple_id, kind (`quote`/`import`), status, params jsonb, result jsonb, error, created_at, finished_at | |
 
@@ -50,6 +51,7 @@
 
 - Таблицы пары (`recipes` с `couple_id`, `plans`, `plan_items`, `pantry`, `cart_lines`,
   `store_locations`, `jobs`): доступ, если `exists (select 1 from couple_members where couple_id = row.couple_id and user_id = auth.uid())`. Для таблиц без своего `couple_id` — через `plan_id`.
+- `couple_brand_prefs`: доступ только участникам пары.
 - Общие `recipes` (`couple_id is null`), `ingredients`, `unit_conversions`, `stores`, `products`,
   `prices`, `ingredient_product_map`: чтение для авторизованных, запись только сервисной ролью.
 - `votes`: читают оба в паре, пишет только свой `user_id`.

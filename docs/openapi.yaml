@@ -147,7 +147,7 @@ paths:
   /cart/lines:
     post:
       tags: [cart]
-      summary: Добавить свой продукт вручную
+      summary: Добавить свой продукт вручную (с ingredient_id он склеивается с корзиной и получает цены)
       requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/CartLineInput' } } } }
       responses:
         '201': { description: Создано, content: { application/json: { schema: { $ref: '#/components/schemas/CartLine' } } } }
@@ -156,7 +156,7 @@ paths:
     parameters: [{ $ref: '#/components/parameters/Id' }]
     patch:
       tags: [cart]
-      summary: Исключить продукт, поправить количество, подтвердить товар
+      summary: Исключить продукт, задать количество вместо расчётного (qty), закрепить товар (chosen_product_id)
       requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/CartLinePatch' } } } }
       responses:
         '200': { description: OK, content: { application/json: { schema: { $ref: '#/components/schemas/CartLine' } } } }
@@ -311,6 +311,7 @@ components:
       required: [title, qty, unit]
       properties:
         plan_id: { type: string, format: uuid }
+        ingredient_id: { type: string, format: uuid, description: Привязка к справочнику; без неё позиция без цен и сравнения }
         title: { type: string }
         qty: { type: number }
         unit: { $ref: '#/components/schemas/Unit' }
@@ -318,8 +319,8 @@ components:
       type: object
       properties:
         excluded: { type: boolean }
-        qty: { type: number }
-        chosen_product_id: { type: string, format: uuid }
+        qty: { type: number, description: Заменяет расчётное количество; запасы к нему не применяются }
+        chosen_product_id: { type: string, format: uuid, nullable: true, description: Закрепить товар в его магазине; null снимает закрепление }
     CartLine:
       type: object
       properties:
@@ -330,6 +331,8 @@ components:
         unit: { $ref: '#/components/schemas/Unit' }
         excluded: { type: boolean }
         added_manually: { type: boolean }
+        qty_overridden: { type: boolean, description: Количество задано парой, а не посчитано по плану }
+        manual_qty: { type: number, description: Часть количества, добавленная вручную }
         needs_review: { type: boolean }
         product: { $ref: '#/components/schemas/ProductChoice' }
     ProductChoice:

@@ -1,0 +1,151 @@
+{
+  "ingredients": [
+    {
+      "id": "a",
+      "name": "a"
+    },
+    {
+      "id": "b",
+      "name": "b"
+    }
+  ],
+  "recipes": [
+    {
+      "id": "r1",
+      "items": [
+        {
+          "ing": "a",
+          "qty": 100,
+          "unit": "g"
+        },
+        {
+          "ing": "b",
+          "qty": 100,
+          "unit": "g"
+        }
+      ]
+    }
+  ],
+  "plan": [
+    {
+      "recipe": "r1",
+      "servings": 1
+    }
+  ],
+  "products": [
+    {
+      "id": "pa_d",
+      "store": "dixy",
+      "ing": "a",
+      "mode": "by_weight",
+      "brand": "",
+      "unit": "g",
+      "per_kg": 100,
+      "store_only": true
+    },
+    {
+      "id": "pa_l",
+      "store": "lenta",
+      "ing": "a",
+      "mode": "by_weight",
+      "brand": "",
+      "unit": "g",
+      "per_kg": 200
+    },
+    {
+      "id": "pb_d",
+      "store": "dixy",
+      "ing": "b",
+      "mode": "by_weight",
+      "brand": "",
+      "unit": "g",
+      "per_kg": 50,
+      "oos": true
+    },
+    {
+      "id": "pb_l",
+      "store": "lenta",
+      "ing": "b",
+      "mode": "by_weight",
+      "brand": "",
+      "unit": "g",
+      "per_kg": 80
+    }
+  ],
+  "expect": {
+    "lines": [
+      {
+        "key": "a",
+        "status": "ok",
+        "mass": 100,
+        "brand_auto": true,
+        "cheapest": "pa_l",
+        "offers": [
+          {
+            "p": "pa_l",
+            "status": "ok",
+            "qty": 0.1,
+            "unit": "kg",
+            "cost": 20
+          },
+          {
+            "p": "pa_d",
+            "status": "ok",
+            "qty": 0.1,
+            "unit": "kg",
+            "cost": 10,
+            "flags": [
+              "store_only"
+            ]
+          }
+        ]
+      },
+      {
+        "key": "b",
+        "status": "ok",
+        "mass": 100,
+        "brand_auto": true,
+        "cheapest": "pb_l",
+        "offers": [
+          {
+            "p": "pb_l",
+            "status": "ok",
+            "qty": 0.1,
+            "unit": "kg",
+            "cost": 8
+          },
+          {
+            "p": "pb_d",
+            "status": "ok",
+            "qty": 0.1,
+            "unit": "kg",
+            "cost": 5,
+            "flags": [
+              "oos"
+            ]
+          }
+        ]
+      }
+    ],
+    "totals": [
+      {
+        "store": "lenta",
+        "total": 28,
+        "covered": 2
+      },
+      {
+        "store": "dixy",
+        "missing": 2
+      }
+    ],
+    "single": "lenta",
+    "split": {
+      "total": 28,
+      "picks": [
+        "pa_l",
+        "pb_l"
+      ]
+    }
+  },
+  "name": "store_only_and_out_of_stock"
+}

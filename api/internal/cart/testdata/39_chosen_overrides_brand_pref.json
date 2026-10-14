@@ -1,0 +1,108 @@
+{
+  "ingredients": [
+    {
+      "id": "milk",
+      "name": "milk"
+    }
+  ],
+  "recipes": [
+    {
+      "id": "r1",
+      "items": [
+        {
+          "ing": "milk",
+          "qty": 500,
+          "unit": "ml"
+        }
+      ]
+    }
+  ],
+  "plan": [
+    {
+      "recipe": "r1",
+      "servings": 1
+    }
+  ],
+  "prefs": {
+    "milk": "Beta"
+  },
+  "chosen": {
+    "milk": "pa"
+  },
+  "products": [
+    {
+      "id": "pa",
+      "store": "dixy",
+      "ing": "milk",
+      "mode": "pack_mass",
+      "brand": "Alpha",
+      "unit": "g",
+      "price": 90,
+      "pack": 930
+    },
+    {
+      "id": "pb",
+      "store": "lenta",
+      "ing": "milk",
+      "mode": "pack_mass",
+      "brand": "Beta",
+      "unit": "g",
+      "price": 80,
+      "pack": 930
+    }
+  ],
+  "expect": {
+    "lines": [
+      {
+        "key": "milk",
+        "status": "ok",
+        "mass": 500,
+        "brand": "Alpha",
+        "cheapest": "pa",
+        "offers": [
+          {
+            "p": "pa",
+            "status": "ok",
+            "qty": 1,
+            "unit": "packs",
+            "cost": 90,
+            "left": 430,
+            "flags": [
+              "chosen"
+            ]
+          },
+          {
+            "p": "pb",
+            "status": "ok",
+            "qty": 1,
+            "unit": "packs",
+            "cost": 80,
+            "left": 430,
+            "flags": [
+              "alternative"
+            ]
+          }
+        ]
+      }
+    ],
+    "totals": [
+      {
+        "store": "dixy",
+        "total": 90,
+        "covered": 1
+      },
+      {
+        "store": "lenta",
+        "missing": 1
+      }
+    ],
+    "single": "dixy",
+    "split": {
+      "total": 90,
+      "picks": [
+        "pa"
+      ]
+    }
+  },
+  "name": "chosen_overrides_brand_pref"
+}

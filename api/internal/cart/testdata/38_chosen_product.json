@@ -1,0 +1,123 @@
+{
+  "ingredients": [
+    {
+      "id": "milk",
+      "name": "milk"
+    }
+  ],
+  "recipes": [
+    {
+      "id": "r1",
+      "items": [
+        {
+          "ing": "milk",
+          "qty": 500,
+          "unit": "ml"
+        }
+      ]
+    }
+  ],
+  "plan": [
+    {
+      "recipe": "r1",
+      "servings": 1
+    }
+  ],
+  "chosen": {
+    "milk": "pa_big"
+  },
+  "products": [
+    {
+      "id": "pa",
+      "store": "dixy",
+      "ing": "milk",
+      "mode": "pack_mass",
+      "brand": "Alpha",
+      "unit": "g",
+      "price": 90,
+      "pack": 930
+    },
+    {
+      "id": "pa_big",
+      "store": "dixy",
+      "ing": "milk",
+      "mode": "pack_mass",
+      "brand": "Alpha",
+      "unit": "g",
+      "price": 120,
+      "pack": 1500
+    },
+    {
+      "id": "pb",
+      "store": "lenta",
+      "ing": "milk",
+      "mode": "pack_mass",
+      "brand": "Alpha",
+      "unit": "g",
+      "price": 80,
+      "pack": 930
+    },
+    {
+      "id": "pz",
+      "store": "lenta",
+      "ing": "milk",
+      "mode": "pack_mass",
+      "brand": "Beta",
+      "unit": "g",
+      "price": 75,
+      "pack": 930
+    }
+  ],
+  "expect": {
+    "lines": [
+      {
+        "key": "milk",
+        "status": "ok",
+        "mass": 500,
+        "brand": "Alpha",
+        "cheapest": "pb",
+        "offers": [
+          {
+            "p": "pb",
+            "status": "ok",
+            "qty": 1,
+            "unit": "packs",
+            "cost": 80,
+            "left": 430
+          },
+          {
+            "p": "pa_big",
+            "status": "ok",
+            "qty": 1,
+            "unit": "packs",
+            "cost": 120,
+            "left": 1000,
+            "flags": [
+              "chosen"
+            ]
+          }
+        ]
+      }
+    ],
+    "totals": [
+      {
+        "store": "lenta",
+        "total": 80,
+        "covered": 1
+      },
+      {
+        "store": "dixy",
+        "total": 120,
+        "covered": 1
+      }
+    ],
+    "single": "lenta",
+    "split": {
+      "total": 80,
+      "picks": [
+        "pb"
+      ]
+    }
+  },
+  "name": "chosen_product"
+}

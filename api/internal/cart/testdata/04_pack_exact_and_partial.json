@@ -1,0 +1,110 @@
+{
+  "ingredients": [
+    {
+      "id": "flour",
+      "name": "flour"
+    },
+    {
+      "id": "sugar",
+      "name": "sugar"
+    }
+  ],
+  "recipes": [
+    {
+      "id": "r1",
+      "items": [
+        {
+          "ing": "flour",
+          "qty": 500,
+          "unit": "g"
+        },
+        {
+          "ing": "sugar",
+          "qty": 300,
+          "unit": "g"
+        }
+      ]
+    }
+  ],
+  "plan": [
+    {
+      "recipe": "r1",
+      "servings": 2
+    }
+  ],
+  "products": [
+    {
+      "id": "p_f",
+      "store": "dixy",
+      "ing": "flour",
+      "mode": "pack_mass",
+      "brand": "",
+      "unit": "g",
+      "price": 40,
+      "pack": 500
+    },
+    {
+      "id": "p_s",
+      "store": "dixy",
+      "ing": "sugar",
+      "mode": "pack_mass",
+      "brand": "",
+      "unit": "g",
+      "price": 50,
+      "pack": 1000
+    }
+  ],
+  "expect": {
+    "lines": [
+      {
+        "key": "flour",
+        "status": "ok",
+        "mass": 1000,
+        "brand_auto": true,
+        "cheapest": "p_f",
+        "offers": [
+          {
+            "p": "p_f",
+            "status": "ok",
+            "qty": 2,
+            "unit": "packs",
+            "cost": 80
+          }
+        ]
+      },
+      {
+        "key": "sugar",
+        "status": "ok",
+        "mass": 600,
+        "brand_auto": true,
+        "cheapest": "p_s",
+        "offers": [
+          {
+            "p": "p_s",
+            "status": "ok",
+            "qty": 1,
+            "unit": "packs",
+            "cost": 50,
+            "left": 400
+          }
+        ]
+      }
+    ],
+    "totals": [
+      {
+        "store": "dixy",
+        "total": 130,
+        "covered": 2
+      }
+    ],
+    "single": "dixy",
+    "split": {
+      "total": 130,
+      "picks": [
+        "p_f",
+        "p_s"
+      ]
+    }
+  },
+  "name": "pack_exact_and_partial"
+}

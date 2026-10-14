@@ -1,0 +1,12 @@
+{
+  "plan": [
+    {
+      "recipe": "ghost",
+      "servings": 1
+    }
+  ],
+  "expect": {
+    "error": "unknown recipe"
+  },
+  "name": "unknown_recipe"
+}

@@ -1,0 +1,36 @@
+{
+  "ingredients": [
+    {
+      "id": "x",
+      "name": "x"
+    }
+  ],
+  "recipes": [
+    {
+      "id": "r1",
+      "items": [
+        {
+          "ing": "x",
+          "qty": 100,
+          "unit": "g"
+        }
+      ]
+    }
+  ],
+  "plan": [
+    {
+      "recipe": "r1",
+      "servings": 1
+    }
+  ],
+  "expect": {
+    "lines": [
+      {
+        "key": "x",
+        "status": "no_offers",
+        "mass": 100
+      }
+    ]
+  },
+  "name": "no_mapping"
+}

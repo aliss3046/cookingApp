@@ -1,0 +1,80 @@
+{
+  "ingredients": [
+    {
+      "id": "onion",
+      "name": "onion"
+    }
+  ],
+  "recipes": [
+    {
+      "id": "r1",
+      "items": [
+        {
+          "ing": "onion",
+          "qty": 300,
+          "unit": "g"
+        }
+      ]
+    }
+  ],
+  "plan": [
+    {
+      "recipe": "r1",
+      "servings": 1
+    }
+  ],
+  "overrides": [
+    {
+      "ing": "onion",
+      "qty": 2,
+      "unit": "pcs"
+    }
+  ],
+  "products": [
+    {
+      "id": "p_p",
+      "store": "dixy",
+      "ing": "onion",
+      "mode": "per_piece",
+      "brand": "",
+      "unit": "g",
+      "price": 10
+    }
+  ],
+  "expect": {
+    "lines": [
+      {
+        "key": "onion",
+        "status": "ok",
+        "overridden": true,
+        "pcs": 2,
+        "brand_auto": true,
+        "cheapest": "p_p",
+        "offers": [
+          {
+            "p": "p_p",
+            "status": "ok",
+            "qty": 2,
+            "unit": "pcs",
+            "cost": 20
+          }
+        ]
+      }
+    ],
+    "totals": [
+      {
+        "store": "dixy",
+        "total": 20,
+        "covered": 1
+      }
+    ],
+    "single": "dixy",
+    "split": {
+      "total": 20,
+      "picks": [
+        "p_p"
+      ]
+    }
+  },
+  "name": "qty_override_other_unit"
+}

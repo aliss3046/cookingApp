@@ -1,0 +1,70 @@
+{
+  "ingredients": [
+    {
+      "id": "a",
+      "name": "a"
+    }
+  ],
+  "recipes": [
+    {
+      "id": "r1",
+      "items": [
+        {
+          "ing": "a",
+          "qty": 100,
+          "unit": "g"
+        }
+      ]
+    }
+  ],
+  "plan": [
+    {
+      "recipe": "r1",
+      "servings": 1
+    }
+  ],
+  "products": [
+    {
+      "id": "pa",
+      "store": "dixy",
+      "ing": "a",
+      "mode": "by_weight",
+      "brand": "",
+      "unit": "g",
+      "per_kg": 100,
+      "oos": true
+    }
+  ],
+  "expect": {
+    "lines": [
+      {
+        "key": "a",
+        "status": "ok",
+        "mass": 100,
+        "brand_auto": true,
+        "offers": [
+          {
+            "p": "pa",
+            "status": "ok",
+            "qty": 0.1,
+            "unit": "kg",
+            "cost": 10,
+            "flags": [
+              "oos"
+            ]
+          }
+        ]
+      }
+    ],
+    "totals": [
+      {
+        "store": "dixy",
+        "missing": 1
+      }
+    ],
+    "split": {
+      "uncovered": 1
+    }
+  },
+  "name": "all_out_of_stock"
+}
