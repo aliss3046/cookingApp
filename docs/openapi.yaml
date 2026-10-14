@@ -116,7 +116,7 @@ paths:
         default: { $ref: '#/components/responses/Error' }
     post:
       tags: [plans]
-      summary: Добавить блюдо в план
+      summary: Добавить блюдо в план (при чужом «не хочу» блюдо добавляется, в ответе будет conflicts)
       requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/PlanItemInput' } } } }
       responses:
         '201': { description: Создано, content: { application/json: { schema: { $ref: '#/components/schemas/PlanItem' } } } }
@@ -298,17 +298,29 @@ components:
         id: { type: string, format: uuid }
         week_start: { type: string, format: date }
         status: { type: string }
+    Meal: { type: string, enum: [breakfast, lunch, dinner, snack] }
     PlanItemInput:
       type: object
       properties:
         recipe_id: { type: string, format: uuid }
         servings: { type: integer, minimum: 1 }
-        date: { type: string, format: date }
+        date: { type: string, format: date, nullable: true, description: День внутри недели плана; без даты блюдо «на неделю» }
+        meal: { allOf: [{ $ref: '#/components/schemas/Meal' }], nullable: true, description: Только вместе с date }
     PlanItem:
       allOf:
         - $ref: '#/components/schemas/PlanItemInput'
         - type: object
-          properties: { id: { type: string, format: uuid } }
+          properties:
+            id: { type: string, format: uuid }
+            conflicts:
+              type: array
+              description: |
+                Участники пары, проголосовавшие «не хочу» за это блюдо. Добавление не запрещается,
+                предупреждение приходит и в ответе на POST, и в списке плана (голос мог измениться позже).
+              items:
+                type: object
+                required: [user_id]
+                properties: { user_id: { type: string, format: uuid } }
     PantryItem:
       type: object
       required: [ingredient_id, qty, unit]

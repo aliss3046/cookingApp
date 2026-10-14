@@ -156,9 +156,11 @@ func plansIsolated(t *testing.T, e Env) {
 	it := must(e.Repos.AddPlanItem(ctx, e.CoupleA, domain.PlanItem{PlanID: p.ID, RecipeID: e.SharedRecipeID, Servings: 2}))(t)
 
 	it.Servings = 4
+	date := time.Date(2026, 10, 14, 0, 0, 0, 0, time.UTC)
+	it.Date, it.Meal = &date, domain.MealDinner
 	upd := must(e.Repos.UpdatePlanItem(ctx, e.CoupleA, it))(t)
-	if upd.Servings != 4 {
-		t.Fatalf("servings not updated")
+	if upd.Servings != 4 || upd.Meal != domain.MealDinner || upd.Date == nil || !upd.Date.Equal(date) {
+		t.Fatalf("servings/date/meal not updated: %+v", upd)
 	}
 	items := must(e.Repos.ListPlanItems(ctx, e.CoupleA, p.ID))(t)
 	if len(items) != 1 || items[0].Servings != 4 {

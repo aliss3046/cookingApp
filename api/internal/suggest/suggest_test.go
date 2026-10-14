@@ -149,3 +149,33 @@ func TestSuggest(t *testing.T) {
 		})
 	}
 }
+
+func TestConflicts(t *testing.T) {
+	votes := []domain.Vote{
+		vote("a", anna, domain.VoteDontWant),
+		vote("a", boris, domain.VoteWant),
+		vote("b", anna, domain.VoteWant),
+		vote("b", boris, domain.VoteDontWant),
+		vote("c", anna, domain.VoteDontWant),
+		vote("c", boris, domain.VoteDontWant),
+		vote("c", boris, domain.VoteDontWant), // повтор не удваивает
+		vote("d", other, domain.VoteDontWant), // чужая пара
+	}
+	members := []domain.ID{anna, boris}
+	tests := []struct {
+		recipe string
+		want   []suggest.Conflict
+	}{
+		{"a", []suggest.Conflict{{UserID: anna}}},
+		{"b", []suggest.Conflict{{UserID: boris}}},
+		{"c", []suggest.Conflict{{UserID: anna}, {UserID: boris}}},
+		{"d", nil},
+		{"unknown", nil},
+	}
+	for _, tc := range tests {
+		got := suggest.Conflicts(domain.ID(tc.recipe), votes, members)
+		if !reflect.DeepEqual(got, tc.want) {
+			t.Errorf("recipe %s: got %+v, want %+v", tc.recipe, got, tc.want)
+		}
+	}
+}

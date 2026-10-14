@@ -110,3 +110,24 @@ func classify(v map[domain.ID]domain.VoteValue, members []domain.ID) (Suggestion
 	}
 	return s, true
 }
+
+// Conflict — участник пары, который проголосовал «не хочу» за блюдо.
+type Conflict struct {
+	UserID domain.ID
+}
+
+// Conflicts возвращает участников, не желающих это блюдо. Нужен для предупреждения
+// при добавлении блюда в план и в списке плана (голос мог поменяться позже).
+// Добавление не запрещается: решение за парой.
+func Conflicts(recipeID domain.ID, votes []domain.Vote, members []domain.ID) []Conflict {
+	var out []Conflict
+	for _, m := range members {
+		for _, v := range votes {
+			if v.RecipeID == recipeID && v.UserID == m && v.Value == domain.VoteDontWant {
+				out = append(out, Conflict{UserID: m})
+				break
+			}
+		}
+	}
+	return out
+}
