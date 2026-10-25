@@ -94,6 +94,7 @@ WHERE id = :job_id AND status = 'выполняется';
 ```python
 from jobs.contract import CHECKS, Harness
 
+
 @pytest.mark.parametrize("check", CHECKS, ids=lambda c: c.__name__)
 def test_postgres_queue(check, pg):
     check(Harness(PostgresJobQueue(pg), add=insert_job, row=read_job))
