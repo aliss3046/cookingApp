@@ -22,7 +22,7 @@ func recipes(n int) []domain.Recipe {
 	var rs []domain.Recipe
 	for i := 0; i < n; i++ {
 		rs = append(rs, domain.Recipe{
-			ID: domain.ID(fmt.Sprintf("r%02d", i)), Title: fmt.Sprintf("Блюдо %d", i), Status: domain.RecipeConfirmed,
+			ID: domain.ID(fmt.Sprintf("r%02d", i)), Title: fmt.Sprintf("Блюдо %d", i), Status: domain.RecipeActive,
 		})
 	}
 	return rs

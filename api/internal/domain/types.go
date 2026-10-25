@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-// ID — UUID в строковом виде. Генерирует база.
+// ID — идентификатор в строковом виде (в базе integer identity). Генерирует база.
 type ID string
 
 // Unit — базовая единица количества. Пересчёт из «ст. ложек» делается до записи в базу.
@@ -31,8 +31,8 @@ func (u Unit) Valid() bool {
 type RecipeStatus string
 
 const (
-	RecipeDraft     RecipeStatus = "draft"
-	RecipeConfirmed RecipeStatus = "confirmed"
+	RecipeDraft  RecipeStatus = "draft"
+	RecipeActive RecipeStatus = "active" // пара проверила, блюдо в голосовании и плане
 )
 
 type VoteValue string
@@ -234,10 +234,10 @@ const (
 type JobStatus string
 
 const (
-	JobQueued  JobStatus = "queued"
-	JobRunning JobStatus = "running"
-	JobDone    JobStatus = "done"
-	JobFailed  JobStatus = "failed"
+	JobQueued  JobStatus = "ждёт"
+	JobRunning JobStatus = "выполняется"
+	JobDone    JobStatus = "готово"
+	JobFailed  JobStatus = "ошибка"
 )
 
 type Job struct {

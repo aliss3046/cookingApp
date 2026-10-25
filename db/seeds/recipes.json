@@ -8,7 +8,7 @@
    "быстро",
    "яйца"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "egg",
@@ -48,7 +48,7 @@
    "завтрак",
    "творог"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "cottage_cheese",
@@ -109,7 +109,7 @@
    "завтрак",
    "выпечка"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "milk",
@@ -164,7 +164,7 @@
    "быстро",
    "вегетарианское"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "oats",
@@ -212,7 +212,7 @@
    "быстро",
    "яйца"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "egg",
@@ -266,7 +266,7 @@
    "завтрак",
    "выпечка"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "kefir",
@@ -327,7 +327,7 @@
    "завтрак",
    "вегетарианское"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "buckwheat",
@@ -381,7 +381,7 @@
    "завтрак",
    "быстро"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "white_bread",
@@ -436,7 +436,7 @@
    "суп",
    "мясо"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "beef",
@@ -540,7 +540,7 @@
    "суп",
    "курица"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "chicken_breast",
@@ -616,7 +616,7 @@
    "суп",
    "мясо"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "beef",
@@ -705,7 +705,7 @@
    "обед",
    "суп"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "split_peas",
@@ -789,7 +789,7 @@
    "грибы",
    "вегетарианское"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "champignon",
@@ -865,7 +865,7 @@
    "суп",
    "мясо"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "beef",
@@ -948,7 +948,7 @@
    "суп",
    "вегетарианское"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "potato",
@@ -1024,7 +1024,7 @@
    "мясо",
    "рис"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "beef",
@@ -1107,7 +1107,7 @@
    "грибы",
    "вегетарианское"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "buckwheat",
@@ -1168,7 +1168,7 @@
    "ужин",
    "мясо"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "minced_mixed",
@@ -1265,7 +1265,7 @@
    "быстро",
    "мясо"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "pasta",
@@ -1320,7 +1320,7 @@
    "паста",
    "мясо"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "spaghetti",
@@ -1410,7 +1410,7 @@
    "паста",
    "быстро"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "spaghetti",
@@ -1486,7 +1486,7 @@
    "курица",
    "духовка"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "chicken_thigh",
@@ -1554,7 +1554,7 @@
    "ужин",
    "мясо"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "beef",
@@ -1631,7 +1631,7 @@
    "духовка",
    "быстро"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "salmon",
@@ -1685,7 +1685,7 @@
    "ужин",
    "курица"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "minced_chicken",
@@ -1753,7 +1753,7 @@
    "ужин",
    "мясо"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "minced_mixed",
@@ -1835,7 +1835,7 @@
    "ужин",
    "мясо"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "pork",
@@ -1911,7 +1911,7 @@
    "курица",
    "рис"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "chicken_breast",
@@ -1994,7 +1994,7 @@
    "овощи",
    "вегетарианское"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "zucchini",
@@ -2077,7 +2077,7 @@
    "духовка",
    "мясо"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "potato",
@@ -2168,7 +2168,7 @@
    "духовка",
    "мясо"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "lasagna_sheets",
@@ -2271,7 +2271,7 @@
    "ужин",
    "мясо"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "white_cabbage",
@@ -2354,7 +2354,7 @@
    "курица",
    "паста"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "chicken_breast",
@@ -2430,7 +2430,7 @@
    "быстро",
    "вегетарианское"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "tomato",
@@ -2498,7 +2498,7 @@
    "салат",
    "праздничное"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "boiled_sausage",
@@ -2573,7 +2573,7 @@
    "салат",
    "курица"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "chicken_breast",
@@ -2641,7 +2641,7 @@
    "салат",
    "вегетарианское"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "beet",
@@ -2703,7 +2703,7 @@
    "быстро",
    "вегетарианское"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "white_cabbage",
@@ -2765,7 +2765,7 @@
    "быстро",
    "рыба"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "canned_tuna",
@@ -2834,7 +2834,7 @@
    "выпечка",
    "духовка"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "apple",
@@ -2890,7 +2890,7 @@
    "быстро",
    "вегетарианское"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "banana",
@@ -2939,7 +2939,7 @@
    "духовка",
    "творог"
   ],
-  "status": "confirmed",
+  "status": "active",
   "ingredients": [
    {
     "ingredient_id": "cottage_cheese",

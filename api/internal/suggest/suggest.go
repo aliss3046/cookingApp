@@ -64,7 +64,7 @@ func Suggest(in Input) []Suggestion {
 	byID := map[domain.ID]domain.Recipe{}
 	var out []Suggestion
 	for _, r := range in.Recipes {
-		if r.Status != domain.RecipeConfirmed || in.Planned[r.ID] {
+		if r.Status != domain.RecipeActive || in.Planned[r.ID] {
 			continue
 		}
 		s, ok := classify(votes[r.ID], in.Members)

@@ -15,7 +15,7 @@ const (
 )
 
 func recipe(id, title string) domain.Recipe {
-	return domain.Recipe{ID: domain.ID(id), Title: title, Status: domain.RecipeConfirmed}
+	return domain.Recipe{ID: domain.ID(id), Title: title, Status: domain.RecipeActive}
 }
 
 func vote(r string, u domain.ID, v domain.VoteValue) domain.Vote {

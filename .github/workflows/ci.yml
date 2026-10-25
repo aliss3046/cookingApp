@@ -49,3 +49,25 @@ jobs:
       - run: pip install pyyaml==6.0.2
       - name: Проверка docs/openapi.yaml
         run: python -I scripts/check_openapi.py docs/openapi.yaml
+
+  db:
+    name: БД (миграции)
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      PGHOST: localhost
+      PGUSER: postgres
+      PGPASSWORD: postgres
+    steps:
+      - uses: actions/checkout@v4
+      - name: Миграции и проверки на примерах
+        run: |
+          for f in db/migrations/*.sql; do psql -v ON_ERROR_STOP=1 -q -f "$f"; done
+          for f in db/migrations/checks/*.sql; do psql -v ON_ERROR_STOP=1 -q -f "$f"; done
