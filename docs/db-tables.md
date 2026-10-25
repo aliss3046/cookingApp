@@ -278,9 +278,14 @@ ingredients ──< ingredient_product_map >── products
 | `result` | jsonb | нет | результат: черновик рецепта |
 | `error` | text | нет | причина ошибки |
 | `created_at` | timestamptz | да, `now()` | |
+| `started_at` | timestamptz | нет | когда воркер взял задание; обязателен при `выполняется` |
+| `attempts` | integer | да, `0` | сколько раз брали задание |
 | `finished_at` | timestamptz | нет | |
 
-Частичный индекс по ждущим заданиям ускоряет выборку воркером. Сам воркер пока не написан.
+При ошибке `result` = `{"error": {"code", "message"}}` (формат `Error` из OpenAPI), `error` — текст.
+Задание, которое воркер взял и не завершил за 10 минут, возвращается в `ждёт`; после 3 попыток — `ошибка`
+с кодом `job_failed`. Частичные индексы по ждущим и выполняющимся ускоряют выборку.
+Воркер: [jobs/](../jobs/README.md). `started_at` и `attempts` добавляет миграция `0002_jobs_attempts.sql`.
 
 ---
 
