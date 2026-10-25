@@ -29,7 +29,7 @@
 | Таблица | Поля | Заметки |
 |---|---|---|
 | `plans` | id, couple_id, week_start date, status | |
-| `plan_items` | id, plan_id, recipe_id, servings, date | |
+| `plan_items` | id, plan_id, recipe_id, servings, date (null — на неделю), **meal** (`breakfast`/`lunch`/`dinner`/`snack`, null) | ограничения: `servings >= 1`; `meal` не null только при `date`; `date` внутри недели плана (`week_start`..`week_start + 6`); в день и приём пищи можно несколько блюд |
 | `pantry` | couple_id, ingredient_id, qty, unit, source (`manual`/`leftover`) | `leftover` — остаток от упаковок |
 | `cart_lines` | id, plan_id, ingredient_id (null для ручной позиции без привязки), title, qty, unit, excluded bool, added_manually bool, **qty_overridden bool**, chosen_product_id | `qty_overridden` — пара сама задала количество вместо расчётного по плану; `added_manually` + `ingredient_id` — ручная позиция, склеиваемая с ингредиентом корзины; `chosen_product_id` — товар, закреплённый в его магазине |
 
