@@ -81,7 +81,7 @@ func BuildDeck(in DeckInput) (Deck, error) {
 	}
 	var cards []card
 	for _, r := range in.Recipes {
-		if r.Status != domain.RecipeConfirmed || voted[r.ID] || rejected[r.ID] {
+		if r.Status != domain.RecipeActive || voted[r.ID] || rejected[r.ID] {
 			continue
 		}
 		p := position{key: orderKey(in.Me, r.ID), id: r.ID}

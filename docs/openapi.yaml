@@ -253,7 +253,7 @@ components:
       content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
   schemas:
     Unit: { type: string, enum: [g, ml, pcs] }
-    RecipeStatus: { type: string, enum: [draft, confirmed] }
+    RecipeStatus: { type: string, enum: [draft, active] }
     VoteValue: { type: string, enum: [want, neutral, dont_want] }
     ErrorCode:
       type: string
@@ -466,6 +466,6 @@ components:
       properties:
         id: { type: string, format: uuid }
         kind: { type: string, enum: [quote, import] }
-        status: { type: string, enum: [queued, running, done, failed] }
+        status: { type: string, enum: [ждёт, выполняется, готово, ошибка] }
         result: { type: object, nullable: true, additionalProperties: true }
         error: { $ref: '#/components/schemas/Error' }

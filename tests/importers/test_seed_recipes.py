@@ -36,7 +36,7 @@ def test_set_has_30_to_50_dishes_with_unique_slugs():
 
 def test_every_dish_is_complete(directory):
     for r in SEED:
-        assert r["status"] == "confirmed" and 1 <= r["default_servings"] <= 12, r["slug"]
+        assert r["status"] == "active" and 1 <= r["default_servings"] <= 12, r["slug"]
         assert r["tags"] and set(r["tags"]) <= TAGS, (r["slug"], set(r["tags"]) - TAGS)
         required = [i for i in r["ingredients"] if not i["optional"]]
         assert len(required) >= 3, r["slug"]

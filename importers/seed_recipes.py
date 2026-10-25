@@ -58,7 +58,7 @@ def build_seed(source: list[dict[str, Any]], directory: Directory) -> list[dict[
                 "title": recipe["title"],
                 "default_servings": recipe["default_servings"],
                 "tags": item["tags"],
-                "status": "confirmed",
+                "status": "active",
                 "ingredients": [
                     {
                         "ingredient_id": x["ingredient_id"],

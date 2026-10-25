@@ -20,7 +20,7 @@ func TestContract(t *testing.T) {
 		s.SeedMember(e.CoupleA, e.UserA2)
 		s.SeedMember(e.CoupleB, e.UserB1)
 		e.SharedRecipeID = s.SeedSharedRecipe(domain.Recipe{
-			Title: "Омлет", DefaultServings: 1, Status: domain.RecipeConfirmed,
+			Title: "Омлет", DefaultServings: 1, Status: domain.RecipeActive,
 		}).ID
 		return e
 	})

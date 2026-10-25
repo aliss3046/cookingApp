@@ -76,7 +76,7 @@ func wantNotFound(t *testing.T, err error) {
 
 func newRecipe(title string) domain.Recipe {
 	return domain.Recipe{
-		Title: title, DefaultServings: 2, Status: domain.RecipeConfirmed,
+		Title: title, DefaultServings: 2, Status: domain.RecipeActive,
 		Ingredients: []domain.RecipeIngredient{{QtyPerServing: 100, Unit: domain.UnitGram, RawText: "100 г"}},
 	}
 }

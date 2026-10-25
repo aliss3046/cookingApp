@@ -56,7 +56,7 @@
 ## Асинхронные операции
 
 Тяжёлые операции (`POST /plans/{id}/quote`, `POST /recipes/import`) возвращают `202` и `job_id`.
-Статус: `GET /jobs/{id}` (`queued → running → done | failed`). Таблица `jobs` в схеме.
+Статус: `GET /jobs/{id}` (`ждёт → выполняется → готово | ошибка`). Таблица `jobs` в схеме.
 Результат `quote` сохраняется в БД и приходит клиенту также через Realtime.
 
 ## Realtime
