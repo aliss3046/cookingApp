@@ -52,7 +52,7 @@
 | `products` | id, store_id, external_id, title, brand, sale_mode (`pack_mass`/`pack_count`/`per_piece`/`by_weight`), pack_qty, pack_unit, category | уникально (store_id, external_id) |
 | `ingredient_product_map` | ingredient_id, product_id, preferred, confidence numeric(3,2) 0..1, confirmed_by_couple, matcher_version | ключ (ingredient_id, product_id) |
 | `prices` | id, product_id, location_id (→ store_location), price, card_price, price_per_kg, in_stock, store_only, fetched_at, source (`site`/`manual`/`receipt`) | INSERT-only; индекс (product_id, location_id, fetched_at desc) |
-| `jobs` | id, couple_id, kind (`import`/`quote`), status (`ждёт`/`выполняется`/`готово`/`ошибка`), params jsonb, result jsonb, error, created_at, finished_at | новое задание `ждёт`; индекс по ждущим |
+| `jobs` | id, couple_id, kind (`import`/`quote`), status (`ждёт`/`выполняется`/`готово`/`ошибка`), params jsonb, result jsonb, error, created_at, started_at, attempts, finished_at | новое задание `ждёт`; `выполняется` только со `started_at`; индексы по ждущим и выполняющимся (миграция 0002) |
 
 Устаревание цены вычисляется на чтении: `now() - fetched_at > 3 days` → `stale = true`.
 

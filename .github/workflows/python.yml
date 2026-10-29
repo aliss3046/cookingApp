@@ -31,4 +31,4 @@ jobs:
       - name: Стартовый набор блюд актуален
         run: python -m importers.seed_recipes --check
       - name: pytest
-        run: pytest --cov=importers --cov=prices --cov-branch --cov-report=term-missing --cov-fail-under=95
+        run: pytest --cov=importers --cov=prices --cov=jobs --cov-branch --cov-report=term-missing --cov-fail-under=95
